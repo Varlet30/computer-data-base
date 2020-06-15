@@ -6,14 +6,16 @@ public class Computer {
 	
 	private Long idComputer;
 	private String name;
-	private LocalDate IntroducedDate;
-	private LocalDate DiscontinuedDate;
+	private LocalDate introducedDate;
+	private LocalDate discontinuedDate;
+	private Company company = null;
 	
-	public Computer(Long idComputer, String name, LocalDate IntroducedDate, LocalDate DiscontinuedDate) {
-		this.idComputer = idComputer;
-		this.name = name;
-		this.IntroducedDate = IntroducedDate;
-		this.DiscontinuedDate = DiscontinuedDate;
+	public Computer(ComputerBuilder builder) {
+		this.idComputer = builder.idComputer;
+		this.name = builder.name;
+		this.introducedDate = builder.introducedDate;
+		this.discontinuedDate = builder.discontinuedDate;
+		this.company = builder.company;
 	}
 
 	public Long getIdComputer() {
@@ -33,33 +35,41 @@ public class Computer {
 	}
 
 	public LocalDate getIntroducedDate() {
-		return IntroducedDate;
+		return introducedDate;
 	}
 
 	public void setIntroducedDate(LocalDate introducedDate) {
-		IntroducedDate = introducedDate;
+		this.introducedDate = introducedDate;
 	}
 
 	public LocalDate getDiscontinuedDate() {
-		return DiscontinuedDate;
+		return discontinuedDate;
 	}
 
 	public void setDiscontinuedDate(LocalDate discontinuedDate) {
-		DiscontinuedDate = discontinuedDate;
+		this.discontinuedDate = discontinuedDate;
 	}
 
+	public Company getCompany() {
+		return company;
+	}
+
+	public void setCompany(Company company) {
+		this.company = company;
+	}
+	
 	@Override
 	public String toString() {
-		return "Computer [idComputer=" + idComputer + ", name=" + name + ", IntroducedDate=" + IntroducedDate
-				+ ", DiscontinuedDate=" + DiscontinuedDate + "]";
+		return "Computer [idComputer=" + idComputer + ", name=" + name + ", IntroducedDate=" + introducedDate
+				+ ", DiscontinuedDate=" + discontinuedDate + "]";
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((DiscontinuedDate == null) ? 0 : DiscontinuedDate.hashCode());
-		result = prime * result + ((IntroducedDate == null) ? 0 : IntroducedDate.hashCode());
+		result = prime * result + ((discontinuedDate == null) ? 0 : discontinuedDate.hashCode());
+		result = prime * result + ((introducedDate == null) ? 0 : introducedDate.hashCode());
 		result = prime * result + ((idComputer == null) ? 0 : idComputer.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
@@ -74,15 +84,15 @@ public class Computer {
 		if (getClass() != obj.getClass())
 			return false;
 		Computer other = (Computer) obj;
-		if (DiscontinuedDate == null) {
-			if (other.DiscontinuedDate != null)
+		if (discontinuedDate == null) {
+			if (other.discontinuedDate != null)
 				return false;
-		} else if (!DiscontinuedDate.equals(other.DiscontinuedDate))
+		} else if (!discontinuedDate.equals(other.discontinuedDate))
 			return false;
-		if (IntroducedDate == null) {
-			if (other.IntroducedDate != null)
+		if (introducedDate == null) {
+			if (other.introducedDate != null)
 				return false;
-		} else if (!IntroducedDate.equals(other.IntroducedDate))
+		} else if (!introducedDate.equals(other.introducedDate))
 			return false;
 		if (idComputer == null) {
 			if (other.idComputer != null)
@@ -95,5 +105,42 @@ public class Computer {
 		} else if (!name.equals(other.name))
 			return false;
 		return true;
+	}
+	
+	public static class ComputerBuilder{
+		private long idComputer;
+		private String name;
+		private LocalDate introducedDate;
+		private LocalDate discontinuedDate;
+		private Company company;
+		
+		public ComputerBuilder(String name) {
+			this.name = name;
+		}
+		
+		public ComputerBuilder id(long idComputer) {
+			this.idComputer = idComputer;
+			return this;
+		}
+		
+		public ComputerBuilder introduced(LocalDate introducedDate) {
+			this.introducedDate = introducedDate;
+			return this;
+		}
+		
+		public ComputerBuilder discontinued(LocalDate discontinuedDate) {
+			this.discontinuedDate = discontinuedDate;
+			return this;
+		}
+		
+		public ComputerBuilder company(Company company) {
+			this.company = company;
+			return this;
+		}
+		
+		public Computer build() {
+			return new Computer(this);
+		}
+		
 	}
 }

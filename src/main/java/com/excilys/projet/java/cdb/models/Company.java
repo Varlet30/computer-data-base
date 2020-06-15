@@ -62,6 +62,24 @@ public class Company {
 		return true;
 	}
 	
+	public Company(CompanyBuilder builder) {
+		this.idCompany = builder.idCompany;
+		this.name = builder.name;
+	}
+	
+	public static class CompanyBuilder{
+		private long idCompany;
+		private String name;
+		
+		public CompanyBuilder(long idCompany, String name) {
+			this.idCompany = idCompany;
+			this.name = name;
+		}
+		
+		public Company build() {
+			return new Company(this);
+		}
+	}
 	
 	
 }
