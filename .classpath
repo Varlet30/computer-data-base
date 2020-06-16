@@ -13,5 +13,11 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="lib" path="/home/varlet/Programme/Eclipse/eclipse-jee-2020-03-R-incubation-linux-gtk-x86_64/eclipse/plugins/org.slf4j.api_1.7.30.v20200204-2150.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="/home/varlet/Programme/Eclipse/eclipse-jee-2020-03-R-incubation-linux-gtk-x86_64/eclipse/plugins/org.junit_4.13.0.v20200204-1500.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/3"/>
+	<classpathentry kind="lib" path="/home/varlet/Programme/mysql-connector-java_8.0.20-1ubuntu20.04_all/data/usr/share/java/mysql-connector-java-8.0.20.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

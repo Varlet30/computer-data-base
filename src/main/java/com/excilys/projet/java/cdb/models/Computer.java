@@ -1,13 +1,13 @@
 package main.java.com.excilys.projet.java.cdb.models;
 
-import java.time.LocalDate;
+import java.sql.Date;
 
 public class Computer {
 	
 	private Long idComputer;
 	private String name;
-	private LocalDate introducedDate;
-	private LocalDate discontinuedDate;
+	private Date introducedDate;
+	private Date discontinuedDate;
 	private Company company = null;
 	
 	public Computer(ComputerBuilder builder) {
@@ -34,19 +34,19 @@ public class Computer {
 		this.name = name;
 	}
 
-	public LocalDate getIntroducedDate() {
+	public Date getIntroducedDate() {
 		return introducedDate;
 	}
 
-	public void setIntroducedDate(LocalDate introducedDate) {
+	public void setIntroducedDate(Date introducedDate) {
 		this.introducedDate = introducedDate;
 	}
 
-	public LocalDate getDiscontinuedDate() {
+	public Date getDiscontinuedDate() {
 		return discontinuedDate;
 	}
 
-	public void setDiscontinuedDate(LocalDate discontinuedDate) {
+	public void setDiscontinuedDate(Date discontinuedDate) {
 		this.discontinuedDate = discontinuedDate;
 	}
 
@@ -110,8 +110,8 @@ public class Computer {
 	public static class ComputerBuilder{
 		private long idComputer;
 		private String name;
-		private LocalDate introducedDate;
-		private LocalDate discontinuedDate;
+		private Date introducedDate;
+		private Date discontinuedDate;
 		private Company company;
 		
 		public ComputerBuilder(String name) {
@@ -123,12 +123,12 @@ public class Computer {
 			return this;
 		}
 		
-		public ComputerBuilder introduced(LocalDate introducedDate) {
+		public ComputerBuilder introduced(Date introducedDate) {
 			this.introducedDate = introducedDate;
 			return this;
 		}
 		
-		public ComputerBuilder discontinued(LocalDate discontinuedDate) {
+		public ComputerBuilder discontinued(Date discontinuedDate) {
 			this.discontinuedDate = discontinuedDate;
 			return this;
 		}

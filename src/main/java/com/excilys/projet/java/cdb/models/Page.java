@@ -1,59 +1,62 @@
 package main.java.com.excilys.projet.java.cdb.models;
-
 public class Page {
-	
-	private int currentPage;
-	private int linesPerPage;
-	
-	public Page(int currentPage, int linesPerPage) {
-		this.currentPage = currentPage;
-		this.linesPerPage = linesPerPage;
-	}
 
-	public int getCurrentPage() {
-		return currentPage;
-	}
+    private int currentPage;
+    private int linesPerPage;
 
-	public void setCurrentPage(int currentPage) {
-		this.currentPage = currentPage;
-	}
+    private static final int DEFAULT_PAGE = 1;
+    private static final int DEFAULT_LINES_PER_PAGE = 20;
 
-	public int getLinesPerPage() {
-		return linesPerPage;
-	}
+    public Page() {
+        this.currentPage = DEFAULT_PAGE;
+        this.linesPerPage = DEFAULT_LINES_PER_PAGE;
+    }
 
-	public void setLinesPerPage(int linesPerPage) {
-		this.linesPerPage = linesPerPage;
-	}
+    public Page(int maxLine, int currentpage) {
+        this.currentPage = currentpage;
+        this.linesPerPage = maxLine;
+    }
 
-	@Override
-	public String toString() {
-		return "Page [currentPage=" + currentPage + ", linesPerPage=" + linesPerPage + "]";
-	}
+    public int getCurrentPage() {
+        return currentPage;
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + currentPage;
-		result = prime * result + linesPerPage;
-		return result;
-	}
+    public void setCurrentPage(int currentpage) {
+        this.currentPage = currentpage;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Page other = (Page) obj;
-		if (currentPage != other.currentPage)
-			return false;
-		if (linesPerPage != other.linesPerPage)
-			return false;
-		return true;
-	}
-	
+    public int getMaxLine() {
+        return linesPerPage;
+    }
+
+    public void setMaxLine(int maxLine) {
+        this.linesPerPage = maxLine;
+    }
+
+    public int getTotalPages(int numberOfEntries) {
+        return (int) Math.ceil((double) numberOfEntries / linesPerPage);
+    }
+
+    public int getPageFirstLine() {
+        return linesPerPage * (currentPage - 1);
+    }
+
+    public void nextPage() {
+        currentPage++;
+    }
+
+    public void previousPage() {
+        currentPage--;
+    }
+
+    public boolean hasNextPage(int numberOfEntries) {
+        boolean result = currentPage < getTotalPages(numberOfEntries) ? true : false;
+        return result;
+    }
+
+    public boolean hasPreviousPage() {
+        boolean result = currentPage > 1 ? true : false;
+        return result;
+    }
+
 }
