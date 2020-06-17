@@ -1,11 +1,11 @@
 package main.java.com.excilys.projet.java.cdb.cliui;
 
-import java.time.LocalDate;
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Scanner;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import main.java.com.excilys.projet.java.cdb.models.Company;
 import main.java.com.excilys.projet.java.cdb.models.Computer;
@@ -19,29 +19,22 @@ public class InterfaceClient {
     private static CompanyService companyService = CompanyService.getInstance();
     private static Scanner scanner = new Scanner(System.in);
 
-    private static Logger logger = LoggerFactory.getLogger(InterfaceClient.class);
-
-    public void start() {
-        logger.debug("start the UI");
+    public void start() throws ParseException {
 
         boolean quit = false;
 
         while (!quit) {
 
-            System.out.println("Computer Database \n");
-            System.out.println("Available features :");
-
-            System.out.println("1 - List computers");
-            System.out.println("2 - List companies");
-            System.out.println("3 - Show computer details");
-            System.out.println("4 - Create a computer");
-            System.out.println("5 - Update a computer");
-            System.out.println("6 - Delete a computer");
-            System.out.println("7 - Quit");
-
-            System.out.println("");
-
-            System.out.println("Enter your choice: ");
+            System.out.println("Computer Database \n\n"
+            				 + "Available features : \n"
+            				 + "1 -> Computers list \n"
+            				 + "2 -> Companies list \n"
+            				 + "3 -> Computer details \n"
+            				 + "4 -> Create computer \n"
+            				 + "5 -> Update computer \n"
+            				 + "6 -> Delete computer \n"
+            				 + "7 -> Exit \n\n"
+        					 + "-- Enter your choice: --");
             int featureChoice = scanner.nextInt();
             scanner.nextLine();
 
@@ -72,13 +65,8 @@ public class InterfaceClient {
             case 4:
                 boolean askId = false;
                 Computer computer = inputComputer(askId);
-
-                if (computerService.allowedToCreateOrEdit(computer)) {
-                    computerService.create(computer);
-                    System.out.println("Creation OK.");
-                } else {
-                    System.out.println("Creation impossible.");
-                }
+                computerService.create(computer);
+                
                 break;
 
             case 5:
@@ -119,8 +107,8 @@ public class InterfaceClient {
         scanner.close();
     }
 
-    public Computer inputComputer(boolean needId) {
-        Computer computer = new Computer(null);
+    public Computer inputComputer(boolean needId) throws ParseException {
+        Computer computer = new Computer();
 
         if (needId) {
             System.out.println("Enter the id of the computer: ");
@@ -145,14 +133,18 @@ public class InterfaceClient {
         System.out
                 .println("Enter the introduced date of the computer in the format YYYY-MM-DD: (press <Enter> to skip)");
         String introduced = scanner.nextLine();
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");    
 
         if (!introduced.equals("")) {
-            computer.setIntroducedDate(LocalDate.parse(introduced));
-            System.out.println(
-                    "Enter the discontinued date of the computer in the format YYYY-MM-DD: (press <Enter> to skip)");
+            Date dateIntroduced = format.parse(introduced);
+            java.sql.Date sqlIntroducedDate = new java.sql.Date(dateIntroduced.getTime());
+            computer.setIntroducedDate(sqlIntroducedDate);
+            System.out.println("Enter the discontinued date of the computer in the format YYYY-MM-DD: (press <Enter> to skip)");
             String discontinued = scanner.nextLine();
             if (!discontinued.equals("")) {
-                computer.setDiscontinuedDate(LocalDate.parse(discontinued));
+            	Date dateDiscontinued = format.parse(discontinued); 
+            	java.sql.Date sqlDiscontinuedDate = new java.sql.Date(dateDiscontinued.getTime());
+                computer.setDiscontinuedDate(sqlDiscontinuedDate);
             }
         }
         System.out.println("Enter the manufacturer company id:(press <Enter> to skip)");

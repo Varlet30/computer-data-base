@@ -8,9 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import main.java.com.excilys.projet.java.cdb.mapper.CompanyMapper;
 import main.java.com.excilys.projet.java.cdb.models.Company;
 import main.java.com.excilys.projet.java.cdb.models.Page;
@@ -18,7 +15,6 @@ import main.java.com.excilys.projet.java.cdb.persistence.Connect;
 
 public class CompanyDAO extends Dao<Company> {
     private static CompanyDAO companyDAO;
-    private static Logger logger = LoggerFactory.getLogger(CompanyDAO.class);
     private Connection connect = Connect.getInstance();
 
     /**
@@ -74,7 +70,6 @@ public class CompanyDAO extends Dao<Company> {
                     companyList.add(company);
                 }
             } catch (SQLException e) {
-                logger.error("sql error when listing companies by page");
             }
         }
 
@@ -92,7 +87,6 @@ public class CompanyDAO extends Dao<Company> {
                     result = Optional.ofNullable(CompanyMapper.getCompany(resultSet));
                 }
             } catch (SQLException e) {
-                logger.error("error sql");
             }
         }
         return result;

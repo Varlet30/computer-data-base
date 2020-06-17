@@ -17,6 +17,9 @@ public class Computer {
 		this.discontinuedDate = builder.discontinuedDate;
 		this.company = builder.company;
 	}
+	
+	public Computer() {
+	}
 
 	public Long getIdComputer() {
 		return idComputer;
@@ -141,6 +144,5 @@ public class Computer {
 		public Computer build() {
 			return new Computer(this);
 		}
-		
 	}
 }

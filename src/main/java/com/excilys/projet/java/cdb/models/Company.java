@@ -1,7 +1,6 @@
 package main.java.com.excilys.projet.java.cdb.models;
 
 public class Company {
-	
 	private Long idCompany;
 	private String name;
 	

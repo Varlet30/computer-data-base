@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -110,12 +109,10 @@ public class ComputerDAO extends Dao<Computer> {
             try (PreparedStatement statement = connect.prepareStatement("INSERT INTO computer (name, introduced, discontinued, company_id) "
                     + "VALUES (?, ?, ?, ?)")) {
                 statement.setString(1, computer.getName());
-                Timestamp introDate = computer.getIntroducedDate() == null ? null
-                        : Timestamp.valueOf(computer.getIntroducedDate().atStartOfDay());
-                statement.setTimestamp(2, introDate);
-                Timestamp discontDate = computer.getDiscontinuedDate() == null ? null
-                        : Timestamp.valueOf(computer.getDiscontinuedDate().atStartOfDay());
-                statement.setTimestamp(3, discontDate);
+                java.sql.Date sqlIntroducedDate = new java.sql.Date(computer.getIntroducedDate().getTime());
+                java.sql.Date sqlDiscontinuedDate = new java.sql.Date(computer.getDiscontinuedDate().getTime());
+                statement.setDate(2, sqlIntroducedDate);
+                statement.setDate(3, sqlDiscontinuedDate);
                 if (computer.getCompany() == null) {
                     statement.setNull(4, java.sql.Types.INTEGER);
                 } else {
@@ -136,12 +133,10 @@ public class ComputerDAO extends Dao<Computer> {
         try (PreparedStatement statement = connect.prepareStatement("UPDATE computer SET name = ?, introduced = ?, discontinued = ?, company_id = ? "
                 + "WHERE id = ?")) {
             statement.setString(1, computer.getName());
-            Timestamp introDate = computer.getIntroducedDate() == null ? null
-                    : Timestamp.valueOf(computer.getIntroducedDate().atStartOfDay());
-            statement.setTimestamp(2, introDate);
-            Timestamp discontDate = computer.getDiscontinuedDate() == null ? null
-                    : Timestamp.valueOf(computer.getDiscontinuedDate().atStartOfDay());
-            statement.setTimestamp(3, discontDate);
+            java.sql.Date sqlIntroducedDate = new java.sql.Date(computer.getIntroducedDate().getTime());
+            java.sql.Date sqlDiscontinuedDate = new java.sql.Date(computer.getDiscontinuedDate().getTime());
+            statement.setDate(2, sqlIntroducedDate);
+            statement.setDate(3, sqlDiscontinuedDate);
             if (computer.getCompany() == null) {
                 statement.setNull(4, java.sql.Types.INTEGER);
             } else {
