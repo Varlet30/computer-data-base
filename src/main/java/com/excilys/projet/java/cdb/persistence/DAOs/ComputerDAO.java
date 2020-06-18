@@ -38,8 +38,9 @@ public class ComputerDAO extends Dao<Computer> {
     public List<Computer> getAll() {
         List<Computer> computerList = new ArrayList<Computer>();
 
-        try (PreparedStatement statement = connect.prepareStatement("SELECT computer.id, computer.name, introduced, discontinued, "
-                + "company_id, company.name AS company_name FROM computer LEFT JOIN company ON company_id = company.id ORDER BY computer.id")) {
+        try (PreparedStatement statement = connect.prepareStatement("SELECT computer.id, computer.name,"
+        		+ "introduced, discontinued, company_id, company.name AS company_name FROM computer "
+        		+ "LEFT JOIN company ON company_id = company.id ORDER BY computer.id")) {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 Computer computer = ComputerMapper.getComputer(resultSet);
@@ -61,9 +62,10 @@ public class ComputerDAO extends Dao<Computer> {
 
         if (page.getCurrentPage() > 0) {
 
-            try (PreparedStatement statement = connect.prepareStatement("SELECT computer.id, computer.name, introduced, discontinued, "
-                    + "company_id, company.name AS company_name FROM computer LEFT JOIN company ON company_id = company.id "
-                    + "ORDER BY computer.id LIMIT ? OFFSET ?")) {
+            try (PreparedStatement statement = connect.prepareStatement("SELECT computer.id, computer.name,"
+            		+ " introduced, discontinued, company_id, company.name AS company_name "
+            		+ "FROM computer LEFT JOIN company ON company_id = company.id ORDER BY computer.id "
+            		+ "LIMIT ? OFFSET ?")) {
                 statement.setInt(1, page.getMaxLine());
                 statement.setInt(2, page.getPageFirstLine());
 
@@ -106,8 +108,8 @@ public class ComputerDAO extends Dao<Computer> {
      */
     public void create(Computer computer) {
         if (computer != null) {
-            try (PreparedStatement statement = connect.prepareStatement("INSERT INTO computer (name, introduced, discontinued, company_id) "
-                    + "VALUES (?, ?, ?, ?)")) {
+            try (PreparedStatement statement = connect.prepareStatement("INSERT INTO computer "
+            		+ "(name, introduced, discontinued, company_id) VALUES (?, ?, ?, ?)")) {
                 statement.setString(1, computer.getName());
                 java.sql.Date sqlIntroducedDate = new java.sql.Date(computer.getIntroducedDate().getTime());
                 java.sql.Date sqlDiscontinuedDate = new java.sql.Date(computer.getDiscontinuedDate().getTime());
@@ -130,8 +132,8 @@ public class ComputerDAO extends Dao<Computer> {
      * @param computer
      */
     public void update(Computer computer) {
-        try (PreparedStatement statement = connect.prepareStatement("UPDATE computer SET name = ?, introduced = ?, discontinued = ?, company_id = ? "
-                + "WHERE id = ?")) {
+        try (PreparedStatement statement = connect.prepareStatement("UPDATE computer SET name = ?, "
+        		+ "introduced = ?, discontinued = ?, company_id = ? WHERE id = ?")) {
             statement.setString(1, computer.getName());
             java.sql.Date sqlIntroducedDate = new java.sql.Date(computer.getIntroducedDate().getTime());
             java.sql.Date sqlDiscontinuedDate = new java.sql.Date(computer.getDiscontinuedDate().getTime());
