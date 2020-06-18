@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src"/>
+	<classpathentry excluding="resources/" kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/java-8-openjdk-amd64">
 		<attributes>
 			<attribute name="owner.project.facets" value="java"/>
@@ -19,5 +19,6 @@
 	<classpathentry kind="lib" path="/home/varlet/Programme/Eclipse/eclipse-jee-2020-03-R-incubation-linux-gtk-x86_64/eclipse/plugins/org.junit_4.13.0.v20200204-1500.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/3"/>
 	<classpathentry kind="lib" path="/home/varlet/Programme/mysql-connector-java_8.0.20-1ubuntu20.04_all/data/usr/share/java/mysql-connector-java-8.0.20.jar"/>
+	<classpathentry kind="lib" path="src/resources"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

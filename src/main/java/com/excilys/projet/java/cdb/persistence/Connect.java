@@ -3,6 +3,9 @@ package main.java.com.excilys.projet.java.cdb.persistence;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
+import java.io.IOException;
+import java.io.InputStream;
 
 public final class Connect {
 
@@ -11,15 +14,20 @@ public final class Connect {
     private Connect() {
     	System.out.println("Connection...");
         try {
-            String url = "jdbc:mysql://localhost:3306/computer-database-db?serverTimezone=UTC";
-        	String driver = "com.mysql.cj.jdbc.Driver";
-        	String userName = "admincdb";
-        	String password = "qwerty1234";      
+        	Properties properties = new Properties();
+            InputStream in = getClass().getClassLoader().getResourceAsStream("db.properties");
+			properties.load(in);
+			in.close();
+        	
+            String url = properties.getProperty("jdbc.url");
+            String driver = properties.getProperty("jdbc.driver");
+            String userName = properties.getProperty("jdbc.username");
+            String password = properties.getProperty("jdbc.password");    
         	
             Class.forName(driver);
             connection = DriverManager.getConnection(url, userName, password);
             System.out.println("Connecté");
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException | IOException e) {
             e.printStackTrace();
         }
     }
