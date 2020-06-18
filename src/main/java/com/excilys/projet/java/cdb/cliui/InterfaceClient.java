@@ -1,6 +1,7 @@
 package main.java.com.excilys.projet.java.cdb.cliui;
 
 import java.util.Date;
+import java.util.InputMismatchException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -24,84 +25,90 @@ public class InterfaceClient {
         boolean quit = false;
 
         while (!quit) {
-
+        	
             System.out.println("Computer Database \n\n"
             				 + "Available features : \n"
-            				 + "1 -> Computers list \n"
-            				 + "2 -> Companies list \n"
-            				 + "3 -> Computer details \n"
-            				 + "4 -> Create computer \n"
-            				 + "5 -> Update computer \n"
-            				 + "6 -> Delete computer \n"
+            				 + "1 -> List computers \n"
+            				 + "2 -> List companies \n"
+            				 + "3 -> Show computer details \n"
+            				 + "4 -> Create a computer \n"
+            				 + "5 -> Update a computer \n"
+            				 + "6 -> Delete a computer \n"
             				 + "7 -> Exit \n\n"
         					 + "-- Enter your choice: --");
-            int featureChoice = scanner.nextInt();
-            scanner.nextLine();
+            try {
+            	String featureChoice = scanner.next();
+            	scanner.nextLine();
 
-            switch (featureChoice) {
-            case 1:
-                showAllComputers();
-                break;
+            	switch (featureChoice) {
+            	case "1":
+            		showAllComputers();
+            		break;
 
-            case 2:
-                showAllCompanies();
-                break;
+            	case "2":
+            		showAllCompanies();
+            		break;
 
-            case 3:
-                System.out.println("Enter the id of a computer: ");
-                Long computerId = scanner.nextLong();
+            	case "3":
+            		System.out.println("Enter the id of a computer: ");
+            		Long computerId = scanner.nextLong();
 
-                if (computerService.exist(computerId)) {
-                    Computer computer = computerService.findById(computerId);
-                    System.out.println(computer.toString());
-                } else {
-                    System.out.println("The computer with the id " + computerId + " doesn't exit.");
-                }
+            		if (computerService.exist(computerId)) {
+            			Computer computer = computerService.findById(computerId);
+            			System.out.println(computer.toString());
+            		} else {
+            			System.out.println("Doesn't exit.");
+            		}
 
-                backToMenu();
+            		backToMenu();
 
-                break;
+            		break;
 
-            case 4:
-                boolean askId = false;
-                Computer computer = inputComputer(askId);
-                computerService.create(computer);
+            	case "4":
+            		boolean askId = false;
+            		Computer computer = inputComputer(askId);
+            		computerService.create(computer);
                 
-                break;
+            		break;
 
-            case 5:
-                boolean needId = true;
-                Computer computerUpd = inputComputer(needId);
+            	case "5":
+            		boolean needId = true;
+            		Computer computerUpd = inputComputer(needId);
 
-                if (computerService.exist(computerUpd.getIdComputer())) {
-                    computerService.update(computerUpd);
-                    System.out.println("Update OK.");
-                } else {
-                    System.out.println("Update impossible.");
-                }
-                break;
+            		if (computerService.exist(computerUpd.getIdComputer())) {
+            			computerService.update(computerUpd);
+            			System.out.println("Updated");
+            		} else {
+            			System.out.println("Error update");
+            		}
+            		break;
 
-            case 6:
-                System.out.println("Enter the id of the computer to delete: ");
-                Long id = scanner.nextLong();
-                boolean exist = computerService.exist(id);
+            	case "6":
+            		System.out.println("Id computer to delete: ");
+            		Long id = scanner.nextLong();
+            		boolean exist = computerService.exist(id);
 
-                while (!exist) {
-                    System.out.println("The id doesn't exist.");
-                    System.out.println("Enter the id of an existing  computer : ");
-                    id = scanner.nextLong();
-                }
-                scanner.nextLine();
-                computerService.delete(id);
-                System.out.println("Delete OK.");
-                break;
-            case 7:
-                quit = true;
-                break;
+            		while (!exist) {
+            			System.out.println("Id doesn't exist.");
+            			System.out.println("Enter the id of an existing  computer : ");
+            			id = scanner.nextLong();
+            		}
+            		scanner.nextLine();
+            		computerService.delete(id);
+            		System.out.println("Delete OK.");
+            		break;
+            	case "7":
+            		quit = true;
+            		break;
 
-            default:
-                System.out.println("This feature doesn't exist.");
-            }
+            	default:
+            		System.out.println("This feature doesn't exist.");
+            	}
+            	
+            }catch(InputMismatchException e) {
+        		System.out.println("just int");
+        		scanner.close();
+        	}	
         }
 
         scanner.close();
