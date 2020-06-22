@@ -36,5 +36,6 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="/home/varlet/Programme/computer-database/src/main/resources"/>
 	<classpathentry kind="lib" path="/home/varlet/Programme/mysql-connector-java_8.0.20-1ubuntu20.04_all/data/usr/share/java/mysql-connector-java-8.0.20.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
