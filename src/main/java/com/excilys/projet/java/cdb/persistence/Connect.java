@@ -7,12 +7,18 @@ import java.util.Properties;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.excilys.projet.java.cdb.cliui.InterfaceClient;
+
 public final class Connect {
 
     private static Connection connection;
+    private static final Logger logger = LoggerFactory.getLogger(InterfaceClient.class);
 
     private Connect() {
-    	System.out.println("Connection...");
+    	logger.info("Connection...");
         try {
         	Properties properties = new Properties();
             InputStream in = getClass().getClassLoader().getResourceAsStream("db.properties");
@@ -26,9 +32,10 @@ public final class Connect {
         	
             Class.forName(driver);
             connection = DriverManager.getConnection(url, userName, password);
-            System.out.println("Connecté");
+            logger.info("Connecté");
         } catch (SQLException | ClassNotFoundException | IOException e) {
             e.printStackTrace();
+            logger.info("Error Connection");
         }
     }
 

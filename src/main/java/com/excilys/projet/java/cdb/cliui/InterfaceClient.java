@@ -8,6 +8,9 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Scanner;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.excilys.projet.java.cdb.models.Company;
 import com.excilys.projet.java.cdb.models.Computer;
 import com.excilys.projet.java.cdb.models.Page;
@@ -19,13 +22,14 @@ public class InterfaceClient {
     private static ComputerService computerService = ComputerService.getInstance();
     private static CompanyService companyService = CompanyService.getInstance();
     private static Scanner scanner = new Scanner(System.in);
+    
+    private static final Logger logger = LoggerFactory.getLogger(InterfaceClient.class);
 
     public void start() throws ParseException {
 
         boolean quit = false;
 
         while (!quit) {
-        	
             System.out.println("Computer Database \n\n"
             				 + "Available features : \n"
             				 + "1 -> List computers \n"
@@ -42,14 +46,17 @@ public class InterfaceClient {
 
             	switch (featureChoice) {
             	case "1":
+            		logger.info("Show All Computers");
             		showAllComputers();
             		break;
 
             	case "2":
+            		logger.info("Show All Companies");
             		showAllCompanies();
             		break;
 
             	case "3":
+            		logger.info("Computer Details");
             		System.out.println("Enter the id of a computer: ");
             		Long computerId = scanner.nextLong();
 
@@ -65,6 +72,7 @@ public class InterfaceClient {
             		break;
 
             	case "4":
+            		logger.info("Input Computer");
             		boolean askId = false;
             		Computer computer = inputComputer(askId);
             		computerService.create(computer);
@@ -72,6 +80,7 @@ public class InterfaceClient {
             		break;
 
             	case "5":
+            		logger.info("Update Computer");
             		boolean needId = true;
             		Computer computerUpd = inputComputer(needId);
 
@@ -84,6 +93,7 @@ public class InterfaceClient {
             		break;
 
             	case "6":
+            		logger.info("Delete Computer");
             		System.out.println("Id computer to delete: ");
             		Long id = scanner.nextLong();
             		boolean exist = computerService.exist(id);
@@ -98,6 +108,7 @@ public class InterfaceClient {
             		System.out.println("Delete OK.");
             		break;
             	case "7":
+            		logger.info("Exit");
             		quit = true;
             		break;
 
