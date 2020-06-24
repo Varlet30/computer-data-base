@@ -164,4 +164,15 @@ public class ComputerDAO extends Dao<Computer> {
         }
     }
 
+	 public int getNumberComputers() {
+        int count = -1;
+        try (PreparedStatement statement = connect.prepareStatement("SELECT COUNT(id) AS total FROM computer")) {
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                count = resultSet.getInt("total");
+            }
+        } catch (SQLException e) {
+        }
+        return count;
+    }
 }

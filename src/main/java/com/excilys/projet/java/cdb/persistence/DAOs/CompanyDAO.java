@@ -91,4 +91,34 @@ public class CompanyDAO extends Dao<Company> {
         }
         return result;
     }
+
+    public void delete(Long id) {
+        if (id != null) {
+            try {
+                this.connect.setAutoCommit(false);
+                PreparedStatement computerStatement = connect.prepareStatement("DELETE FROM company WHERE id = ?");
+                computerStatement.setLong(1, id);
+                computerStatement.execute();
+                PreparedStatement companyStatement = connect.prepareStatement("DELETE FROM computer WHERE company_id = ?");
+                companyStatement.setLong(1, id);
+                companyStatement.execute();
+                this.connect.commit();
+                computerStatement.close();
+                companyStatement.close();
+            } catch (SQLException e) {
+                try {
+                    this.connect.rollback();
+                } catch (SQLException e1) {
+                }
+            } finally {
+                try {
+                    this.connect.setAutoCommit(true);
+                } catch (SQLException e) {
+                }
+            }
+        } else {
+        }
+
+
+    }
 }

@@ -8,7 +8,7 @@ import com.excilys.projet.java.cdb.persistence.DAOs.CompanyDAO;
 public class CompanyService {
 
     private static CompanyService companyService;
-
+    
     private CompanyService() {
     }
 

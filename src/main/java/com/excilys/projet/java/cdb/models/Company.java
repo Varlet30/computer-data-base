@@ -4,6 +4,10 @@ public class Company {
 	private Long idCompany;
 	private String name;
 	
+	public Company(Long idCompany) {
+		this.idCompany = idCompany;
+	}
+	
 	public Company(Long idCompany, String name) {
 		this.idCompany = idCompany;
 		this.name = name;
