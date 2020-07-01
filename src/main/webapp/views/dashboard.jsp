@@ -110,7 +110,9 @@
               </c:if>
               <c:forEach var="i" begin="1" end="5">
 	             
-              <li><a href="List?page=${page+i-1}&lenPage=${lenPage}"><c:out value="${page+i-1}"></c:out></a></li>
+              <li>
+              	<a name="${page+i-1}" id="page" href="List?page=${page+i-1}&lenPage=${lenPage}"><c:out value="${page+i-1}"></c:out></a>
+              </li>
      		 </c:forEach>
               <c:if test="${page<maxPage-4}">
               <li>
