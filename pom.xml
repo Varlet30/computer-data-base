@@ -26,9 +26,15 @@
     <servlet-version>4.0.0-b06</servlet-version>
     <jstl-version>1.2</jstl-version>
     <selenium-version>3.141.59</selenium-version>
+    <validator-version>2.5.6</validator-version>
   </properties>
 
   <dependencies>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+      <version>${validator-version}</version>
+   </dependency>
    <dependency>
 	  <groupId>org.seleniumhq.selenium</groupId>
 	  <artifactId>selenium-java</artifactId>
