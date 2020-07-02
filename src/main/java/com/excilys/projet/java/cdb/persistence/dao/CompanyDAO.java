@@ -3,18 +3,30 @@ package com.excilys.projet.java.cdb.persistence.dao;
 import java.sql.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.excilys.projet.java.cdb.mapper.CompanyMapper;
 import com.excilys.projet.java.cdb.model.Company;
 
 public class CompanyDAO 
 {
 	private static CompanyDAO instance;
+	private static Logger logger = LoggerFactory.getLogger(CompanyDAO.class);
+	
+	private static final String All = "SELECT * FROM company";
+	private static final String FindById = "SELECT * FROM company WHERE id = ?";
+	private static final String FindByName = "SELECT * FROM company WHERE name = ?";
+	private static final String DeleteByIdComputer = "DELETE FROM computer WHERE company_id = ?";
+	private static final String DeleteByIdCompany = "DELETE FROM company WHERE id = ?";
 	
 	private CompanyDAO()
 	{
 	}
 	
-	public static CompanyDAO getInstance()
+	public static synchronized CompanyDAO getInstance()
 	{
 		if (instance == null)
 		{
@@ -27,108 +39,89 @@ public class CompanyDAO
 		}
 	}
 	
-	private static Connection connexionOpen() throws ClassNotFoundException
-	{
-		Connection preparation = ConnecHikari.getInstance().getConnection();
-		return preparation;
-	}
-	
-	private static void connexionClose(Connection preparation) throws ClassNotFoundException
-	{
-		ConnecHikari.getInstance().disconnect();
-	}
-	
-	public ArrayList<Company> allCompany() throws ClassNotFoundException
+	public List<Company> allCompany()
 	{
 		ArrayList<Company> listCompany = new ArrayList<Company>();
 		try
 		{
-			Connection preparation = CompanyDAO.connexionOpen();
-			PreparedStatement prepare = preparation.prepareStatement("SELECT * FROM company") ;
+			Connection preparation = ConnecHikari.getInstance().getConnection();
+			PreparedStatement prepare = preparation.prepareStatement(All) ;
 			ResultSet resultat = prepare.executeQuery();
 			while (resultat.next())
 			{ 
-				String name = resultat.getString("name");
-				long id = resultat.getLong("id");
-				Company compa = new Company.CompanyBuilder().setId(id).setName(name).build();
+				Company compa = CompanyMapper.convertRequest(resultat);
 				listCompany.add(compa);
 			}
-			CompanyDAO.connexionClose(preparation);
+			ConnecHikari.getInstance().disconnect();
 			return listCompany;
 		}
 		catch (SQLException e)
 		{
-			e.printStackTrace();
+			logger.error("Error request " + e);
 		}
 		return null;
 	}
 	
-	public Company findCompany(Long id) throws ClassNotFoundException
+	public Company findCompany(Long id)
 	{
 		try
 		{
-			Connection preparation = CompanyDAO.connexionOpen();
-			PreparedStatement prepare = preparation.prepareStatement("SELECT * FROM company WHERE id = ?") ;
+			Connection preparation = ConnecHikari.getInstance().getConnection();
+			PreparedStatement prepare = preparation.prepareStatement(FindById) ;
 			prepare.setLong(1, id);
 			ResultSet resultat = prepare.executeQuery();
 			Company compa = null;
 			if(resultat.next())
 			{
-				long idCompany = resultat.getLong("id");
-				String name = resultat.getString("name");
-				compa = new Company.CompanyBuilder().setId(idCompany).setName(name).build();
+				compa = CompanyMapper.convertRequest(resultat);
 			}
-			CompanyDAO.connexionClose(preparation);
+			ConnecHikari.getInstance().disconnect();
 			return compa;
 		}
 		catch (SQLException e)
 		{
-			e.printStackTrace();
+			logger.error("Error request " + e);
 		}
 		return null;
 	}
 	
-	public Company findCompany(String name) throws ClassNotFoundException
+	public Company findCompany(String name)
 
 	{
 		
 		try
 		{
-			Connection preparation = CompanyDAO.connexionOpen();
-			PreparedStatement prepare = preparation.prepareStatement("SELECT * FROM company WHERE name = ?") ;
+			Connection preparation = ConnecHikari.getInstance().getConnection();
+			PreparedStatement prepare = preparation.prepareStatement(FindByName) ;
 			prepare.setString(1, name);
 			ResultSet resultat = prepare.executeQuery();
 			while (resultat.next())
 			{ 
-				long id = resultat.getLong("id");
-				String nameCompany = resultat.getString("name");
-
-				Company compa = new Company.CompanyBuilder().setId(id).setName(nameCompany).build();
-
-				CompanyDAO.connexionClose(preparation);
+				Company compa = CompanyMapper.convertRequest(resultat);
+				ConnecHikari.getInstance().disconnect();
 				return compa;
 			}
 		}
 		catch (SQLException e)
 		{
-			e.printStackTrace();
+			logger.error("Error request " + e);
 		}
 		return null;
 	}
 	
-	public int delete(long companyId) throws ClassNotFoundException, SQLException
+	public int delete(long companyId) throws SQLException
 	{
 		int value = 0;
-		Connection preparation = CompanyDAO.connexionOpen();
+		Connection preparation = ConnecHikari.getInstance().getConnection();
 		preparation.setAutoCommit(false);
 		try 
 		{
-			PreparedStatement prepare = preparation.prepareStatement("DELETE FROM computer WHERE company_id = ?") ;
+			PreparedStatement prepare = preparation.prepareStatement(DeleteByIdComputer) ;
 			prepare.setLong(1, companyId);
 			value = prepare.executeUpdate();
 			if (value > 0)
 			{
-				prepare = preparation.prepareStatement("DELETE FROM company WHERE id = ?") ;
+				prepare = preparation.prepareStatement(DeleteByIdCompany) ;
 				prepare.setLong(1, companyId);
 				value = prepare.executeUpdate();
 				if (value == 1)
@@ -147,11 +140,11 @@ public class CompanyDAO
 		}
 		catch (SQLException e)
 		{
-			e.printStackTrace();
+			logger.error("Error request " + e);
 			preparation.rollback();
 		}
 		preparation.setAutoCommit(true);
-		CompanyDAO.connexionClose(preparation);
+		ConnecHikari.getInstance().disconnect();
 		return value;
 	}
 }

@@ -3,7 +3,7 @@ package com.excilys.projet.java.cdb.dao;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +14,7 @@ public class CompanyDAOTest {
 
     @Test
     public void testGetAll() throws ClassNotFoundException {
-    	ArrayList<Company> company = ServiceCompany.getInstance().getCompanyList();
+    	List<Company> company = ServiceCompany.getInstance().getCompanyList();
         assertFalse(company.isEmpty());
         assertEquals(42, company.size());
     }

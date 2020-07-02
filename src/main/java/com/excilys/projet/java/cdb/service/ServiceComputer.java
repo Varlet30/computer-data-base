@@ -1,6 +1,6 @@
 package com.excilys.projet.java.cdb.service;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import com.excilys.projet.java.cdb.persistence.dao.ComputerDAO;
@@ -11,12 +11,12 @@ public class ServiceComputer
 	private static ServiceComputer instance;
 	private final ComputerDAO computerDao = ComputerDAO.getInstance();
 	
-	private ServiceComputer() throws ClassNotFoundException
+	private ServiceComputer()
 	{
 		
 	}
 	
-	public static ServiceComputer getInstance() throws ClassNotFoundException
+	public static ServiceComputer getInstance()
 	{
 		if (instance == null)
 		{
@@ -29,25 +29,25 @@ public class ServiceComputer
 		}
 	}
 	
-	public ArrayList<Computer> getComputerList() throws ClassNotFoundException
+	public List<Computer> getComputerList()
 	{
-		ArrayList<Computer> listComput = computerDao.allComputer();
+		List<Computer> listComput = computerDao.allComputer();
 		return listComput;	
 	}
 	
-	public ArrayList<Computer> getComputerListPaginer(int tri, String colonne, int limit, int offset) throws ClassNotFoundException
+	public List<Computer> getComputerListPaginer(int tri, String colonne, int limit, int offset) throws ClassNotFoundException
 	{
-		ArrayList<Computer> listComput = computerDao.pageComputer(tri, colonne, limit, offset);
+		List<Computer> listComput = computerDao.pageComputer(tri, colonne, limit, offset);
 		return listComput;
 	}
 	
-	public int getCount() throws ClassNotFoundException
+	public int getCount()
 	{
 		int nombreComputer = computerDao.count();
 		return nombreComputer;	
 	}
 	
-	public Optional<Computer> addComputer(Computer comput) throws ClassNotFoundException
+	public Optional<Computer> addComputer(Computer comput)
 	{
 		int i = ComputerDAO.getInstance().create(comput);
 		if (i == 1)
@@ -60,25 +60,25 @@ public class ServiceComputer
 		}
 	}
 	
-	public void editComputer(Computer comp) throws ClassNotFoundException
+	public void editComputer(Computer comp)
 	{
 		ComputerDAO.getInstance().update(comp);
 	}
 	
-	public Computer findComputerById(Long id) throws ClassNotFoundException
+	public Computer findComputerById(Long id)
 	{
 		Computer comp = ComputerDAO.getInstance().findId(id);
 		return comp;
 	}
 	
-	public void deleteComputer(long id) throws ClassNotFoundException
+	public void deleteComputer(long id)
 	{
 		ComputerDAO.getInstance().delete(id);
 	}
 	
-	public ArrayList<Computer> findComputerByName(String name) throws ClassNotFoundException
+	public List<Computer> findComputerByName(String name)
 	{
-		ArrayList<Computer> computerList = ComputerDAO.getInstance().findName(name);
+		List<Computer> computerList = ComputerDAO.getInstance().findName(name);
 		return computerList;
 	}
 }

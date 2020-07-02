@@ -14,7 +14,7 @@
 <body>
     <header class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="List"> Application - Computer Database </a>
+            <a class="navbar-brand" href="ListServlet"> Application - Computer Database </a>
         </div>
     </header>
     <section id="main">
@@ -26,7 +26,7 @@
                     </div>
                     <h1>Edit Computer</h1>
 
-                    <form action="Edit" method="POST" name = "editComputer">
+                    <form action="EditServlet" method="POST" name = "editComputer">
                         <input type="hidden" value="${idComputer}" id="id" name="id"/> <!-- TODO: Change this value with the computer id -->
                         <fieldset>
                             <div class="form-group">
@@ -54,9 +54,9 @@
                         <c:out value ="${erreur}"></c:out>
                         </div>
                         <div class="actions pull-right">
-                            <input type="submit" value="Edit" class="btn btn-primary">
+                            <input type="submit" value="EditServlet" class="btn btn-primary">
                             or
-                            <a id="cancel" href="List" class="btn btn-default">Cancel</a>
+                            <a id="cancel" href="ListServlet" class="btn btn-default">Cancel</a>
                         </div>
                     </form>
                 </div>

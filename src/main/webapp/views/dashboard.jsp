@@ -15,7 +15,7 @@
 <body>
     <header class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="List"> Application - Computer Database </a>
+            <a class="navbar-brand" href="ListServlet"> Application - Computer Database </a>
         </div>
     </header>
 
@@ -26,7 +26,7 @@
             </h1>
             <div id="actions" class="form-horizontal">
                 <div class="pull-left">
-                    <form id="searchForm" action="List" method="GET" class="form-inline">
+                    <form id="searchForm" action="ListServlet" method="GET" class="form-inline">
 
                         <input type="search" id="searchbox" name="search" class="form-control" placeholder="Search name" />
                         <input type="submit" id="searchsubmit" value="Filter by name"
@@ -34,13 +34,13 @@
                     </form>
                 </div>
                 <div class="pull-right">
-                    <a class="btn btn-success" id="addComputer" href="Add">Add Computer</a> 
+                    <a class="btn btn-success" id="addComputer" href="AddServlet">Add Computer</a> 
                     <a class="btn btn-default" id="editComputer" href="#" onclick="$.fn.toggleEditMode();">Edit</a>
                 </div>
             </div>
         </div>
 
-        <form id="deleteForm" action="List" method="POST">
+        <form id="deleteForm" action="ListServlet" method="POST">
             <input type="hidden" name="selection" value="">
         </form>
 
@@ -60,18 +60,18 @@
                             </span>
                         </th>
                         <th>
-							<a href ="List?colonne=computer_name&tri=${tri+1}">Computer name</a>
+							<a href ="ListServlet?colonne=computer_name&tri=${tri+1}">Computer name</a>
                         </th>
                         <th>
-                            <a href ="List?colonne=introduced&tri=${tri+1}">Introduced date</a>
+                            <a href ="ListServlet?colonne=introduced&tri=${tri+1}">Introduced date</a>
                         </th>
                         <!-- Table header for Discontinued Date -->
                         <th>
-                            <a href ="List?colonne=discontinued&tri=${tri+1}">Discontinued date</a>
+                            <a href ="ListServlet?colonne=discontinued&tri=${tri+1}">Discontinued date</a>
                         </th>
                         <!-- Table header for Company -->
                         <th>
-                            <a href ="List?colonne=company_name&tri=${tri+1}">Company name</a>
+                            <a href ="ListServlet?colonne=company_name&tri=${tri+1}">Company name</a>
                         </th>
 
                     </tr>
@@ -85,7 +85,7 @@
                             <input type="checkbox" name="cb" class="cb" value="${computer.id}">
                   </td>
 					<td>
-					<a href ="Edit?id=${computer.id}" onclick=""><c:out value="${computer.name}"></c:out></a>
+					<a href ="EditServlet?id=${computer.id}" onclick=""><c:out value="${computer.name}"></c:out></a>
 					</td>
 			         <td> <c:out value = "${computer.introduced}"/><p> </td>
 			         <td> <c:out value = "${computer.discontinued}"/><p> </td>
@@ -103,7 +103,7 @@
             <ul class="pagination">
                 <c:if test="${page>1}">
                 <li>
-                    <a href="List?page=${page-1}&lenPage=${lenPage}" aria-label="Previous">
+                    <a href="ListServlet?page=${page-1}&lenPage=${lenPage}" aria-label="Previous">
                       <span aria-hidden="true">&laquo;</span>
                   </a>
               </li>
@@ -111,12 +111,12 @@
               <c:forEach var="i" begin="1" end="5">
 	             
               <li>
-              	<a name="${page+i-1}" id="page" href="List?page=${page+i-1}&lenPage=${lenPage}"><c:out value="${page+i-1}"></c:out></a>
+              	<a name="${page+i-1}" id="page" href="ListServlet?page=${page+i-1}&lenPage=${lenPage}"><c:out value="${page+i-1}"></c:out></a>
               </li>
      		 </c:forEach>
               <c:if test="${page<maxPage-4}">
               <li>
-                <a href="List?page=${page+5}&lenPage=${lenPage}" aria-label="Next">
+                <a href="ListServlet?page=${page+5}&lenPage=${lenPage}" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>
@@ -125,9 +125,9 @@
  
 
         <div class="btn-group btn-group-sm pull-right" role="group" >
-            <button type="button" class="btn btn-default"><a href = "List?lenPage=${lenPage=10}">10</a></button>
-            <button type="button" class="btn btn-default"><a href = "List?lenPage=${lenPage=50}">50</a></button>
-            <button type="button" class="btn btn-default"><a href = "List?lenPage=${lenPage=100}">100</a></button>
+            <button type="button" class="btn btn-default"><a href = "ListServlet?lenPage=${lenPage=10}">10</a></button>
+            <button type="button" class="btn btn-default"><a href = "ListServlet?lenPage=${lenPage=50}">50</a></button>
+            <button type="button" class="btn btn-default"><a href = "ListServlet?lenPage=${lenPage=100}">100</a></button>
         </div>
 
     </footer>

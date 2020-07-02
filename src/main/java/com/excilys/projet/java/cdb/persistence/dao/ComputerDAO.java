@@ -1,24 +1,59 @@
 package com.excilys.projet.java.cdb.persistence.dao;
 
 import java.sql.*;
-
-import java.util.ArrayList;
-
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.excilys.projet.java.cdb.mapper.ComputerMapper;
 import com.excilys.projet.java.cdb.model.Company;
 import com.excilys.projet.java.cdb.model.Computer;
 
 public class ComputerDAO
 {
+	private static String colonne;
+	private static ComputerDAO instance; 
+	private static Logger logger = LoggerFactory.getLogger(CompanyDAO.class);
+	
+	private static final String AllComputer = "SELECT computer.id as computerId, computer.name as computerName, computer.introduced as computerIntroduced, "
+			+ "computer.discontinued as computerDiscontinued, company.id, as companyId company.name as companyName FROM computer "
+			+ "LEFT JOIN company ON computer.company_id = company.id";
+	private static final String ListComputer = "SELECT computer.id as computerId, computer.name as computerName, computer.introduced as computerIntroduced, "
+			+ "computer.discontinued as computerDiscontinued, company.id as companyId, company.name as companyName FROM computer "
+			+ "LEFT JOIN company ON computer.company_id = company.id";
+	private static final String PageNoOrder = "SELECT computer.name as computerName, computer.id as computerId, "
+			+ "computer.introduced as computerIntroduced, computer.discontinued as computerDiscontinued, computer.company_id, "
+			+ "company.name as companyName FROM computer LEFT JOIN company on "
+			+ "company.id=computer.company_id" + " LIMIT ?, ?";
+	private static final String PageOrder = "SELECT computer.name as computerName, computer.id as computerId, "
+			+ "computer.introduced as computerIntroduced, computer.discontinued as computerDiscontinued, computer.company_id, "
+			+ "company.name as companyName FROM computer LEFT JOIN company on "
+			+ "company.id=computer.company_id" + " ORDER BY " + colonne + " ASC" + " LIMIT ?, ?";
+	private static final String PageOrderInverse = "SELECT computer.name as computerName, computer.id as computerId, "
+			+ "computer.introduced as computerIntroduced, computer.discontinued as computerDiscontinued, computer.company_id, "
+			+ "company.name as companuName FROM computer LEFT JOIN company on "
+			+ "company.id=computer.company_id" + " ORDER BY " + colonne + " DESC" + " LIMIT ?, ?";
+	private static final String FindById = "SELECT computer.id as computerId, computer.name as computerName, computer.introduced as computerIntroduced, "
+			+ "computer.discontinued as computerDiscontinued, company_id AS companyId FROM computer WHERE id = ?";
+	private static final String FindByName = "SELECT  computer.name as computerName, computer.id as computerId, "
+			+ "computer.introduced as computerIntroduced, computer.discontinued as computerDiscontinued, computer.company_id as compuanyId, "
+			+ "company.name as companyName FROM computer LEFT JOIN company on "
+			+ "companyId=computer.company_id WHERE LOWER(computer.name) LIKE ? "
+			+ "OR LOWER(company.name) LIKE ? OR introduced LIKE ? OR discontinued LIKE ?;";
+	private static final String Update = "UPDATE computer SET omputerName = ?, computerIntroduced = ?, computerDiscontinued = ?, computer.company_id = ? WHERE computerId = ?";
+	private static final String DeleteByIdComputer = "DELETE FROM computer WHERE id = ?";
+	private static final String DeleteByIdCompany = "DELETE FROM computer WHERE company_id = ?";
+	private static final String Insert = "INSERT computer (computerName, computerIntroduced, computerDiscontinued, computer.company_id) VALUES (?,?,?,?)";
+	
 	
 	private ComputerDAO()
 	{
 	}
 	
-	private static ComputerDAO instance; 
-	
-	public static ComputerDAO getInstance()
+	public static synchronized ComputerDAO getInstance()
 	{
 		if (instance == null)
 		{
@@ -31,129 +66,81 @@ public class ComputerDAO
 		}
 	}
 	
-	private static Connection connexionOpen() throws ClassNotFoundException
-	{
-		Connection preparation = ConnecHikari.getInstance().getConnection();
-		return preparation;
-	}
-	
-	private static void connexionClose(Connection preparation) throws ClassNotFoundException
-	{
-		ConnecHikari.getInstance().disconnect();
-	}
-	
-	public ArrayList<Computer> allComputer() throws ClassNotFoundException
+	public List<Computer> allComputer()
 	{
 		
 		ArrayList<Computer> listComputer = new ArrayList<Computer>();
 		try
 		{
-			Connection preparation = ComputerDAO.connexionOpen();
-			PreparedStatement prepare = preparation.prepareStatement("SELECT computer.id, computer.name, computer.introduced, computer.discontinued, company.id, company.name"
-					+ " FROM computer LEFT JOIN company ON computer.company_id = company.id") ;
+			Connection preparation = ConnecHikari.getInstance().getConnection();
+			PreparedStatement prepare = preparation.prepareStatement(AllComputer) ;
 			ResultSet resultat = prepare.executeQuery();
 			while (resultat.next())
 			{ 
-				String name = resultat.getString("computer.name");
-				Date intro = resultat.getDate("computer.introduced");
-				Date disco = resultat.getDate("computer.discontinued");
-				LocalDate introduced = null;
-				if (intro != null)
-				{
-					introduced = intro.toLocalDate();
-				}
-				LocalDate discontinued = null;
-				if (disco != null)
-				{
-					discontinued = disco.toLocalDate();
-				}
-				String companyName = resultat.getString("company.name");
-				
-				Company compa = new Company.CompanyBuilder().setName(companyName).build();
-				long id = resultat.getLong("computer.id");
-				Computer comp = new Computer.ComputerBuilder(name).setIntroduced(introduced).setDiscontinued(discontinued).setCompany(compa).build();			
-				comp.setId(id);
+				Computer comp = ComputerMapper.convertRequestByName(resultat);
 				if (comp.getName() != null)
 				{
 					listComputer.add(comp);
 				}
 			}
-			ComputerDAO.connexionClose(preparation);
+ConnecHikari.getInstance().disconnect();
 			return listComputer;
 		}
 		catch (SQLException e)
 		{
-			e.printStackTrace();
+			logger.error("Error request " + e);
 		}
 		return null;
 	}
 	
-	public int count() throws ClassNotFoundException
+	public int count()
 	{	
 		ArrayList<Computer> listComputer = new ArrayList<Computer>();
 		int nombreComputer = 0;
 		try
 		{
-			Connection preparation = ComputerDAO.connexionOpen();
-			PreparedStatement prepare = preparation.prepareStatement("SELECT computer.id, computer.name, computer.introduced, computer.discontinued, company.id, company.name"
-					+ " FROM computer LEFT JOIN company ON computer.company_id = company.id");
+			Connection preparation = ConnecHikari.getInstance().getConnection();
+			PreparedStatement prepare = preparation.prepareStatement(ListComputer);
 			ResultSet resultat = prepare.executeQuery();
 			while (resultat.next())
 			{ 
-				String name = resultat.getString("computer.name");
-				Date intro = resultat.getDate("computer.introduced");
-				Date disco = resultat.getDate("computer.discontinued");
-				LocalDate introduced = null;
-				if (intro != null)
-				{
-					introduced = intro.toLocalDate();
-				}
-				LocalDate discontinued = null;
-				if (disco != null)
-				{
-					discontinued = disco.toLocalDate();
-				}
-				Long company_id = resultat.getLong("company.id");
-				
-				Company compa = CompanyDAO.getInstance().findCompany(company_id);
-				Computer comp = new Computer.ComputerBuilder(name).setIntroduced(introduced).setDiscontinued(discontinued).setCompany(compa).build();			
-
+				Computer comp = ComputerMapper.convertRequestById(resultat);
 				if (comp.getName() != null)
 				{
 					listComputer.add(comp);
 				}
 				nombreComputer = listComputer.size();
 			}
-			ComputerDAO.connexionClose(preparation);
+ConnecHikari.getInstance().disconnect();
 			return nombreComputer;
 		}
 		catch (SQLException e)
 		{
-			e.printStackTrace();
+			logger.error("Error request " + e);
 		}
 		return 0;
 	}
 	
-	public ArrayList<Computer> pageComputer(int tri, String colonne, int limit, int offset) throws ClassNotFoundException
+	public List<Computer> pageComputer(int tri, String colonne, int limit, int offset)
 	{
 		ArrayList<Computer> listComputer = new ArrayList<Computer>();
 		String requete;
 		try
 		{
-			Connection preparation = ComputerDAO.connexionOpen();
+			Connection preparation = ConnecHikari.getInstance().getConnection();
 			if (tri==0||colonne==null)
 			{
-				requete = "SELECT computer.name as computer_name, computer.id as computer_id, computer.introduced, computer.discontinued, computer.company_id, company.name as company_name FROM computer LEFT JOIN company on company.id=computer.company_id" + " LIMIT ?, ?";
+				requete = PageNoOrder;
 			}
 			else
 			{
 				if (tri==1)
 				{
-					requete = "SELECT computer.name as computer_name, computer.id as computer_id, computer.introduced, computer.discontinued, computer.company_id, company.name as company_name FROM computer LEFT JOIN company on company.id=computer.company_id" + " ORDER BY " + colonne + " ASC" + " LIMIT ?, ?";
+					requete = PageOrder;
 				}
 				else
 				{
-					requete = "SELECT computer.name as computer_name, computer.id as computer_id, computer.introduced, computer.discontinued, computer.company_id, company.name as company_name FROM computer LEFT JOIN company on company.id=computer.company_id" + " ORDER BY " + colonne + " DESC" + " LIMIT ?, ?";
+					requete = PageOrderInverse; 
 				}
 			}
 			PreparedStatement prepare = preparation.prepareStatement(requete);
@@ -162,70 +149,33 @@ public class ComputerDAO
 			ResultSet resultat = prepare.executeQuery();
 			while (resultat.next())
 			{ 
-				String name = resultat.getString("computer_name");
-				Date intro = resultat.getDate("introduced");
-				Date disco = resultat.getDate("discontinued");
-				LocalDate introduced = null;
-				if (intro != null)
-				{
-					introduced =intro.toLocalDate();
-				}
-				LocalDate discontinued = null;
-				if (disco != null)
-				{
-					discontinued = disco.toLocalDate();
-				}
-				String companyName = resultat.getString("company_name");
-				Company compa = new Company.CompanyBuilder().setName(companyName).build();
-				long id = resultat.getLong("computer_id");
-				Computer comp = new Computer.ComputerBuilder(name).setIntroduced(introduced).setDiscontinued(discontinued).setCompany(compa).build();			
-				comp.setId(id);
-
+				Computer comp = ComputerMapper.convertRequestByName(resultat);
 				if (comp.getName()!= null)
 				{
 					listComputer.add(comp);
 				}
 			}
-			ComputerDAO.connexionClose(preparation);
+ConnecHikari.getInstance().disconnect();
 			return listComputer;
 		}
 		catch (SQLException e)
 		{
-			e.printStackTrace();
+			logger.error("Error request " + e);
 		}
 		return null;
 	}
 	
-	public Computer findId (long id) throws ClassNotFoundException
+	public Computer findId (long id)
 	{
 		try
 		{
-			Connection preparation = ComputerDAO.connexionOpen();
-			PreparedStatement prepare = preparation.prepareStatement("SELECT * FROM computer WHERE id = ?") ;
+			Connection preparation = ConnecHikari.getInstance().getConnection();
+			PreparedStatement prepare = preparation.prepareStatement(FindById) ;
 			prepare.setLong(1, id);
 			ResultSet resultat = prepare.executeQuery();
 			while (resultat.next())
 			{ 
-
-				String name = resultat.getString("name");
-				Date intro = resultat.getDate("introduced");
-				Date disco = resultat.getDate("discontinued");
-				LocalDate introduced = LocalDate.now();
-				if (intro != null)
-				{
-					introduced = intro.toLocalDate();
-				}
-				
-				LocalDate discontinued = LocalDate.now();
-				if (disco!=null)
-				{
-					discontinued = disco.toLocalDate();
-				}
-				long company_id = resultat.getLong("company_id");
-				
-				Company compa = CompanyDAO.getInstance().findCompany(company_id);
-				Computer comp = new Computer.ComputerBuilder(name).setIntroduced(introduced).setDiscontinued(discontinued).setCompany(compa).build();			
-
+				Computer comp = ComputerMapper.convertRequestById(resultat);
 				if (comp.getName() != null)
 				{
 					return comp;
@@ -236,22 +186,22 @@ public class ComputerDAO
 					return null;
 				}
 			}
-			ComputerDAO.connexionClose(preparation);
+ConnecHikari.getInstance().disconnect();
 		}
 		catch (SQLException e)
 		{
-			e.printStackTrace();
+			logger.error("Error request " + e);
 		}
 		return null;
 	}
 	
-	public ArrayList<Computer> findName (String recherche) throws ClassNotFoundException
+	public List<Computer> findName (String recherche)
 	{
 		ArrayList<Computer> listComputer = new ArrayList<Computer>();
 		try
 		{
-			Connection preparation = ComputerDAO.connexionOpen();
-			PreparedStatement prepare = preparation.prepareStatement("SELECT  computer.name as computer_name, computer.id as computer_id, computer.introduced, computer.discontinued, computer.company_id, company.name as company_name FROM computer LEFT JOIN company on company.id=computer.company_id WHERE LOWER(computer.name) LIKE ? OR LOWER(company.name) LIKE ? OR introduced LIKE ? OR discontinued LIKE ?;") ;
+			Connection preparation = ConnecHikari.getInstance().getConnection();
+			PreparedStatement prepare = preparation.prepareStatement(FindByName) ;
 			recherche = recherche.toLowerCase();
 			recherche = "%"+recherche+"%";
 			prepare.setString(1,recherche);
@@ -261,44 +211,27 @@ public class ComputerDAO
 			ResultSet resultat = prepare.executeQuery();
 			while (resultat.next())
 			{ 
-				String name = resultat.getString("computer_name");
-				Date intro = resultat.getDate("introduced");
-				Date disco = resultat.getDate("discontinued");
-				LocalDate introduced = LocalDate.now();
-				if (intro != null)
-				{
-					introduced = intro.toLocalDate();
-				}
-				LocalDate discontinued = LocalDate.now();
-				if (disco != null)
-				{
-					discontinued = disco.toLocalDate();
-				}
-				String companyName = resultat.getString("company_name");
-				Company compa = new Company.CompanyBuilder().setName(companyName).build();
-				long id = resultat.getLong("computer_id");
-				Computer comp = new Computer.ComputerBuilder(name).setIntroduced(introduced).setDiscontinued(discontinued).setCompany(compa).build();			
-				comp.setId(id);
+				Computer comp = ComputerMapper.convertRequestByName(resultat);
 				listComputer.add(comp);
 			}
-			ComputerDAO.connexionClose(preparation);
+			ConnecHikari.getInstance().disconnect();
 		}
 		catch (SQLException e)
 		{
-			e.printStackTrace();
+			logger.error("Error request " + e);
 		}
 		return listComputer;
 	}
 	
-	public int update(Computer comp) throws ClassNotFoundException
+	public int update(Computer comp)
 	{
 		int value = 0;
-		Connection preparation = ComputerDAO.connexionOpen();
+		Connection preparation = ConnecHikari.getInstance().getConnection();
 		if (comp.getName() != null)
 		{
 			try
 			{
-				PreparedStatement prepare = preparation.prepareStatement("UPDATE computer SET name = ?, introduced = ?, discontinued = ?, company_id = ? WHERE id = ?");
+				PreparedStatement prepare = preparation.prepareStatement(Update);
 				prepare.setString(1, comp.getName());
 				if (comp.getIntroduced() != null)
 				{
@@ -327,54 +260,54 @@ public class ComputerDAO
 			}
 			catch (SQLException e)
 			{
-				e.printStackTrace();
+				logger.error("Error request " + e);
 			}
 		}
-		ComputerDAO.connexionClose(preparation);
+		ConnecHikari.getInstance().disconnect();
 		return value;
 	}
 	
-	public int delete(long computerId) throws ClassNotFoundException
+	public int delete(long computerId)
 	{
 		int value = 0;
-		Connection preparation = ComputerDAO.connexionOpen();
+		Connection preparation = ConnecHikari.getInstance().getConnection();
 		try
 		{
-			PreparedStatement prepare = preparation.prepareStatement("DELETE FROM computer WHERE id = ?") ;
+			PreparedStatement prepare = preparation.prepareStatement(DeleteByIdComputer) ;
 			prepare.setLong(1, computerId);
 			value=prepare.executeUpdate();
 		}
 		catch (SQLException e)
 		{
-			e.printStackTrace();
+			logger.error("Error request " + e);
 		}
-		ComputerDAO.connexionClose(preparation);
+		ConnecHikari.getInstance().disconnect();
 		return value;
 	}
-	public int deleteComputIdCompany(long companyId) throws ClassNotFoundException
+	public int deleteComputIdCompany(long companyId)
 	{
 		int value = 0;
-		Connection preparation = ComputerDAO.connexionOpen();
+		Connection preparation = ConnecHikari.getInstance().getConnection();
 		try
 		{
-			PreparedStatement prepare = preparation.prepareStatement("DELETE FROM computer WHERE company_id = ?") ;
+			PreparedStatement prepare = preparation.prepareStatement(DeleteByIdCompany) ;
 			prepare.setLong(1, companyId);
 			value=prepare.executeUpdate();
 		}
 		catch (SQLException e)
 		{
-			e.printStackTrace();
+			logger.error("Error request " + e);
 		}
-		ComputerDAO.connexionClose(preparation);
+		ConnecHikari.getInstance().disconnect();
 		return value;
 	}
-	public int create(Computer comp) throws ClassNotFoundException
+	public int create(Computer comp)
 	{
-		Connection preparation = ComputerDAO.connexionOpen();
+		Connection preparation = ConnecHikari.getInstance().getConnection();
 		int value = 0;
 		try
 		{
-			PreparedStatement prepare = preparation.prepareStatement("INSERT INTO computer (name, introduced, discontinued, company_id) VALUES (?,?,?,?)") ;
+			PreparedStatement prepare = preparation.prepareStatement(Insert) ;
 			prepare.setString(1, comp.getName());
 			if (comp.getIntroduced() != null)
 			{
@@ -403,9 +336,9 @@ public class ComputerDAO
 		}
 		catch (SQLException e)
 		{
-			e.printStackTrace();
+			logger.error("Error request " + e);
 		}
-		ComputerDAO.connexionClose(preparation);
+		ConnecHikari.getInstance().disconnect();
 		return value;
 	}
 }

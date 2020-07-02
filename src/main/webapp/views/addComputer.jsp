@@ -14,7 +14,7 @@
 <body>
     <header class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="List"> Application - Computer Database </a>
+            <a class="navbar-brand" href="ListServlet"> Application - Computer Database </a>
         </div>
     </header>
 
@@ -23,7 +23,7 @@
             <div class="row">
                 <div class="col-xs-8 col-xs-offset-2 box">
                     <h1>Add Computer</h1>
-                    <form action="Add" method="POST" name = "addComputer">
+                    <form action="AddServlet" method="POST" name = "addComputer">
                         <fieldset>
                             <div class="form-group">
                                 <label for="computerName">Computer name</label>
@@ -50,9 +50,9 @@
                         <c:out value ="${erreur}"></c:out>
                         </div>
                         <div class="actions pull-right">
-                            <input type="submit" value="Add" class="btn btn-primary">
+                            <input type="submit" value="AddServlet" class="btn btn-primary">
                             or
-                            <a id="cancel" href="List" class="btn btn-default">Cancel</a>
+                            <a id="cancel" href="ListServlet" class="btn btn-default">Cancel</a>
                         </div>
                     </form>
                 </div>
