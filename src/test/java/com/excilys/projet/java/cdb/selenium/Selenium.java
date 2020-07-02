@@ -1,4 +1,4 @@
-package com.excilys.projet.java.cdb;
+package com.excilys.projet.java.cdb.selenium;
 
 import java.util.concurrent.TimeUnit;
 

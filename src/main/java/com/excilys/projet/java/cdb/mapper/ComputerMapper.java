@@ -9,7 +9,7 @@ import com.excilys.projet.java.cdb.model.Computer;
 
 public class ComputerMapper 
 {
-	public static Computer convertComputerDTOtoComputer(ComputerDTO compDTO)
+	public static Computer convert(ComputerDTO compDTO)
 	{
 		Long id = compDTO.getIdComputer();
 		String name = compDTO.getName();
@@ -18,7 +18,7 @@ public class ComputerMapper
 		CompanyDTO compaDTO = compDTO.getCompa();
 		LocalDate introduced = LocalDate.parse(intro);
 		LocalDate discontinued = LocalDate.parse(disco);
-		Company compa = CompanyMapper.convertCompanyDTOtoCompany(compaDTO);
+		Company compa = CompanyMapper.convert(compaDTO);
 		Computer comp = new Computer.ComputerBuilder(name).setIntroduced(introduced).setDiscontinued(discontinued).setCompany(compa).build(); 
 		comp.setId(id);
 		return comp;

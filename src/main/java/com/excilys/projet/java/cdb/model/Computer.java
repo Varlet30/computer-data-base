@@ -23,6 +23,9 @@ public class Computer
 		this.compa=builder.compa;
 	}
 	
+	public Computer() {
+	}
+
 	public String getName() 
 	{
 		return name;

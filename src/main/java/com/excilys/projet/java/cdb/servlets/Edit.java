@@ -69,7 +69,7 @@ public class Edit extends HttpServlet {
 		CompanyDTO compaDTO = new CompanyDTO(company);
 		ComputerDTO compuDTO = new ComputerDTO(name,introduced,discontinued,compaDTO);
 		compuDTO.setIdComputer(id);
-		Computer comp = ComputerMapper.convertComputerDTOtoComputer(compuDTO);
+		Computer comp = ComputerMapper.convert(compuDTO);
 		try 
 		{
 			ServiceComputer.getInstance().editComputer(comp);

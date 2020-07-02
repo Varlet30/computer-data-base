@@ -63,7 +63,7 @@ public class Add extends HttpServlet {
 			String company = request.getParameter("company");
 			CompanyDTO compaDTO =new CompanyDTO(company);
 			ComputerDTO compuDTO =new ComputerDTO(name,computerIntroduced,computerDiscontinued,compaDTO); 
-			Computer comp = ComputerMapper.convertComputerDTOtoComputer(compuDTO);
+			Computer comp = ComputerMapper.convert(compuDTO);
 			StringBuilder erreur = new StringBuilder();
 			try 
 			{

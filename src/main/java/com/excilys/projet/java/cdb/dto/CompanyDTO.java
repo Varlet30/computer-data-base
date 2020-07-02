@@ -5,6 +5,10 @@ public class CompanyDTO
 	private long id;
 	private String name;
 	
+	public CompanyDTO ()
+	{
+	}
+	
 	public CompanyDTO (String id)
 	{
 		this.id=Long.parseLong(id);
