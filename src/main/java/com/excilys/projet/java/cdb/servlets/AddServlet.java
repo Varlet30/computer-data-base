@@ -3,10 +3,6 @@ package com.excilys.projet.java.cdb.servlets;
 import java.io.IOException;
 
 import java.util.List;
-import java.util.Optional;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -26,7 +22,6 @@ import com.excilys.projet.java.cdb.service.ServiceComputer;
 @WebServlet(urlPatterns = "/AddServlet")
 public class AddServlet extends HttpServlet {
 	
-	private static Logger logger = LoggerFactory.getLogger(AddServlet.class);
 	private static final long serialVersionUID = 1L;
 	
 	public int maxPage;

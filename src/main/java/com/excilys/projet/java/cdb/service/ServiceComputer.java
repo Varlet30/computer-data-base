@@ -34,9 +34,9 @@ public class ServiceComputer
 		return listComput;	
 	}
 	
-	public List<Computer> getComputerListPaginer(int tri, String colonne, int limit, int offset) throws ClassNotFoundException
+	public List<Computer> getComputerListPaginer(int tri, String colonne, int limit, int offset)
 	{
-		List<Computer> listComput = computerDao.pageComputer(tri, colonne, limit, offset);
+	List<Computer> listComput = computerDao.pageComputer(tri, colonne, limit, offset);
 		return listComput;
 	}
 	

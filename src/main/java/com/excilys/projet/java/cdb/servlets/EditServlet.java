@@ -4,9 +4,6 @@ import java.io.IOException;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,7 +22,6 @@ import com.excilys.projet.java.cdb.service.ServiceComputer;
 @WebServlet(urlPatterns = "/EditServlet")
 public class EditServlet extends HttpServlet {
 	
-	private static Logger logger = LoggerFactory.getLogger(EditServlet.class);
 	private static final long serialVersionUID = 1L;
 	
 	public String idComputer;

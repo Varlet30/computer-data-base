@@ -56,27 +56,23 @@ public class ListServlet extends HttpServlet
 				lenPage = Integer.parseInt(request.getParameter("lenPage"));
 			}else{
 				lenPage = 10;
-			}	try {
-				totalComputer = ServiceComputer.getInstance().getCount();
-				maxPage = totalComputer/lenPage;
-				
-				if (request.getParameter("page") != null)	{
-					page = Integer.parseInt(request.getParameter("page"));
-					if (page == maxPage){
-						computerList = ServiceComputer.getInstance().getComputerListPaginer(tri,colonne,ServiceComputer.getInstance().getCount()%10,page*lenPage);
-					}else{
-						computerList = ServiceComputer.getInstance().getComputerListPaginer(tri,colonne,lenPage,page*lenPage);
-					}
+			}	totalComputer = ServiceComputer.getInstance().getCount();
+			maxPage = totalComputer/lenPage;
+			
+			if (request.getParameter("page") != null)	{
+				page = Integer.parseInt(request.getParameter("page"));
+				if (page == maxPage){
+					computerList = ServiceComputer.getInstance().getComputerListPaginer(tri,colonne,ServiceComputer.getInstance().getCount()%10,page*lenPage);
 				}else{
-					page = 1;
-					computerList = ServiceComputer.getInstance().getComputerListPaginer(tri,colonne,lenPage,0);
+					computerList = ServiceComputer.getInstance().getComputerListPaginer(tri,colonne,lenPage,page*lenPage);
 				}
-				request.setAttribute("page", page);
-				request.setAttribute("maxPage", maxPage);
-				request.setAttribute("lenPage", lenPage);
-			}catch (ClassNotFoundException e) {
-				logger.error("Error Class " + e);
+			}else{
+				page = 1;
+				computerList = ServiceComputer.getInstance().getComputerListPaginer(tri,colonne,lenPage,0);
 			}
+			request.setAttribute("page", page);
+			request.setAttribute("maxPage", maxPage);
+			request.setAttribute("lenPage", lenPage);
 		}else{
 			String search = request.getParameter("search");
 			computerList = ServiceComputer.getInstance().findComputerByName(search);
