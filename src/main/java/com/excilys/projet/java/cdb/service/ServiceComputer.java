@@ -1,7 +1,6 @@
 package com.excilys.projet.java.cdb.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.excilys.projet.java.cdb.persistence.dao.ComputerDAO;
 import com.excilys.projet.java.cdb.model.Computer;
@@ -47,17 +46,9 @@ public class ServiceComputer
 		return nombreComputer;	
 	}
 	
-	public Optional<Computer> addComputer(Computer comput)
+	public void addComputer(Computer comput)
 	{
-		int i = ComputerDAO.getInstance().create(comput);
-		if (i == 1)
-		{
-			return Optional.of(comput);
-		}
-		else 
-		{
-			return Optional.empty();
-		}
+		ComputerDAO.getInstance().create(comput);
 	}
 	
 	public void editComputer(Computer comp)

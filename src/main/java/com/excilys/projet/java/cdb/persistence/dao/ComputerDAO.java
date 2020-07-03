@@ -1,7 +1,6 @@
 package com.excilys.projet.java.cdb.persistence.dao;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,12 +8,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.excilys.projet.java.cdb.mapper.ComputerMapper;
-import com.excilys.projet.java.cdb.model.Company;
 import com.excilys.projet.java.cdb.model.Computer;
 
 public class ComputerDAO
 {
-	private static String colonne;
 	private static ComputerDAO instance; 
 	private static Logger logger = LoggerFactory.getLogger(CompanyDAO.class);
 	
@@ -24,18 +21,10 @@ public class ComputerDAO
 	private static final String ListComputer = "SELECT computer.id as computerId, computer.name as computerName, computer.introduced as computerIntroduced, "
 			+ "computer.discontinued as computerDiscontinued, company.id as companyId, company.name as companyName FROM computer "
 			+ "LEFT JOIN company ON computer.company_id = company.id";
-	private static final String PageNoOrder = "SELECT computer.name as computerName, computer.id as computerId, "
-			+ "computer.introduced as computerIntroduced, computer.discontinued as computerDiscontinued, computer.company_id, "
-			+ "company.name as companyName FROM computer LEFT JOIN company on "
-			+ "company.id=computer.company_id" + " LIMIT ?, ?";
 	private static final String PageOrder = "SELECT computer.name as computerName, computer.id as computerId, "
 			+ "computer.introduced as computerIntroduced, computer.discontinued as computerDiscontinued, computer.company_id, "
 			+ "company.name as companyName FROM computer LEFT JOIN company on "
-			+ "company.id=computer.company_id" + " ORDER BY " + colonne + " ASC" + " LIMIT ?, ?";
-	private static final String PageOrderInverse = "SELECT computer.name as computerName, computer.id as computerId, "
-			+ "computer.introduced as computerIntroduced, computer.discontinued as computerDiscontinued, computer.company_id, "
-			+ "company.name as companuName FROM computer LEFT JOIN company on "
-			+ "company.id=computer.company_id" + " ORDER BY " + colonne + " DESC" + " LIMIT ?, ?";
+			+ "company.id=computer.company_id";
 	private static final String FindById = "SELECT computer.id as computerId, computer.name as computerName, computer.introduced as computerIntroduced, "
 			+ "computer.discontinued as computerDiscontinued, company_id AS companyId FROM computer WHERE id = ?";
 	private static final String FindByName = "SELECT  computer.name as computerName, computer.id as computerId, "
@@ -130,18 +119,15 @@ ConnecHikari.getInstance().disconnect();
 			Connection preparation = ConnecHikari.getInstance().getConnection();
 			if (tri==0||colonne==null)
 			{
-				requete = PageNoOrder;
+				requete = PageOrder+" LIMIT ?, ?";
+			}
+			else if (tri==1)
+			{
+				requete = PageOrder+" ORDER BY " + colonne + " ASC" + " LIMIT ?, ?";
 			}
 			else
 			{
-				if (tri==1)
-				{
-					requete = PageOrder;
-				}
-				else
-				{
-					requete = PageOrderInverse; 
-				}
+				requete = PageOrder+" ORDER BY " + colonne + " DESC" + " LIMIT ?, ?";
 			}
 			PreparedStatement prepare = preparation.prepareStatement(requete);
 			prepare.setInt(2, limit);

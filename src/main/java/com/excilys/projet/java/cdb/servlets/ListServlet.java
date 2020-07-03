@@ -37,7 +37,7 @@ public class ListServlet extends HttpServlet
      */
     public ListServlet() 
     {
-        super();
+    	super();
     }
 
 	/**
@@ -48,9 +48,8 @@ public class ListServlet extends HttpServlet
 		if (request.getParameter("tri") == null){
 			tri = 0;
 		}else{
-			tri = Integer.parseInt(request.getParameter("tri"));
+			tri = Integer.parseInt(request.getParameter("tri")) % 3;
 		}
-		tri %=  3;
 		colonne = request.getParameter("colonne");
 		if (request.getParameter("search") == null||request.getParameter("search") == ""){
 			if (request.getParameter("lenPage") != null){

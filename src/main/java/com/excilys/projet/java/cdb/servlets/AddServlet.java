@@ -56,7 +56,7 @@ public class AddServlet extends HttpServlet {
 			
 		Computer comp = ComputerMapper.convertResult(request);
 		StringBuilder erreur = new StringBuilder();
-		Optional<Computer> comput= ServiceComputer.getInstance().addComputer(comp);
+		ServiceComputer.getInstance().addComputer(comp);
 		lenPage=10;
 		maxPage=ServiceComputer.getInstance().getCount()/lenPage;
 		request.getRequestDispatcher("ListServlet?page="+ maxPage).forward(request,response);

@@ -9,9 +9,6 @@ import org.slf4j.LoggerFactory;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public class ConnecHikari 
 {
 

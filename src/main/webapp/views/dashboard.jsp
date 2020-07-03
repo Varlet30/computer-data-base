@@ -60,18 +60,18 @@
                             </span>
                         </th>
                         <th>
-							<a href ="ListServlet?colonne=computer_name&tri=${tri+1}">Computer name</a>
+							<a href ="ListServlet?colonne=computerName&tri=${tri+1}">Computer name</a>
                         </th>
                         <th>
-                            <a href ="ListServlet?colonne=introduced&tri=${tri+1}">Introduced date</a>
+                            <a href ="ListServlet?colonne=computerIntroduced&tri=${tri+1}">Introduced date</a>
                         </th>
                         <!-- Table header for Discontinued Date -->
                         <th>
-                            <a href ="ListServlet?colonne=discontinued&tri=${tri+1}">Discontinued date</a>
+                            <a href ="ListServlet?colonne=computerDiscontinued&tri=${tri+1}">Discontinued date</a>
                         </th>
                         <!-- Table header for Company -->
                         <th>
-                            <a href ="ListServlet?colonne=company_name&tri=${tri+1}">Company name</a>
+                            <a href ="ListServlet?colonne=companyName&tri=${tri+1}">Company name</a>
                         </th>
 
                     </tr>
