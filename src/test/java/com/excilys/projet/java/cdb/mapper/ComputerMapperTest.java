@@ -8,12 +8,7 @@ import static org.junit.Assert.fail;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.excilys.projet.java.cdb.dto.CompanyDTO;
@@ -36,22 +31,6 @@ public class ComputerMapperTest {
     private final Long idCompany = 11L;
 
     private ResultSet resultSet = mock(ResultSet.class);
-
-    @BeforeAll
-	protected static void setUpBeforeClass() throws Exception {
-	}
-
-	@AfterAll
-	protected static void tearDownAfterClass() throws Exception {
-	}
-
-	@BeforeEach
-	protected void setUp() throws Exception {
-	}
-
-	@AfterEach
-	protected void tearDown() throws Exception {
-	}
 
 	@Test
     public void testConvert() throws SQLException {
