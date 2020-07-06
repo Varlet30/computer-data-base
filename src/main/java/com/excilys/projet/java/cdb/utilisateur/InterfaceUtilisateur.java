@@ -9,6 +9,9 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
 import java.time.*;
 
 import com.excilys.projet.java.cdb.model.Company;
@@ -16,8 +19,13 @@ import com.excilys.projet.java.cdb.model.Computer;
 import com.excilys.projet.java.cdb.service.ServiceCompany;
 import com.excilys.projet.java.cdb.service.ServiceComputer;
 
+@Controller
 public class InterfaceUtilisateur 
 {
+	@Autowired
+	private static ServiceComputer serviceComputer;
+	private static ServiceCompany serviceCompany;
+	
 	public static void AfficherInterface() throws ParseException, ClassNotFoundException, SQLException
 	{
 		System.out.println("Choices: "+
@@ -100,7 +108,7 @@ public class InterfaceUtilisateur
 	public static void Delete_Computer(Scanner clavier) throws ClassNotFoundException {
 		System.out.println("Id computer to delete:");
 		Long computerId = clavier.nextLong();
-		ServiceComputer.getInstance().deleteComputer(computerId);
+		serviceComputer.deleteComputer(computerId);
 	}
 	
 	public static void Dispaly_Page_Computers(Scanner clavier) throws ClassNotFoundException {
@@ -108,33 +116,33 @@ public class InterfaceUtilisateur
 		int limit = clavier.nextInt();
 		System.out.println("Nb computer to view: ");
 		int offset = clavier.nextInt();
-		ServiceComputer.getInstance().getComputerListPaginer(0, null, limit, offset);
+		serviceComputer.getComputerListPaginer(0, null, limit, offset);
 	}
 	
 	public static void Find_Company_By_Id(Scanner clavier) throws ClassNotFoundException {
 		System.out.println("Id company to find : ");
 		Long companyId = clavier.nextLong();
-		ServiceCompany.getInstance().getCompany(companyId);
+		serviceCompany.getCompany(companyId);
 	}
 	
 	public static void Display_All_Computers(Scanner clavier) throws ClassNotFoundException {
-		ServiceComputer.getInstance().getComputerList();
+		serviceComputer.getComputerList();
 	}
 	
 	public static void Display_All_Company(Scanner clavier) throws ClassNotFoundException {
-		ServiceCompany.getInstance().getCompanyList();
+		serviceCompany.getCompanyList();
 	}
 	
 	public static void Find_Computer_By_Name(Scanner clavier) throws ClassNotFoundException {
 		System.out.println("Name computer to find : ");
 		String NameComputer = clavier.next();
-		ServiceComputer.getInstance().findComputerByName(NameComputer);
+		serviceComputer.findComputerByName(NameComputer);
 	}
 	
 	public static void Delete_Company_By_Id(Scanner clavier) throws SQLException, ClassNotFoundException {	
 		System.out.println("Id company to delete: ");
 		Long companyId = clavier.nextLong();
-		ServiceCompany.getInstance().getDeleteCompany(companyId);
+		serviceCompany.getDeleteCompany(companyId);
 	}
 	
 	public static void Update_Computer_By_Id(Scanner clavier) throws ParseException{	
@@ -216,9 +224,9 @@ public class InterfaceUtilisateur
 		else
 		{
 			companyId = Long.parseLong(idCompany);
-			compa = ServiceCompany.getInstance().getCompany(companyId);
+			compa = serviceCompany.getCompany(companyId);
 		}
 		Computer comp = new Computer.ComputerBuilder(name).setIntroduced(introduced).setDiscontinued(discontinued).setCompany(compa).build();			 
-		ServiceComputer.getInstance().addComputer(comp);
+		serviceComputer.addComputer(comp);
 	}
 }

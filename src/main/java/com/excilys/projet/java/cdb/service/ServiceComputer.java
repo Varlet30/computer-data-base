@@ -2,30 +2,22 @@ package com.excilys.projet.java.cdb.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.excilys.projet.java.cdb.persistence.dao.ComputerDAO;
 import com.excilys.projet.java.cdb.model.Computer;
 
+@Service
 public class ServiceComputer 
 {
-	private static ServiceComputer instance;
-	private final ComputerDAO computerDao = ComputerDAO.getInstance();
+	
+	@Autowired
+	private ComputerDAO computerDao;
 	
 	private ServiceComputer()
 	{
 		
-	}
-	
-	public static ServiceComputer getInstance()
-	{
-		if (instance == null)
-		{
-			instance = new ServiceComputer();
-			return instance;
-		}
-		else
-		{
-			return instance;
-		}
 	}
 	
 	public List<Computer> getComputerList()
