@@ -40,28 +40,28 @@ public class ServiceComputer
 	
 	public void addComputer(Computer comput)
 	{
-		ComputerDAO.getInstance().create(comput);
+		computerDao.create(comput);
 	}
 	
 	public void editComputer(Computer comp)
 	{
-		ComputerDAO.getInstance().update(comp);
+		computerDao.update(comp);
 	}
 	
 	public Computer findComputerById(Long id)
 	{
-		Computer comp = ComputerDAO.getInstance().findId(id);
+		Computer comp = computerDao.findId(id);
 		return comp;
 	}
 	
 	public void deleteComputer(long id)
 	{
-		ComputerDAO.getInstance().delete(id);
+		computerDao.delete(id);
 	}
 	
 	public List<Computer> findComputerByName(String name)
 	{
-		List<Computer> computerList = ComputerDAO.getInstance().findName(name);
+		List<Computer> computerList = computerDao.findName(name);
 		return computerList;
 	}
 }
