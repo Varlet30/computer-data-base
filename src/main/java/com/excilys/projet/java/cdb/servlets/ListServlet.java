@@ -92,7 +92,7 @@ public class ListServlet extends HttpServlet
 		request.setAttribute("totalComputer", totalComputer);
 		request.setAttribute("listComputer", computerList);
 		request.setAttribute("tri", tri);
-		this.getServletContext().getRequestDispatcher("/views/dashboard.jsp").forward(request, response);
+		this.getServletContext().getRequestDispatcher("/WEB-INF/views/dashboard.jsp").forward(request, response);
 	}
 
 	/**

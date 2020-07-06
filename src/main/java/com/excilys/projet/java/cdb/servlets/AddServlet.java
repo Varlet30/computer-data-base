@@ -48,7 +48,7 @@ public class AddServlet extends HttpServlet {
 		List<Company> listCompany;
 		listCompany = serviceCompany.getCompanyList();
 		request.setAttribute("listCompany",listCompany);
-		request.getRequestDispatcher("views/addComputer.jsp").forward(request,response);
+		request.getRequestDispatcher("WEB-INF/views/addComputer.jsp").forward(request,response);
 	}
 
 	/**

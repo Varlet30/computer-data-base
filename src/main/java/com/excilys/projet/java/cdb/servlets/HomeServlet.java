@@ -25,7 +25,7 @@ public class HomeServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.getWriter().append("Served at: ").append(request.getContextPath());
-		request.getRequestDispatcher("views/accueil.html").forward(request,response);
+		request.getRequestDispatcher("WEB-INF/views/accueil.html").forward(request,response);
 	}
 	
 	/**

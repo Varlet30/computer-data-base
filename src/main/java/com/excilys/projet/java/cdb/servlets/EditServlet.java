@@ -51,7 +51,7 @@ public class EditServlet extends HttpServlet {
 		request.setAttribute("listCompany",listCompany);
 		request.setAttribute("idComputer", idComputer);
 		request.setAttribute("updateComputer", comp);
-		request.getRequestDispatcher("views/editComputer.jsp").forward(request,response);
+		request.getRequestDispatcher("WEB-INF/views/editComputer.jsp").forward(request,response);
 	}
 
 	/**
