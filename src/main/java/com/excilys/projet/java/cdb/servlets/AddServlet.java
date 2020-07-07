@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import java.util.List;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import com.excilys.projet.java.cdb.mapper.ComputerMapper;
 import com.excilys.projet.java.cdb.model.Company;
@@ -32,8 +34,14 @@ public class AddServlet extends HttpServlet {
 	public int lenPage;
 	@Autowired
 	private ServiceComputer serviceComputer;
+	@Autowired
 	private ServiceCompany serviceCompany;
-       
+     
+	public void init(ServletConfig config) throws ServletException
+    {
+    	super.init(config);
+    	SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
+    }
     /**
      * @see HttpServlet#HttpServlet()
      */
