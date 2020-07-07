@@ -46,7 +46,7 @@ public class ComputerMapperTest {
         CompanyDTO compaDTO = new CompanyDTO();
 		compaDTO.setId(idCompany);
         ComputerDTO compuDTO =new ComputerDTO(computerName, introduced.toString(), discontinued.toString(), compaDTO); 
-		Computer computer = ComputerMapper.convert(compuDTO);
+		Computer computer = ComputerMapper.convertComputerDTOtoComputer(compuDTO);
         
         Company compa = new Company.CompanyBuilder().setId(idCompany).build();
         

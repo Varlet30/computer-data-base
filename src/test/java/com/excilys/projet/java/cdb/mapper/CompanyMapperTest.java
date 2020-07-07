@@ -31,7 +31,7 @@ public class CompanyMapperTest {
 			}
 			CompanyDTO compaDTO = new CompanyDTO();
 			compaDTO.setId(id);
-			Company compa = CompanyMapper.convert(compaDTO);
+			Company compa = CompanyMapper.convertCompanyDTOtoCompany(compaDTO);
 	        Company expCompany = new Company.CompanyBuilder().setId(id).build();
 	        
 	        assertEquals(expCompany.getId(), compa.getId());

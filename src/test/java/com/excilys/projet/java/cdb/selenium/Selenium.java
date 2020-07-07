@@ -4,7 +4,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -18,32 +18,27 @@ public class Selenium {
 		System.setProperty("webdriver.gecko.driver", "./Driver/geckodriver");
 	}
 
-	@Before
-	public void setUp() {
+	@Test
+	public void testSelenium() throws InterruptedException {
 		driver = new FirefoxDriver();
 		actions = new Actions(driver);
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-		driver.get("http://localhost:8080/cdb/");
-	}
-
-	@After
-	public void tearDown() {
-		driver.quit();
-	}
-
-	@Test
-	public void testSelenium() throws InterruptedException {
-		actions.moveToElement(driver.findElement(By.id("dashboard"))).perform();
-		actions.pause(1000).click().perform();
+		driver.get("http://localhost:8080/mavenCDB/dashboard");
 		actions.moveToElement(driver.findElement(By.name("2"))).perform();
 		actions.pause(1000).click().perform();
-		actions.moveToElement(driver.findElement(By.name("3"))).perform();
+		System.out.println("ok");
+		actions.moveToElement(driver.findElement(By.name("LenPage50"))).perform();
 		actions.pause(1000).click().perform();
+		System.out.println("ok2");
 		actions.moveToElement(driver.findElement(By.id("editComputer"))).perform();
 		actions.pause(1000).click().perform();
+		System.out.println("ok3");
 		actions.moveToElement(driver.findElement(By.id("addComputer"))).perform();
 		actions.pause(1000).click().perform();
+		System.out.println("ok4");
 		actions.moveToElement(driver.findElement(By.id("cancel"))).perform();
 		actions.pause(1000).click().perform();
+		System.out.println("ok");
+		driver.quit();
 	}
 }

@@ -1,14 +1,9 @@
 package com.excilys.projet.java.cdb.model;
-
 import java.time.*;
+import com.excilys.projet.java.cdb.model.Company;
 
 public class Computer
 {
-	@Override
-	public String toString() {
-		return "Computer [id=" + id + ", name=" + name + ", introduced=" + introduced + ", discontinued=" + discontinued + ", compa=" + compa + "]";
-	}
-	
 	private long id;
 	private String name;
 	private LocalDate introduced;
@@ -22,25 +17,18 @@ public class Computer
 		this.discontinued=builder.discontinued;
 		this.compa=builder.compa;
 	}
-	
-	public Computer() {
-	}
-
 	public String getName() 
 	{
 		return name;
 	}
-	
 	public void setName(String name) 
 	{
 		this.name = name;
 	}
-	
 	public LocalDate getIntroduced() 
 	{
 		return introduced;
 	}
-	
 	public void setIntroduced(LocalDate introduced) 
 	{
 		if (introduced != null)
@@ -58,20 +46,16 @@ public class Computer
 			}
 		}	
 	} 
-	
 	public long getId() {
 		return id;
 	}
-	
 	public void setId(long id) {
 		this.id = id;
 	}
-	
 	public LocalDate getDiscontinued() 
 	{
 		return discontinued;
 	}
-	
 	public void setDiscontinued(LocalDate discontinued) 
 	{
 		if (discontinued != null)
@@ -89,20 +73,19 @@ public class Computer
 			}
 		}
 	}
-	
 	public Company getCompany() 
 	{
 		return compa;
 	}
-	
 	public void setCompany(Company compa) 
 	{
 		this.compa=compa;
 	}
-	
 	public static class ComputerBuilder
 	{
+		private long idComputer;
 		private String name;
+		
 		private LocalDate introduced;
 		private LocalDate discontinued;
 		private Company compa;
@@ -111,28 +94,29 @@ public class Computer
 		{
 			this.name=name;
 		}
-		
 		public ComputerBuilder setIntroduced(LocalDate introduced)
 		{
 			this.introduced=introduced;
 			return this;
 		}
-		
 		public ComputerBuilder setDiscontinued(LocalDate discontinued)
 		{
 			this.discontinued=discontinued;
 			return this;
 		}
-		
 		public ComputerBuilder setCompany(Company compa)
 		{
 			this.compa=compa;
 			return this;
 		}
-		
 		public Computer build()
 		{
 			return new Computer(this);
 		}
+	}
+	@Override
+	public String toString() {
+		return "Computer [id=" + id + ", name=" + name + ", introduced=" + introduced + ", discontinued=" + discontinued
+				+ ", compa=" + compa + "]";
 	}
 }

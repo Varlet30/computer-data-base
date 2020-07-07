@@ -5,108 +5,69 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.stereotype.Repository;
+import org.springframework.jdbc.core.RowMapper;
 
 import com.excilys.projet.java.cdb.dto.CompanyDTO;
 import com.excilys.projet.java.cdb.dto.ComputerDTO;
 import com.excilys.projet.java.cdb.model.Company;
 import com.excilys.projet.java.cdb.model.Computer;
 
-@Repository
-public class ComputerMapper 
+public class ComputerMapper implements RowMapper<Computer>
 {
-	
-	public static Computer convert(ComputerDTO compDTO)
+	public Computer mapRow(ResultSet resultat, int i) throws SQLException {
+
+		Computer comp = new Computer.ComputerBuilder(resultat.getString("computer_name")).build();
+		comp.setId(resultat.getLong("computer_id"));
+		Date intro = resultat.getDate("introduced");
+		Date disco = resultat.getDate("discontinued");
+		LocalDate introduced = null;
+		if (intro!=null)
+		{
+			introduced =intro.toLocalDate();
+		}
+		LocalDate discontinued = null;
+		comp.setIntroduced(introduced);
+		if (disco!=null)
+		{
+			discontinued =disco.toLocalDate();
+		}
+		comp.setIntroduced(introduced);
+		comp.setDiscontinued(discontinued);
+		Company compa = new Company.CompanyBuilder().setId(resultat.getLong("company_id")).setName(resultat.getString("company_name")).build();
+		comp.setCompany(compa);		
+		return comp;
+	}
+	public static Computer convertComputerDTOtoComputer(ComputerDTO compDTO)
 	{
-		Long id = compDTO.getIdComputer();
-		String name = compDTO.getName();
-		String intro = compDTO.getIntroduced();
-		String disco = compDTO.getDiscontinued();
-		CompanyDTO compaDTO = compDTO.getCompa();
+		Long id=compDTO.getId();
+		String name=compDTO.getName();
+		String intro=compDTO.getIntroduced();
+		String disco=compDTO.getDiscontinued();
+		CompanyDTO compaDTO=compDTO.getCompanyDTO();
 		LocalDate introduced = LocalDate.parse(intro);
 		LocalDate discontinued = LocalDate.parse(disco);
-		Company compa = CompanyMapper.convert(compaDTO);
+		Company compa = CompanyMapper.convertCompanyDTOtoCompany(compaDTO);
 		Computer comp = new Computer.ComputerBuilder(name).setIntroduced(introduced).setDiscontinued(discontinued).setCompany(compa).build(); 
 		comp.setId(id);
 		return comp;
 	}
-	
-	public static ComputerDTO convertInverse(Computer comp)
+	public static ComputerDTO convertComputertoComputerDTO(Computer comp)
 	{
-		String name = comp.getName();
-		LocalDate intro = comp.getIntroduced();
-		LocalDate disco = comp.getDiscontinued();
-		Company company = comp.getCompany();
-		CompanyDTO compaDTO = CompanyMapper.convertInverse(company);
-		ComputerDTO compDTO = new ComputerDTO(name, intro.toString(), disco.toString(), compaDTO); 
+		Long id=comp.getId();
+		String name=comp.getName();
+		String introduced=null;
+		if(comp.getIntroduced()!=null) {
+			introduced=comp.getIntroduced().toString();
+		} 
+		String discontinued=null;
+		if(comp.getDiscontinued()!=null) {
+			discontinued=comp.getDiscontinued().toString();
+		} 		
+		Company compa=comp.getCompany();
+		
+		CompanyDTO compaDTO = CompanyMapper.convertCompanytoCompanyDTO(compa);
+		ComputerDTO compDTO = new ComputerDTO(name, introduced, discontinued, compaDTO); 
+		compDTO.setId(id);
 		return compDTO;
-	}
-	
-	public static Computer convertResult(HttpServletRequest request)
-	{
-		String name = request.getParameter("computerName");
-		String computerIntroduced = request.getParameter("computerIntroduced");
-		String computerDiscontinued = request.getParameter("computerDiscontinued");
-		String company = request.getParameter("company");
-		CompanyDTO compaDTO = new CompanyDTO(company);
-		ComputerDTO compuDTO = new ComputerDTO(name,computerIntroduced,computerDiscontinued,compaDTO); 
-		Computer comp = ComputerMapper.convert(compuDTO);
-		return comp;
-	}
-	
-	public static Computer convertResultId(HttpServletRequest request)
-	{
-		Long id = Long.parseLong(request.getParameter("id"));
-		String name = request.getParameter("computerName");
-		String introduced = request.getParameter("introduced");
-		String discontinued = request.getParameter("discontinued");
-		String company = request.getParameter("company");
-		CompanyDTO compaDTO = new CompanyDTO(company);
-		ComputerDTO compuDTO = new ComputerDTO(name,introduced,discontinued,compaDTO);
-		compuDTO.setIdComputer(id);
-		Computer comp = ComputerMapper.convert(compuDTO);
-		return comp;
-	}
-	public static Computer convertRequestByName(ResultSet resultat) throws SQLException
-	{
-		String name = resultat.getString("computerName");
-		Date intro = resultat.getDate("computerIntroduced");
-		Date disco = resultat.getDate("computerDiscontinued");
-		LocalDate introduced = null;
-		if (intro != null)
-		{
-			introduced = intro.toLocalDate();
-		}
-		LocalDate discontinued = null;
-		if (disco != null)
-		{
-			discontinued = disco.toLocalDate();
-		}
-		String companyName = resultat.getString("companyName");
-		Company compa = new Company.CompanyBuilder().setName(companyName).build();
-		long id = resultat.getLong("computerId");
-		Computer comp = new Computer.ComputerBuilder(name).setIntroduced(introduced).setDiscontinued(discontinued).setCompany(compa).build();			
-		comp.setId(id);
-		return comp;
-	}
-	public static Computer convertRequestById(ResultSet resultat) throws SQLException
-	{
-		String name = resultat.getString("computerName");
-		Date intro = resultat.getDate("computerIntroduced");
-		Date disco = resultat.getDate("computerDiscontinued");
-		LocalDate introduced = null;
-		if (intro != null)
-		{
-			introduced = intro.toLocalDate();
-		}
-		LocalDate discontinued = null;
-		if (disco != null)
-		{
-			discontinued = disco.toLocalDate();
-		}
-		Computer comp = new Computer.ComputerBuilder(name).setIntroduced(introduced).setDiscontinued(discontinued).build();
-		return comp;
 	}
 }
