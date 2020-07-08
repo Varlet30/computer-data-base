@@ -3,29 +3,28 @@ package com.excilys.projet.java.cdb.spring;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
+
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+
 import org.springframework.core.env.Environment;
-import org.springframework.jdbc.core.JdbcTemplate;
+
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+
 import org.springframework.web.context.AbstractContextLoaderInitializer;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+
 import org.springframework.web.servlet.DispatcherServlet;
-import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.i18n.CookieLocaleResolver;
-import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
-import org.springframework.web.servlet.theme.ThemeChangeInterceptor;
 
 @EnableWebMvc
 @Configuration
@@ -47,21 +46,19 @@ public class SpringConfig extends AbstractContextLoaderInitializer
 	@Bean
 	DataSource dataSource() {
 		DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
-//		driverManagerDataSource.setUrl(environment.getProperty("jdbcUrl"));
-//		driverManagerDataSource.setUsername(environment.getProperty("username"));
-//		driverManagerDataSource.setPassword(environment.getProperty("password"));
-//		driverManagerDataSource.setDriverClassName(environment.getProperty("driverClassName"));
-    	driverManagerDataSource.setUrl("jdbc:mysql://localhost:3306/computer-database-db?autoReconnect=true&useSSL=false&serverTimezone=UTC");
+    	driverManagerDataSource.setUrl("jdbc:mysql://localhost:3306/computer-database-db?autoReconnect=true&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC");
 		driverManagerDataSource.setUsername("admincdb");
 		driverManagerDataSource.setPassword("qwerty1234");
 		driverManagerDataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
 		return driverManagerDataSource;
 	}
+	
 	@Bean
 	NamedParameterJdbcTemplate namedParameterJdbcTemplate(DataSource dataSource) {
 		NamedParameterJdbcTemplate namedParameterJdbcTemplate=new NamedParameterJdbcTemplate(dataSource);
 		return namedParameterJdbcTemplate;
 	}
+	
 	@Override
 	public void onStartup(ServletContext servletContext) throws ServletException {
 		AnnotationConfigWebApplicationContext webContext = new AnnotationConfigWebApplicationContext();

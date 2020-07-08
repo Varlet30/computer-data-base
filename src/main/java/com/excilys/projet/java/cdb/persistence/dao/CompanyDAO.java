@@ -1,22 +1,17 @@
 package com.excilys.projet.java.cdb.persistence.dao;
 
-import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+
 import org.springframework.stereotype.Repository;
 
 import com.excilys.projet.java.cdb.mapper.CompanyMapper;
-import com.excilys.projet.java.cdb.mapper.ComputerMapper;
 import com.excilys.projet.java.cdb.model.Company;
-import com.excilys.projet.java.cdb.model.Computer;
 
 @Repository
 public class CompanyDAO 
@@ -35,7 +30,7 @@ public class CompanyDAO
 	}
 	
 	public List<Company> allCompany() {
-		return (List)namedParameterJdbcTemplate.query(AllCompany,new CompanyMapper());
+		return namedParameterJdbcTemplate.query(AllCompany,new CompanyMapper());
 	}
 	
 	public Company findCompany (long id) {

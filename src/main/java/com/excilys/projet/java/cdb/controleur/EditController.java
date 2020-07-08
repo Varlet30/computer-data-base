@@ -3,9 +3,9 @@ package com.excilys.projet.java.cdb.controleur;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.stereotype.Controller;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,36 +28,36 @@ public class EditController {
 	@Autowired
 	public ServiceComputer serviceComputer;
 	
-	private String findComputUpdate(String idComputer, ModelMap dataMap){
+	private String findComputUpdate(String idComputer, ModelMap map){
 		List<CompanyDTO>companyDTOList=new ArrayList<CompanyDTO>();
 		List<Company>companyList=new ArrayList<Company>();
 		companyList=serviceCompany.getCompanyList();
 		companyList.stream().forEach(compa->companyDTOList.add(CompanyMapper.convertCompanytoCompanyDTO(compa)));
-		dataMap.put("listCompany", companyDTOList);
+		map.put("listCompany", companyDTOList);
 		long id = Long.parseLong(idComputer);
 		Computer comput = serviceComputer.findComputerById(id);
 		ComputerDTO compDTO = ComputerMapper.convertComputertoComputerDTO(comput);
-		dataMap.put("computerToUpdate",compDTO);
+		map.put("computerToUpdate",compDTO);
 		return "editComputer";
 	}
-	private void updateComput(ComputerDTO compDTO, ModelMap dataMap){
+	private void updateComput(ComputerDTO compDTO, ModelMap map){
 		Computer comp = ComputerMapper.convertComputerDTOtoComputer(compDTO);
 		serviceComputer.editComputer(comp);
 	}
 	
 	@GetMapping("editComputer")
 	public String getEditComputer(@RequestParam(value="id", defaultValue = "1") String idComputer,
-			ModelMap dataMap){
-		return findComputUpdate(idComputer, dataMap);
+			ModelMap map){
+		return findComputUpdate(idComputer, map);
 	}
 	
 	@PostMapping("editComputer")
 	public String postEditComputer (@ModelAttribute("computerToUpdate")ComputerDTO compDTO,
 			@RequestParam(value="maxPage", defaultValue = "1")int maxPage,
-			ModelMap dataMap){
+			ModelMap map){
 		System.out.println(compDTO);
-		updateComput(compDTO, dataMap);
-		dataMap.put("computerToUpdate", compDTO);
+		updateComput(compDTO, map);
+		map.put("computerToUpdate", compDTO);
 		return "redirect:dashboard?lengthPage=10&column=&tri=0&page="+maxPage;
 	}
 }

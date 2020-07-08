@@ -1,14 +1,12 @@
 package com.excilys.projet.java.cdb.controleur;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.ArrayList;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.stereotype.Controller;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -26,17 +24,17 @@ public class DashboardController {
 	@Autowired
 	public ServiceComputer serviceComputer;
 	
-	private String search(String recherche,ModelMap dataMap){
+	private String search(String research,ModelMap map){
 		List<ComputerDTO>computerDTOList=new ArrayList<ComputerDTO>();
 		List<Computer>computerList=new ArrayList<Computer>();
-		computerList=serviceComputer.findComputerByName(recherche);
+		computerList=serviceComputer.findComputerByName(research);
 		totalComputer=computerList.size();
-		dataMap.put("totalComputer", totalComputer);
+		map.put("totalComputer", totalComputer);
 		computerList.stream().forEach(comp->computerDTOList.add(ComputerMapper.convertComputertoComputerDTO(comp)));
-		dataMap.put("listComput", computerDTOList);
+		map.put("listComput", computerDTOList);
 		return "dashboard";
 	}
-	private String classification(int tri, String column, int lengthPage,int page, ModelMap dataMap){
+	private String classification(int tri, String column, int lengthPage,int page, ModelMap map){
 		List<ComputerDTO>computerDTOList=new ArrayList<ComputerDTO>();
 		List<Computer>computerList=new ArrayList<Computer>();
 		totalComputer=serviceComputer.getCount();
@@ -52,42 +50,42 @@ public class DashboardController {
 			computerList=serviceComputer.getComputerListPaginer(tri,column,lengthPage,0);
 		}
 		computerList.stream().forEach(comp->computerDTOList.add(ComputerMapper.convertComputertoComputerDTO(comp)));
-		dataMap.put("listComput", computerDTOList);
-		dataMap.put("totalComputer", totalComputer);
-		dataMap.put("page", page);
-		dataMap.put("maxPage", maxPage);
-		dataMap.put("lengthPage", lengthPage);
-		dataMap.put("tri", tri);
-		dataMap.put("column", column);
+		map.put("listComput", computerDTOList);
+		map.put("totalComputer", totalComputer);
+		map.put("page", page);
+		map.put("maxPage", maxPage);
+		map.put("lengthPage", lengthPage);
+		map.put("tri", tri);
+		map.put("column", column);
 		return "dashboard";
 	}
-	private void deleteComputers(String selection, ModelMap dataMap) throws NumberFormatException
+	private void deleteComputers(String select, ModelMap map) throws NumberFormatException
 	{
-		String[] listId = selection.split(",");
+		String[] listId = select.split(",");
 		for (int i=0;i<listId.length;i++) {
 			serviceComputer.deleteComputer(Long.parseLong(listId[i]));
 		}
 	}
 	
 	@GetMapping("dashboard")
-	public String getDashboard(@RequestParam(value="search", required = false) String recherche,
+	public String getDashboard(@RequestParam(value="search", required = false) String research,
 			@RequestParam(value="tri", defaultValue = "0") int tri,
 			@RequestParam(value="column", defaultValue = "") String column,
 			@RequestParam(value="page", defaultValue = "1")int page,
 			@RequestParam(value="lengthPage",defaultValue = "10")int lengthPage,
-			ModelMap dataMap){
-		if (recherche==null||recherche=="") {
-			return classification(tri, column, lengthPage, page, dataMap);
+			ModelMap map){
+		if (research==null||research=="") {
+			return classification(tri, column, lengthPage, page, map);
 		} else {
-			return search(recherche, dataMap);
+			return search(research, map);
 		}
 		
 	}
 	
 	@PostMapping("dashboard")
-	public String postEditComputer (@RequestParam(value="selection", defaultValue = "")String selection,
-			ModelMap dataMap) throws NumberFormatException{
-		deleteComputers(selection,dataMap);
+	public String postEditComputer (@RequestParam(value="select", defaultValue = "")String select,
+			ModelMap map) throws NumberFormatException{
+		deleteComputers(select, map);
 		return "redirect:dashboard";
 	}
 }
