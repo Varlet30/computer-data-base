@@ -19,9 +19,9 @@ public class CompanyDAO
 	private ComputerDAO computerDao;
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 	
-	public static String FindCompanyId = "SELECT * FROM company WHERE id = :id";
-	public static String FindCompanyName = "SELECT * FROM company WHERE name = :name";
-	public static String AllCompany = "SELECT * FROM company";
+	public static String FindCompanyId = "SELECT id, name FROM company WHERE id = :id";
+	public static String FindCompanyName = "SELECT id, name FROM company WHERE name = :name";
+	public static String AllCompany = "SELECT id, name FROM company";
 	public static String DeleteCompany = "DELETE FROM company WHERE id = :id";
 	
 	public CompanyDAO(DataSource dataSource,ComputerDAO computerDao) {
