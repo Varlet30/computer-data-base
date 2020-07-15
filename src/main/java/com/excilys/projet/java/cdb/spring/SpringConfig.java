@@ -4,8 +4,12 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+
 import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.context.annotation.Bean;
@@ -19,6 +23,12 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
+import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.AbstractContextLoaderInitializer;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
@@ -27,6 +37,7 @@ import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @EnableWebMvc
+@EnableTransactionManagement
 @Configuration
 @ComponentScan(basePackages = {"com.excilys.projet.java.cdb.persistence.dao", "com.excilys.projet.java.cdb.controlleur","com.excilys.projet.java.cdb.service","com.excilys.projet.java.cdb.controleur","com.excilys.projet.java.cdb.mapper"})
 @PropertySource("classpath:datasource.properties")
@@ -45,7 +56,7 @@ public class SpringConfig extends AbstractContextLoaderInitializer
 	Environment environment;
 
 	@Bean
-	DataSource dataSource() 
+	DataSource getConnection() 
 	{
 		DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
 		
@@ -63,6 +74,27 @@ public class SpringConfig extends AbstractContextLoaderInitializer
 		NamedParameterJdbcTemplate namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
 		
 		return namedParameterJdbcTemplate;
+	}
+	
+	@Bean
+	public LocalSessionFactoryBean sessionFactory() {
+		LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
+		sessionFactory.setDataSource(getConnection());
+		sessionFactory.setPackagesToScan("com.excilys.projet.java.cdb.model");
+		return sessionFactory;
+	}
+	
+	@Bean
+    public PlatformTransactionManager hibernateTransactionManager() {
+        HibernateTransactionManager transactionManager = new HibernateTransactionManager();
+        transactionManager.setSessionFactory(sessionFactory().getObject());
+        return transactionManager;
+    }
+	
+	@Bean
+	@Qualifier(value = "entityManager")
+	public EntityManager entityManager(EntityManagerFactory entityManagerFactory) {
+	    return entityManagerFactory.createEntityManager();
 	}
 	
 	@Override

@@ -1,22 +1,44 @@
 package com.excilys.projet.java.cdb.model;
 
-import java.time.*;
+import java.time.LocalDate;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="computer")
 public class Computer
 {
-	
+	@Id
+	@Column(name="id")
 	private long id;
+	
+	@Column(name="name")
 	private String name;
+	
+	@Column(name="introduced")
 	private LocalDate introduced;
+	
+	@Column(name="discontinued")
 	private LocalDate discontinued;
-	private Company compa;
+	
+	@ManyToOne
+	@JoinColumn(name = "company_id")
+	private Company company;
+	
+	public Computer() {
+	}
 	
 	private Computer(ComputerBuilder builder)
 	{
 		this.name = builder.name;
 		this.introduced = builder.introduced;
 		this.discontinued = builder.discontinued;
-		this.compa = builder.compa;
+		this.company = builder.company;
 	}
 	
 	public String getName() 
@@ -85,12 +107,12 @@ public class Computer
 	
 	public Company getCompany() 
 	{
-		return compa;
+		return company;
 	}
 	
-	public void setCompany(Company compa) 
+	public void setCompany(Company company) 
 	{
-		this.compa = compa;
+		this.company = company;
 	}
 	
 	public static class ComputerBuilder
@@ -99,7 +121,7 @@ public class Computer
 		private String name;
 		private LocalDate introduced;
 		private LocalDate discontinued;
-		private Company compa;
+		private Company company;
 
 		public ComputerBuilder (String name)
 		{
@@ -120,7 +142,7 @@ public class Computer
 		
 		public ComputerBuilder setCompany(Company compa)
 		{
-			this.compa = compa;
+			this.company = compa;
 			return this;
 		}
 		
@@ -134,6 +156,6 @@ public class Computer
 	public String toString() 
 	{
 		return "Computer [id=" + id + ", name=" + name + ", introduced=" + introduced + ", discontinued=" + discontinued
-				+ ", compa=" + compa + "]";
+				+ ", compa=" + company + "]";
 	}
 }

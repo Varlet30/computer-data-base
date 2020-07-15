@@ -73,7 +73,7 @@
                             </span>
                         </th>
                         <th>
-							<a href ="?column=computer_name&tri=${tri+1}&lengthPage=${lengthPage}"><spring:message code="Computer"/></a>
+							<a href ="?column=name&tri=${tri+1}&lengthPage=${lengthPage}"><spring:message code="Computer"/></a>
                         </th>
                         <th>
                             <a href ="?column=introduced&tri=${tri+1}&lengthPage=${lengthPage}"><spring:message code="Introduced"/></a>
@@ -84,7 +84,7 @@
                         </th>
                         <!-- Table header for Company -->
                         <th>
-                            <a href ="?column=company_name&tri=${tri+1}&lengthPage=${lengthPage}"><spring:message code="Company"/></a>
+                            <a href ="?column=company.name&tri=${tri+1}&lengthPage=${lengthPage}"><spring:message code="Company"/></a>
                         </th>
 
                     </tr>

@@ -68,6 +68,6 @@ public class EditController
 		updateComput(compDTO, map);
 		map.put("computerToUpdate", compDTO);
 		
-		return "redirect:dashboard?lengthPage=10&column=&tri=0&page="+ maxPage;
+		return "dashboard";
 	}
 }
