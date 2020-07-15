@@ -30,71 +30,97 @@ public class ComputerDAO
 	public static String Descendant = " DESC";
 	public static String Order = " ORDER BY ";
 
-	public ComputerDAO(DataSource dataSource) {
-		namedParameterJdbcTemplate=new NamedParameterJdbcTemplate(dataSource);
+	public ComputerDAO(DataSource dataSource) 
+	{
+		namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
 	}
 	
-	public List<Computer> allComputer() {
+	public List<Computer> allComputer() 
+	{
 		return namedParameterJdbcTemplate.query(Select,new ComputerMapper());
 	}
 	
-	public int countComputer() {
-		List<Computer> ListComputer= allComputer();
+	public int countComputer() 
+	{
+		List<Computer> ListComputer = allComputer();
+		
 		return ListComputer.size();
 	}
 	
-	public List<Computer> pageComputer(int tri, String column, int limit, int offset) {
+	public List<Computer> pageComputer(int tri, String column, int limit, int offset) 
+	{
 		SqlParameterSource namedParameters  = new MapSqlParameterSource().addValue("limit",limit)
 				.addValue("offset",offset);
 		String requete;
-		if (tri==0||column==""||column==null) {
+		
+		if (tri == 0||column == ""||column == null) 
+		{
 			requete = Select + Limit;
-		} else if (tri==1) {
-				requete = Select + Order + column + Ascendant + Limit;
-			} else {
-				requete = Select + Order + column + Descendant + Limit;
-			}
+			
+		} 
+		else if (tri == 1) 
+		{
+			requete = Select + Order + column + Ascendant + Limit;
+				
+		} 
+		else 
+		{
+			requete = Select + Order + column + Descendant + Limit;
+		}
+		
 		return namedParameterJdbcTemplate.query(requete, namedParameters, new ComputerMapper());
 	}
 	
-	public Computer findComputerId (long id) {
+	public Computer findComputerId (long id) 
+	{
 		SqlParameterSource namedParameters  = new MapSqlParameterSource().addValue("id",id);
+		
 		return namedParameterJdbcTemplate.queryForObject(FindComputerId, namedParameters, new ComputerMapper());
 	}
 	
-	public List<Computer> findComputerName (String research) {
-		research=research.toLowerCase();
-		research="%"+research+"%";
+	public List<Computer> findComputerName (String research) 
+	{
+		research = research.toLowerCase();
+		research = "%"+ research +"%";
 		SqlParameterSource namedParameters  = new MapSqlParameterSource().addValue("research",research);
+		
 		return namedParameterJdbcTemplate.query(FindComputerName, namedParameters, new ComputerMapper());
 	}
 	
-	public int updateComputer(Computer comp) {
-		SqlParameterSource namedParameters  = new MapSqlParameterSource().addValue("name",comp.getName())
-				.addValue("introduced",comp.getIntroduced())
-				.addValue("name",comp.getName())
-				.addValue("discontinued",comp.getDiscontinued())
+	public int updateComputer(Computer comp) 
+	{
+		SqlParameterSource namedParameters  = new MapSqlParameterSource().addValue("name", comp.getName())
+				.addValue("introduced", comp.getIntroduced())
+				.addValue("name", comp.getName())
+				.addValue("discontinued", comp.getDiscontinued())
 				.addValue("idComputer", comp.getId())
 				.addValue("idCompany", comp.getCompany().getId());
+		
 		return namedParameterJdbcTemplate.update(UpdateComputer, namedParameters);
 	}
 	
-	public int deleteComputer(long id) {
-		SqlParameterSource namedParameters  = new MapSqlParameterSource().addValue("id",id);
+	public int deleteComputer(long id) 
+	{
+		SqlParameterSource namedParameters  = new MapSqlParameterSource().addValue("id", id);
+		
 		return namedParameterJdbcTemplate.update(DeleteComputer, namedParameters);
 	}
 	
-	public int deleteComputerByCompany(long id) {
-		SqlParameterSource namedParameters  = new MapSqlParameterSource().addValue("id",id);
+	public int deleteComputerByCompany(long id) 
+	{
+		SqlParameterSource namedParameters  = new MapSqlParameterSource().addValue("id", id);
+		
 		return namedParameterJdbcTemplate.update(DeleteComputerByCompa, namedParameters);
 	}
 	
-	public int createComputer(Computer comp) {
-		SqlParameterSource namedParameters  = new MapSqlParameterSource().addValue("name",comp.getName())
-				.addValue("introduced",comp.getIntroduced())
-				.addValue("name",comp.getName())
-				.addValue("discontinued",comp.getDiscontinued())
+	public int createComputer(Computer comp) 
+	{
+		SqlParameterSource namedParameters  = new MapSqlParameterSource().addValue("name", comp.getName())
+				.addValue("introduced", comp.getIntroduced())
+				.addValue("name", comp.getName())
+				.addValue("discontinued", comp.getDiscontinued())
 				.addValue("idCompany", comp.getCompany().getId());
+		
 		return namedParameterJdbcTemplate.update(CreateComputer, namedParameters);
 	}
 }

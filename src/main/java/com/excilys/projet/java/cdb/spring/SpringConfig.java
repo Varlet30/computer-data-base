@@ -15,12 +15,12 @@ import org.springframework.context.annotation.PropertySource;
 
 import org.springframework.core.env.Environment;
 
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
-import org.springframework.web.context.AbstractContextLoaderInitializer;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+
 import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.AbstractContextLoaderInitializer;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
 import org.springframework.web.servlet.DispatcherServlet;
@@ -37,6 +37,7 @@ public class SpringConfig extends AbstractContextLoaderInitializer
 	 {
 		 AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
 		 rootContext.register(SpringConfig.class);
+		 
 		 return rootContext;
 	 }
 
@@ -44,23 +45,29 @@ public class SpringConfig extends AbstractContextLoaderInitializer
 	Environment environment;
 
 	@Bean
-	DataSource dataSource() {
+	DataSource dataSource() 
+	{
 		DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
+		
     	driverManagerDataSource.setUrl("jdbc:mysql://localhost:3306/computer-database-db?autoReconnect=true&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC");
 		driverManagerDataSource.setUsername("admincdb");
 		driverManagerDataSource.setPassword("qwerty1234");
 		driverManagerDataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+		
 		return driverManagerDataSource;
 	}
 	
 	@Bean
-	NamedParameterJdbcTemplate namedParameterJdbcTemplate(DataSource dataSource) {
-		NamedParameterJdbcTemplate namedParameterJdbcTemplate=new NamedParameterJdbcTemplate(dataSource);
+	NamedParameterJdbcTemplate namedParameterJdbcTemplate(DataSource dataSource) 
+	{
+		NamedParameterJdbcTemplate namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+		
 		return namedParameterJdbcTemplate;
 	}
 	
 	@Override
-	public void onStartup(ServletContext servletContext) throws ServletException {
+	public void onStartup(ServletContext servletContext) throws ServletException
+	{
 		AnnotationConfigWebApplicationContext webContext = new AnnotationConfigWebApplicationContext();
 		webContext.register(SpringConfig.class,SpringMVCConfig.class);
 		webContext.setServletContext(servletContext);

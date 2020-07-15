@@ -10,14 +10,21 @@ public class ValidationBackComputer
 {
 	private static Logger logger = LoggerFactory.getLogger(ValidationBackComputer.class);
 
-    public static boolean dateFormatValidator(String date) {
+    public static boolean dateFormatValidator(String date) 
+    {
         boolean dateIsValid = true;
-        try {
+        
+        try 
+        {
             LocalDate.parse(date);
-        } catch (DateTimeParseException e) {
+        } 
+        catch (DateTimeParseException e) 
+        {
             dateIsValid = false;
             logger.error("invalid date format: " + date);
-        } catch (NullPointerException e) {
+        } 
+        catch (NullPointerException e) 
+        {
             logger.info("the date is null");
         }
         return dateIsValid;

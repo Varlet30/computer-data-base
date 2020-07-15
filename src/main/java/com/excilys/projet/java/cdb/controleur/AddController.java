@@ -21,7 +21,8 @@ import com.excilys.projet.java.cdb.service.ServiceCompany;
 import com.excilys.projet.java.cdb.service.ServiceComputer;
 
 @Controller
-public class AddController {
+public class AddController 
+{
 	
 	@Autowired
 	public ServiceCompany serviceCompany;
@@ -29,31 +30,38 @@ public class AddController {
 	public ServiceComputer serviceComputer;
 	
 	private String listCompany(ModelMap map){
-		List<CompanyDTO>companyDTOList=new ArrayList<CompanyDTO>();
-		List<Company>companyList=new ArrayList<Company>();
+		
+		List<CompanyDTO>companyDTOList = new ArrayList<CompanyDTO>();
+		List<Company>companyList = new ArrayList<Company>();
+		
 		companyList=serviceCompany.getCompanyList();
 		companyList.stream().forEach(compa->companyDTOList.add(CompanyMapper.convertCompanytoCompanyDTO(compa)));
+		
 		map.put("listCompany", companyDTOList);
+		
 		return "addComputer";
 	}
-	private void addComput(ComputerDTO compDTO, ModelMap map){
+	private void addComput(ComputerDTO compDTO, ModelMap map)
+	{
 		Computer comp = ComputerMapper.convertComputerDTOtoComputer(compDTO);
 		serviceComputer.addComputer(comp);
 	}
 	
 	@GetMapping("addComputer")
-	public String getAddComputer(ModelMap map){
+	public String getAddComputer(ModelMap map)
+	{
 		return listCompany(map);
 	}
 	
 	@PostMapping("addComputer")
 	public String postAddComputer (@ModelAttribute("computerToAdd")ComputerDTO compDTO,
-			@RequestParam(value="maxPage", defaultValue = "1")int maxPage,
-			ModelMap map){
+			@RequestParam(value = "maxPage", defaultValue = "1")int maxPage,
+			ModelMap map)
+	{
 		System.out.println(compDTO);
 		addComput(compDTO, map);
 		map.put("computerToAdd", compDTO);
-		return "redirect:dashboard?lengthPage=10&column=&tri=0&page="+maxPage;
-	}
-			
+		
+		return "redirect:dashboard?lengthPage=10&column=&tri=0&page="+ maxPage;
+	}	
 }

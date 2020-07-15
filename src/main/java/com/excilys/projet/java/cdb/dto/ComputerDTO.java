@@ -10,54 +10,65 @@ public class ComputerDTO
 	
 	public ComputerDTO(String name,String introduced, String discontinued, CompanyDTO companyDTO)
 	{
-		this.name=name;
-		this.introduced=introduced;
-		this.discontinued=discontinued;
-		this.companyDTO=companyDTO;
+		this.name = name;
+		this.introduced = introduced;
+		this.discontinued = discontinued;
+		this.companyDTO = companyDTO;
 	}
 	
-	public String getName() {
+	public String getName() 
+	{
 		return name;
 	}
 	
-	public void setName(String name) {
+	public void setName(String name) 
+	{
 		this.name = name;
 	}
 	
-	public long getId() {
+	public long getId() 
+	{
 		return id;
 	}
 	
-	public void setId(long id) {
+	public void setId(long id) 
+	{
 		this.id = id;
 	}
 	
-	public String getIntroduced() {
+	public String getIntroduced() 
+	{
 		return introduced;
 	}
 	
-	public void setIntroduced(String introduced) {
+	public void setIntroduced(String introduced) 
+	{
 		this.introduced = introduced;
 	}
 	
-	public String getDiscontinued() {
+	public String getDiscontinued() 
+	{
 		return discontinued;
 	}
 	
-	public void setDiscontinued(String discontinued) {
+	public void setDiscontinued(String discontinued) 
+	{
 		this.discontinued = discontinued;
 	}
 	
-	public CompanyDTO getCompanyDTO() {
+	public CompanyDTO getCompanyDTO() 
+	{
 		return companyDTO;
 	}
 	
-	public void setCompanyDTO(CompanyDTO companyDTO) {
+	public void setCompanyDTO(CompanyDTO companyDTO) 
+	{
 		this.companyDTO = companyDTO;
 	}
 	
 	@Override
-	public String toString() {
+	public String toString() 
+	{
 		return "ComputerDTO [id=" + id + ", name=" + name + ", introduced=" + introduced + ", discontinued=" + discontinued
 				+ ", company=" + companyDTO + "]";
 	}

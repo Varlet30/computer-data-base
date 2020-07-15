@@ -14,24 +14,27 @@ public class ServiceComputer
 	
 	private ServiceComputer(ComputerDAO computerDao)
 	{
-		this.computerDao=computerDao;
+		this.computerDao = computerDao;
 	}
 	
 	public List<Computer> getComputerList() 
 	{
 		List<Computer> listComput=computerDao.allComputer();
+		
 		return listComput;	
 	}
 	
 	public List<Computer> getComputerListPaginer(int tri, String column, int limit, int offset) 
 	{
-		List<Computer> listComput=computerDao.pageComputer(tri, column, limit, offset);
+		List<Computer> listComput = computerDao.pageComputer(tri, column, limit, offset);
+		
 		return listComput;
 	}
 	
 	public int getCount() 
 	{
 		int nombreComputer=computerDao.countComputer();
+		
 		return nombreComputer;	
 	}
 	
@@ -48,6 +51,7 @@ public class ServiceComputer
 	public Computer findComputerById(Long id) 
 	{
 		Computer comp = computerDao.findComputerId(id);
+		
 		return comp;
 	}
 	
@@ -58,7 +62,7 @@ public class ServiceComputer
 	
 	public List<Computer> findComputerByName(String name) 
 	{
-		List<Computer> computerList=computerDao.findComputerName(name);
+		List<Computer> computerList = computerDao.findComputerName(name);
 		return computerList;
 	}
 }

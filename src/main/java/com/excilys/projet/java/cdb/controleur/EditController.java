@@ -21,43 +21,53 @@ import com.excilys.projet.java.cdb.service.ServiceCompany;
 import com.excilys.projet.java.cdb.service.ServiceComputer;
 
 @Controller
-public class EditController {
-	
+public class EditController 
+{
 	@Autowired
 	public ServiceCompany serviceCompany;
 	@Autowired
 	public ServiceComputer serviceComputer;
 	
-	private String findComputUpdate(String idComputer, ModelMap map){
-		List<CompanyDTO>companyDTOList=new ArrayList<CompanyDTO>();
-		List<Company>companyList=new ArrayList<Company>();
-		companyList=serviceCompany.getCompanyList();
+	private String findComputUpdate(String idComputer, ModelMap map)
+	{
+		List<CompanyDTO>companyDTOList = new ArrayList<CompanyDTO>();
+		List<Company>companyList = new ArrayList<Company>();
+		
+		companyList = serviceCompany.getCompanyList();
 		companyList.stream().forEach(compa->companyDTOList.add(CompanyMapper.convertCompanytoCompanyDTO(compa)));
+		
 		map.put("listCompany", companyDTOList);
+		
 		long id = Long.parseLong(idComputer);
+		
 		Computer comput = serviceComputer.findComputerById(id);
 		ComputerDTO compDTO = ComputerMapper.convertComputertoComputerDTO(comput);
-		map.put("computerToUpdate",compDTO);
+		
+		map.put("computerToUpdate", compDTO);
+		
 		return "editComputer";
 	}
-	private void updateComput(ComputerDTO compDTO, ModelMap map){
+	private void updateComput(ComputerDTO compDTO, ModelMap map)
+	{
 		Computer comp = ComputerMapper.convertComputerDTOtoComputer(compDTO);
 		serviceComputer.editComputer(comp);
 	}
 	
 	@GetMapping("editComputer")
-	public String getEditComputer(@RequestParam(value="id", defaultValue = "1") String idComputer,
-			ModelMap map){
+	public String getEditComputer(@RequestParam(value = "id", defaultValue = "1") String idComputer,
+			ModelMap map)
+	{
 		return findComputUpdate(idComputer, map);
 	}
 	
 	@PostMapping("editComputer")
 	public String postEditComputer (@ModelAttribute("computerToUpdate")ComputerDTO compDTO,
-			@RequestParam(value="maxPage", defaultValue = "1")int maxPage,
-			ModelMap map){
+			@RequestParam(value = "maxPage", defaultValue = "1")int maxPage, ModelMap map)
+	{
 		System.out.println(compDTO);
 		updateComput(compDTO, map);
 		map.put("computerToUpdate", compDTO);
-		return "redirect:dashboard?lengthPage=10&column=&tri=0&page="+maxPage;
+		
+		return "redirect:dashboard?lengthPage=10&column=&tri=0&page="+ maxPage;
 	}
 }

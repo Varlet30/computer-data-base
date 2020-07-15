@@ -2,13 +2,14 @@ package com.excilys.projet.java.cdb.model;
 
 public class Company 
 {
+	
 	private long id;
 	private String name;
 	
 	private Company(CompanyBuilder builder) 
 	{
-		this.id=builder.id;
-		this.name=builder.name;
+		this.id = builder.id;
+		this.name = builder.name;
 	}
 	
 	public Long getId() 
@@ -28,7 +29,7 @@ public class Company
 	
 	public void setName(String name) 
 	{
-		this.name =name;
+		this.name = name;
 	}
 	
 	public static class CompanyBuilder
@@ -42,13 +43,13 @@ public class Company
 		
 		public CompanyBuilder setId(long id)
 		{
-			this.id=id;
+			this.id = id;
 			return this;
 		}
 		
 		public CompanyBuilder setName(String name)
 		{
-			this.name=name;
+			this.name = name;
 			return this;
 		}
 		
@@ -59,10 +60,8 @@ public class Company
 	}
 	
 	@Override
-	public String toString() {
+	public String toString() 
+	{
 		return "Company [id=" + id + ", name=" + name + "]";
 	}
-	
-	
-	
 }
