@@ -7,12 +7,16 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 import com.excilys.projet.java.cdb.mapper.ComputerMapper;
+import com.excilys.projet.java.cdb.model.Company;
 import com.excilys.projet.java.cdb.model.Computer;
 
+@Repository
 public class ComputerDAO
 {
-	private static ComputerDAO instance; 
 	private static Logger logger = LoggerFactory.getLogger(CompanyDAO.class);
 	
 	private static final String AllComputer = "SELECT computer.id as computerId, computer.name as computerName, computer.introduced as computerIntroduced, "
@@ -36,23 +40,14 @@ public class ComputerDAO
 	private static final String DeleteByIdComputer = "DELETE FROM computer WHERE id = ?";
 	private static final String DeleteByIdCompany = "DELETE FROM computer WHERE company_id = ?";
 	private static final String Insert = "INSERT computer (computerName, computerIntroduced, computerDiscontinued, computer.company_id) VALUES (?,?,?,?)";
+
+	@Autowired
+	private CompanyDAO companyDao;
+	@Autowired
+	private ConnecHikari connecHikari;
 	
-	
-	private ComputerDAO()
+	public ComputerDAO()
 	{
-	}
-	
-	public static synchronized ComputerDAO getInstance()
-	{
-		if (instance == null)
-		{
-			instance= new ComputerDAO();
-			return instance;
-		}
-		else
-		{
-			return instance;
-		}
 	}
 	
 	public List<Computer> allComputer()
@@ -61,7 +56,7 @@ public class ComputerDAO
 		ArrayList<Computer> listComputer = new ArrayList<Computer>();
 		try
 		{
-			Connection preparation = ConnecHikari.getInstance().getConnection();
+			Connection preparation = connecHikari.getConnection();
 			PreparedStatement prepare = preparation.prepareStatement(AllComputer) ;
 			ResultSet resultat = prepare.executeQuery();
 			while (resultat.next())
@@ -72,7 +67,7 @@ public class ComputerDAO
 					listComputer.add(comp);
 				}
 			}
-ConnecHikari.getInstance().disconnect();
+connecHikari.disconnect();
 			return listComputer;
 		}
 		catch (SQLException e)
@@ -88,19 +83,22 @@ ConnecHikari.getInstance().disconnect();
 		int nombreComputer = 0;
 		try
 		{
-			Connection preparation = ConnecHikari.getInstance().getConnection();
+			Connection preparation = connecHikari.getConnection();
 			PreparedStatement prepare = preparation.prepareStatement(ListComputer);
 			ResultSet resultat = prepare.executeQuery();
 			while (resultat.next())
 			{ 
 				Computer comp = ComputerMapper.convertRequestById(resultat);
+				Long company_id = resultat.getLong("companyId");
+				Company compa = companyDao.findCompany(company_id);
+				comp.setCompany(compa);
 				if (comp.getName() != null)
 				{
 					listComputer.add(comp);
 				}
 				nombreComputer = listComputer.size();
 			}
-ConnecHikari.getInstance().disconnect();
+			connecHikari.disconnect();
 			return nombreComputer;
 		}
 		catch (SQLException e)
@@ -116,7 +114,7 @@ ConnecHikari.getInstance().disconnect();
 		String requete;
 		try
 		{
-			Connection preparation = ConnecHikari.getInstance().getConnection();
+			Connection preparation = connecHikari.getConnection();
 			if (tri==0||colonne==null)
 			{
 				requete = PageOrder+" LIMIT ?, ?";
@@ -141,7 +139,7 @@ ConnecHikari.getInstance().disconnect();
 					listComputer.add(comp);
 				}
 			}
-ConnecHikari.getInstance().disconnect();
+connecHikari.disconnect();
 			return listComputer;
 		}
 		catch (SQLException e)
@@ -155,13 +153,16 @@ ConnecHikari.getInstance().disconnect();
 	{
 		try
 		{
-			Connection preparation = ConnecHikari.getInstance().getConnection();
+			Connection preparation = connecHikari.getConnection();
 			PreparedStatement prepare = preparation.prepareStatement(FindById) ;
 			prepare.setLong(1, id);
 			ResultSet resultat = prepare.executeQuery();
 			while (resultat.next())
 			{ 
 				Computer comp = ComputerMapper.convertRequestById(resultat);
+				Long company_id = resultat.getLong("companyId");
+				Company compa = companyDao.findCompany(company_id);
+				comp.setCompany(compa);
 				if (comp.getName() != null)
 				{
 					return comp;
@@ -172,7 +173,7 @@ ConnecHikari.getInstance().disconnect();
 					return null;
 				}
 			}
-ConnecHikari.getInstance().disconnect();
+connecHikari.disconnect();
 		}
 		catch (SQLException e)
 		{
@@ -186,7 +187,7 @@ ConnecHikari.getInstance().disconnect();
 		ArrayList<Computer> listComputer = new ArrayList<Computer>();
 		try
 		{
-			Connection preparation = ConnecHikari.getInstance().getConnection();
+			Connection preparation = connecHikari.getConnection();
 			PreparedStatement prepare = preparation.prepareStatement(FindByName) ;
 			recherche = recherche.toLowerCase();
 			recherche = "%"+recherche+"%";
@@ -200,7 +201,7 @@ ConnecHikari.getInstance().disconnect();
 				Computer comp = ComputerMapper.convertRequestByName(resultat);
 				listComputer.add(comp);
 			}
-			ConnecHikari.getInstance().disconnect();
+			connecHikari.disconnect();
 		}
 		catch (SQLException e)
 		{
@@ -212,7 +213,7 @@ ConnecHikari.getInstance().disconnect();
 	public int update(Computer comp)
 	{
 		int value = 0;
-		Connection preparation = ConnecHikari.getInstance().getConnection();
+		Connection preparation = connecHikari.getConnection();
 		if (comp.getName() != null)
 		{
 			try
@@ -249,14 +250,14 @@ ConnecHikari.getInstance().disconnect();
 				logger.error("Error request " + e);
 			}
 		}
-		ConnecHikari.getInstance().disconnect();
+		connecHikari.disconnect();
 		return value;
 	}
 	
 	public int delete(long computerId)
 	{
 		int value = 0;
-		Connection preparation = ConnecHikari.getInstance().getConnection();
+		Connection preparation = connecHikari.getConnection();
 		try
 		{
 			PreparedStatement prepare = preparation.prepareStatement(DeleteByIdComputer) ;
@@ -267,13 +268,13 @@ ConnecHikari.getInstance().disconnect();
 		{
 			logger.error("Error request " + e);
 		}
-		ConnecHikari.getInstance().disconnect();
+		connecHikari.disconnect();
 		return value;
 	}
 	public int deleteComputIdCompany(long companyId)
 	{
 		int value = 0;
-		Connection preparation = ConnecHikari.getInstance().getConnection();
+		Connection preparation = connecHikari.getConnection();
 		try
 		{
 			PreparedStatement prepare = preparation.prepareStatement(DeleteByIdCompany) ;
@@ -284,12 +285,12 @@ ConnecHikari.getInstance().disconnect();
 		{
 			logger.error("Error request " + e);
 		}
-		ConnecHikari.getInstance().disconnect();
+		connecHikari.disconnect();
 		return value;
 	}
 	public int create(Computer comp)
 	{
-		Connection preparation = ConnecHikari.getInstance().getConnection();
+		Connection preparation = connecHikari.getConnection();
 		int value = 0;
 		try
 		{
@@ -324,7 +325,7 @@ ConnecHikari.getInstance().disconnect();
 		{
 			logger.error("Error request " + e);
 		}
-		ConnecHikari.getInstance().disconnect();
+		connecHikari.disconnect();
 		return value;
 	}
 }

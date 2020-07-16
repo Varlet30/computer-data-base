@@ -4,11 +4,16 @@ import java.io.IOException;
 
 import java.util.List;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import com.excilys.projet.java.cdb.mapper.ComputerMapper;
 import com.excilys.projet.java.cdb.model.Company;
@@ -20,13 +25,23 @@ import com.excilys.projet.java.cdb.service.ServiceComputer;
  * Servlet implementation class Add
  */
 @WebServlet(urlPatterns = "/AddServlet")
+@Controller
 public class AddServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
 	
 	public int maxPage;
 	public int lenPage;
-       
+	@Autowired
+	private ServiceComputer serviceComputer;
+	@Autowired
+	private ServiceCompany serviceCompany;
+     
+	public void init(ServletConfig config) throws ServletException
+    {
+    	super.init(config);
+    	SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
+    }
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -39,7 +54,7 @@ public class AddServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		List<Company> listCompany;
-		listCompany = ServiceCompany.getInstance().getCompanyList();
+		listCompany = serviceCompany.getCompanyList();
 		request.setAttribute("listCompany",listCompany);
 		request.getRequestDispatcher("views/addComputer.jsp").forward(request,response);
 	}
@@ -51,9 +66,9 @@ public class AddServlet extends HttpServlet {
 			
 		Computer comp = ComputerMapper.convertResult(request);
 		StringBuilder erreur = new StringBuilder();
-		ServiceComputer.getInstance().addComputer(comp);
+		serviceComputer.addComputer(comp);
 		lenPage=10;
-		maxPage=ServiceComputer.getInstance().getCount()/lenPage;
+		maxPage=serviceComputer.getCount()/lenPage;
 		request.getRequestDispatcher("ListServlet?page="+ maxPage).forward(request,response);
 		erreur.append("Not Name");
 		request.setAttribute("error", erreur);

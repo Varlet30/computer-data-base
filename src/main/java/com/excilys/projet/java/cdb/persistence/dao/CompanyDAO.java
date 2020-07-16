@@ -8,12 +8,16 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 import com.excilys.projet.java.cdb.mapper.CompanyMapper;
 import com.excilys.projet.java.cdb.model.Company;
 
+@Repository
 public class CompanyDAO 
 {
-	private static CompanyDAO instance;
 	private static Logger logger = LoggerFactory.getLogger(CompanyDAO.class);
 	
 	private static final String All = "SELECT * FROM company";
@@ -22,21 +26,11 @@ public class CompanyDAO
 	private static final String DeleteByIdComputer = "DELETE FROM computer WHERE company_id = ?";
 	private static final String DeleteByIdCompany = "DELETE FROM company WHERE id = ?";
 	
+	@Autowired
+	private ConnecHikari connectHikari;
+	
 	private CompanyDAO()
 	{
-	}
-	
-	public static synchronized CompanyDAO getInstance()
-	{
-		if (instance == null)
-		{
-			instance = new CompanyDAO();
-			return instance;
-		}
-		else
-		{
-			return instance;
-		}
 	}
 	
 	public List<Company> allCompany()
@@ -44,7 +38,7 @@ public class CompanyDAO
 		ArrayList<Company> listCompany = new ArrayList<Company>();
 		try
 		{
-			Connection preparation = ConnecHikari.getInstance().getConnection();
+			Connection preparation = connectHikari.getConnection();
 			PreparedStatement prepare = preparation.prepareStatement(All) ;
 			ResultSet resultat = prepare.executeQuery();
 			while (resultat.next())
@@ -52,7 +46,7 @@ public class CompanyDAO
 				Company compa = CompanyMapper.convertRequest(resultat);
 				listCompany.add(compa);
 			}
-			ConnecHikari.getInstance().disconnect();
+			connectHikari.disconnect();
 			return listCompany;
 		}
 		catch (SQLException e)
@@ -66,7 +60,7 @@ public class CompanyDAO
 	{
 		try
 		{
-			Connection preparation = ConnecHikari.getInstance().getConnection();
+			Connection preparation = connectHikari.getConnection();
 			PreparedStatement prepare = preparation.prepareStatement(FindById) ;
 			prepare.setLong(1, id);
 			ResultSet resultat = prepare.executeQuery();
@@ -75,7 +69,7 @@ public class CompanyDAO
 			{
 				compa = CompanyMapper.convertRequest(resultat);
 			}
-			ConnecHikari.getInstance().disconnect();
+			connectHikari.disconnect();
 			return compa;
 		}
 		catch (SQLException e)
@@ -91,14 +85,14 @@ public class CompanyDAO
 		
 		try
 		{
-			Connection preparation = ConnecHikari.getInstance().getConnection();
+			Connection preparation = connectHikari.getConnection();
 			PreparedStatement prepare = preparation.prepareStatement(FindByName) ;
 			prepare.setString(1, name);
 			ResultSet resultat = prepare.executeQuery();
 			while (resultat.next())
 			{ 
 				Company compa = CompanyMapper.convertRequest(resultat);
-				ConnecHikari.getInstance().disconnect();
+				connectHikari.disconnect();
 				return compa;
 			}
 		}
@@ -112,7 +106,7 @@ public class CompanyDAO
 	public int delete(long companyId) throws SQLException
 	{
 		int value = 0;
-		Connection preparation = ConnecHikari.getInstance().getConnection();
+		Connection preparation = connectHikari.getConnection();
 		preparation.setAutoCommit(false);
 		try 
 		{
@@ -144,7 +138,7 @@ public class CompanyDAO
 			preparation.rollback();
 		}
 		preparation.setAutoCommit(true);
-		ConnecHikari.getInstance().disconnect();
+		connectHikari.disconnect();
 		return value;
 	}
 }

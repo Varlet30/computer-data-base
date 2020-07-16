@@ -7,21 +7,28 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.excilys.projet.java.cdb.model.Company;
 import com.excilys.projet.java.cdb.service.ServiceCompany;
 
+@Component
 public class CompanyDAOTest {
 
+	@Autowired
+	private ServiceCompany serviceCompany;
+	
     @Test
     public void testGetAll() throws ClassNotFoundException {
-    	List<Company> company = ServiceCompany.getInstance().getCompanyList();
+    	List<Company> company = serviceCompany.getCompanyList();
         assertFalse(company.isEmpty());
         assertEquals(42, company.size());
     }
 
     @Test
     public void testFindCompany() throws ClassNotFoundException {
-    	Company company = ServiceCompany.getInstance().getCompany(1L);
+    	Company company = serviceCompany.getCompany(1L);
         assertEquals("Apple Inc.", company.getName());
     }
 }

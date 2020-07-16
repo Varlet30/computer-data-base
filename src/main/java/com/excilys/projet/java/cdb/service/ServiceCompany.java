@@ -4,45 +4,37 @@ import java.sql.SQLException;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.excilys.projet.java.cdb.persistence.dao.CompanyDAO;
 import com.excilys.projet.java.cdb.model.Company;
 
+@Service
 public class ServiceCompany 
 {
-	private static ServiceCompany instance;
 	
+	@Autowired
+	private CompanyDAO companyDao;
 	private ServiceCompany()
 	{
 		
 	}
 	
-	public static ServiceCompany getInstance()
-	{
-		if (instance == null)
-		{
-			instance= new ServiceCompany();
-			return instance; 
-		}
-		else
-		{
-			return instance;
-		}
-	}
-	
 	public List<Company> getCompanyList()
 	{
-		List<Company> listCompa = CompanyDAO.getInstance().allCompany();
+		List<Company> listCompa = companyDao.allCompany();
 		return listCompa;	
 	}
 	
 	public Company getCompany(Long id)
 	{
-		Company compa = CompanyDAO.getInstance().findCompany(id);
+		Company compa = companyDao.findCompany(id);
 		return compa;
 	}
 	
 	public void getDeleteCompany(Long id) throws SQLException
 	{
-		CompanyDAO.getInstance().delete(id);
+		companyDao.delete(id);
 	}
 }

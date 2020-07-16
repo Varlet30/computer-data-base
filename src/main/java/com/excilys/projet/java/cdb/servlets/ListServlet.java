@@ -4,11 +4,16 @@ import java.io.IOException;
 
 import java.util.List;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import com.excilys.projet.java.cdb.model.Computer;
 import com.excilys.projet.java.cdb.service.ServiceComputer;
@@ -17,6 +22,7 @@ import com.excilys.projet.java.cdb.service.ServiceComputer;
  * Servlet implementation class ListServlet
  */
 @WebServlet(urlPatterns  =  "/ListServlet")
+@Controller
 public class ListServlet extends HttpServlet 
 {
 	private static final long serialVersionUID  =  1L;
@@ -27,10 +33,19 @@ public class ListServlet extends HttpServlet
 	public int lenPage;
 	public int totalComputer;
 	public String colonne;
+	@Autowired
+	private ServiceComputer serviceComputer;
 
-    /**
-     * @see HttpServlet#HttpServlet()
+	/**
+     * @throws ServletException 
+	 * @see HttpServlet#HttpServlet()
      */
+    public void init(ServletConfig config) throws ServletException
+    {
+    	super.init(config);
+    	SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
+    }
+    
     public ListServlet() 
     {
     	super();
@@ -52,26 +67,26 @@ public class ListServlet extends HttpServlet
 				lenPage = Integer.parseInt(request.getParameter("lenPage"));
 			}else{
 				lenPage = 10;
-			}	totalComputer = ServiceComputer.getInstance().getCount();
+			}	totalComputer = serviceComputer.getCount();
 			maxPage = totalComputer/lenPage;
 			
 			if (request.getParameter("page") != null)	{
 				page = Integer.parseInt(request.getParameter("page"));
 				if (page == maxPage){
-					computerList = ServiceComputer.getInstance().getComputerListPaginer(tri,colonne,ServiceComputer.getInstance().getCount()%10,page*lenPage);
+					computerList = serviceComputer.getComputerListPaginer(tri,colonne,serviceComputer.getCount()%10,page*lenPage);
 				}else{
-					computerList = ServiceComputer.getInstance().getComputerListPaginer(tri,colonne,lenPage,page*lenPage);
+					computerList = serviceComputer.getComputerListPaginer(tri,colonne,lenPage,page*lenPage);
 				}
 			}else{
 				page = 1;
-				computerList = ServiceComputer.getInstance().getComputerListPaginer(tri,colonne,lenPage,0);
+				computerList = serviceComputer.getComputerListPaginer(tri,colonne,lenPage,0);
 			}
 			request.setAttribute("page", page);
 			request.setAttribute("maxPage", maxPage);
 			request.setAttribute("lenPage", lenPage);
 		}else{
 			String search = request.getParameter("search");
-			computerList = ServiceComputer.getInstance().findComputerByName(search);
+			computerList = serviceComputer.findComputerByName(search);
 			totalComputer = computerList.size();
 		}
 		request.setAttribute("totalComputer", totalComputer);
@@ -88,7 +103,7 @@ public class ListServlet extends HttpServlet
 		String[] idList  =  idAttacher.split(",");
 		
 		for (int i = 0; i < idList.length; i++){
-			ServiceComputer.getInstance().deleteComputer(Long.parseLong(idList[i]));
+			serviceComputer.deleteComputer(Long.parseLong(idList[i]));
 		}
 		doGet(request, response);
 	}

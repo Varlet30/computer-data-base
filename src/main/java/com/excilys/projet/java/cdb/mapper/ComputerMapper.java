@@ -7,14 +7,17 @@ import java.time.LocalDate;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.stereotype.Repository;
+
 import com.excilys.projet.java.cdb.dto.CompanyDTO;
 import com.excilys.projet.java.cdb.dto.ComputerDTO;
 import com.excilys.projet.java.cdb.model.Company;
 import com.excilys.projet.java.cdb.model.Computer;
-import com.excilys.projet.java.cdb.persistence.dao.CompanyDAO;
 
+@Repository
 public class ComputerMapper 
 {
+	
 	public static Computer convert(ComputerDTO compDTO)
 	{
 		Long id = compDTO.getIdComputer();
@@ -103,10 +106,7 @@ public class ComputerMapper
 		{
 			discontinued = disco.toLocalDate();
 		}
-		Long company_id = resultat.getLong("companyId");
-	
-		Company compa = CompanyDAO.getInstance().findCompany(company_id);
-		Computer comp = new Computer.ComputerBuilder(name).setIntroduced(introduced).setDiscontinued(discontinued).setCompany(compa).build();			
+		Computer comp = new Computer.ComputerBuilder(name).setIntroduced(introduced).setDiscontinued(discontinued).build();
 		return comp;
 	}
 }

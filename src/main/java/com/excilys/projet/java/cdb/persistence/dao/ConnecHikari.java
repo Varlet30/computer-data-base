@@ -6,9 +6,12 @@ import java.sql.SQLException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.springframework.stereotype.Component;
+
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
+@Component
 public class ConnecHikari 
 {
 
@@ -24,7 +27,7 @@ public class ConnecHikari
   	dataSource = new HikariDataSource(hikariConfig);
   	}
 
-	private ConnecHikari() { 
+	public ConnecHikari() { 
 	}
 
 	public Connection getConnection() {
