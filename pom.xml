@@ -4,7 +4,7 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.excilys.cdb</groupId>
+  <groupId>com.excilys.cbd</groupId>
   <artifactId>mavenCDB</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>war</packaging>
@@ -15,45 +15,46 @@
 
   <properties>
     <junit-version>4.12</junit-version>
-    <mysql-version>8.0.20</mysql-version>
-    <h2database-version>1.4.192</h2database-version>
-    <slf4j-api-version>1.7.5</slf4j-api-version>
-    <slf4j-version>1.7.5</slf4j-version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <hikariCP-version>2.6.1</hikariCP-version>
+    <junit-version>4.12</junit-version>
+    <mysql-version>8.0.19</mysql-version>
+    <h2database-version>1.4.192</h2database-version>
+    <slf4j-version>1.7.5</slf4j-version>
     <servlet-version>4.0.0-b06</servlet-version>
     <jstl-version>1.2</jstl-version>
-    <selenium-version>3.141.59</selenium-version>
-    <validator-version>2.5.6</validator-version>
+    <spring-version>5.2.3.RELEASE</spring-version>
+    <commonslogging-version>1.1</commonslogging-version>
     <mockito-version>1.10.19</mockito-version>
     <jupiter-version>5.7.0-M1</jupiter-version>
+    <selenium-version>3.141.59</selenium-version>
   </properties>
 
-  <dependencies>
+ <dependencies>
     <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-api</artifactId>
-      <version>${jupiter-version}</version>
-      <scope>test</scope>
-    </dependency>
+	    <groupId>org.springframework.boot</groupId>
+	    <artifactId>spring-boot-starter-test</artifactId>
+	    <scope>test</scope>
+	    <version>2.2.6.RELEASE</version>
+	</dependency>
+	<dependency>
+	    <groupId>com.h2database</groupId>
+	    <artifactId>h2</artifactId>
+	    <scope>test</scope>
+	</dependency>
+   <dependency>
+	  <groupId>org.seleniumhq.selenium</groupId>
+	  <artifactId>selenium-java</artifactId>
+	  <version>${selenium-version}</version>
+   </dependency>
     <dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-all</artifactId>
       <version>${mockito-version}</version>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-context</artifactId>
-      <version>${validator-version}</version>
-   </dependency>
-   <dependency>
-	  <groupId>org.seleniumhq.selenium</groupId>
-	  <artifactId>selenium-java</artifactId>
-	  <version>${selenium-version}</version>
-	</dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
@@ -66,54 +67,38 @@
       <version>${mysql-version}</version>
       <scope>compile</scope>
     </dependency>
-   <dependency>
-       <groupId>org.slf4j</groupId>
-       <artifactId>slf4j-log4j12</artifactId>
-       <version>${slf4j-version}</version>
-   </dependency>
-   <dependency>
+    <dependency>
        <groupId>com.h2database</groupId>
        <artifactId>h2</artifactId>
        <version>${h2database-version}</version>
        <scope>test</scope>
     </dependency>
-    <dependency>
+   <dependency>
        <groupId>org.slf4j</groupId>
-       <artifactId>slf4j-api</artifactId>
-       <version>${slf4j-api-version}</version>
+       <artifactId>slf4j-log4j12</artifactId>
+       <version>${slf4j-version}</version>
    </dependency>
-	<dependency>
-	    <groupId>javax.servlet</groupId>
-	    <artifactId>javax.servlet-api</artifactId>
-	    <version>${servlet-version}</version>
-	    <scope>provided</scope>
-	</dependency>
 	<dependency>
 	    <groupId>javax.servlet</groupId>
 	    <artifactId>jstl</artifactId>
 	    <version>${jstl-version}</version>
 	</dependency>
 	<dependency>
-	    <groupId>com.zaxxer</groupId>
-	    <artifactId>HikariCP</artifactId>
-	    <version>${hikariCP-version}</version>
-	</dependency>	
-	<dependency>
-	    <groupId>org.springframework</groupId>
-	    <artifactId>spring-core</artifactId>
-	    <version>5.2.3.RELEASE</version>
+	    <groupId>commons-logging</groupId>
+	    <artifactId>commons-logging-api</artifactId>
+	    <version>${commonslogging-version}</version>
 	</dependency>
 	<dependency>
 	    <groupId>org.springframework</groupId>
-	    <artifactId>spring-context</artifactId>
-	    <version>5.2.3.RELEASE</version>
+	    <artifactId>spring-jdbc</artifactId>
+	    <version>${spring-version}</version>
 	</dependency>
 	<dependency>
 	    <groupId>org.springframework</groupId>
-	    <artifactId>spring-web</artifactId>
-	    <version>5.2.3.RELEASE</version>
+	    <artifactId>spring-webmvc</artifactId>
+	    <version>${spring-version}</version>
 	</dependency>
-  </dependencies>
+ </dependencies>
 
   <build>
     <finalName>mavenCDB</finalName>

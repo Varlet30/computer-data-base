@@ -13,7 +13,7 @@ import com.excilys.projet.java.cdb.dto.CompanyDTO;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.mock;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 public class CompanyMapperTest {
 	
@@ -23,7 +23,7 @@ public class CompanyMapperTest {
     private final Long id = 10L;
 
 	@Test
-	public void testGetCompany() throws Exception {
+	public void testDtoCompanyToCompany() throws Exception {
 			try {
 				when(resultSet.getLong(IDCOMPANY)).thenReturn(id);
 			} catch (SQLException e) {
@@ -31,10 +31,23 @@ public class CompanyMapperTest {
 			}
 			CompanyDTO compaDTO = new CompanyDTO();
 			compaDTO.setId(id);
-			Company compa = CompanyMapper.convert(compaDTO);
+			Company compa = CompanyMapper.convertCompanyDTOtoCompany(compaDTO);
 	        Company expCompany = new Company.CompanyBuilder().setId(id).build();
 	        
 	        assertEquals(expCompany.getId(), compa.getId());
 	}
-
+	
+	@Test
+	public void testCompanyToDtoCompany() throws Exception {
+			try {
+				when(resultSet.getLong(IDCOMPANY)).thenReturn(id);
+			} catch (SQLException e) {
+				fail("sql exception :" + e.getMessage());
+			}
+			Company compa = new Company.CompanyBuilder().setId(id).build();
+			CompanyDTO compaDTO = CompanyMapper.convertCompanytoCompanyDTO(compa);
+	        CompanyDTO expCompany = new CompanyDTO(id.toString());
+	        
+	        assertEquals(expCompany.getId(), compaDTO.getId());
+	}
 }

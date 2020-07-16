@@ -4,10 +4,6 @@ import java.time.*;
 
 public class Computer
 {
-	@Override
-	public String toString() {
-		return "Computer [id=" + id + ", name=" + name + ", introduced=" + introduced + ", discontinued=" + discontinued + ", compa=" + compa + "]";
-	}
 	
 	private long id;
 	private String name;
@@ -17,15 +13,12 @@ public class Computer
 	
 	private Computer(ComputerBuilder builder)
 	{
-		this.name=builder.name;
-		this.introduced=builder.introduced;
-		this.discontinued=builder.discontinued;
-		this.compa=builder.compa;
+		this.name = builder.name;
+		this.introduced = builder.introduced;
+		this.discontinued = builder.discontinued;
+		this.compa = builder.compa;
 	}
 	
-	public Computer() {
-	}
-
 	public String getName() 
 	{
 		return name;
@@ -97,11 +90,12 @@ public class Computer
 	
 	public void setCompany(Company compa) 
 	{
-		this.compa=compa;
+		this.compa = compa;
 	}
 	
 	public static class ComputerBuilder
 	{
+		
 		private String name;
 		private LocalDate introduced;
 		private LocalDate discontinued;
@@ -109,24 +103,24 @@ public class Computer
 
 		public ComputerBuilder (String name)
 		{
-			this.name=name;
+			this.name = name;
 		}
 		
 		public ComputerBuilder setIntroduced(LocalDate introduced)
 		{
-			this.introduced=introduced;
+			this.introduced = introduced;
 			return this;
 		}
 		
 		public ComputerBuilder setDiscontinued(LocalDate discontinued)
 		{
-			this.discontinued=discontinued;
+			this.discontinued = discontinued;
 			return this;
 		}
 		
 		public ComputerBuilder setCompany(Company compa)
 		{
-			this.compa=compa;
+			this.compa = compa;
 			return this;
 		}
 		
@@ -134,5 +128,12 @@ public class Computer
 		{
 			return new Computer(this);
 		}
+	}
+	
+	@Override
+	public String toString() 
+	{
+		return "Computer [id=" + id + ", name=" + name + ", introduced=" + introduced + ", discontinued=" + discontinued
+				+ ", compa=" + compa + "]";
 	}
 }

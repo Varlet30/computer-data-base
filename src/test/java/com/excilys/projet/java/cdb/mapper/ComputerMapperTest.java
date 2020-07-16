@@ -9,7 +9,7 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import com.excilys.projet.java.cdb.dto.CompanyDTO;
 import com.excilys.projet.java.cdb.dto.ComputerDTO;
@@ -33,7 +33,7 @@ public class ComputerMapperTest {
     private ResultSet resultSet = mock(ResultSet.class);
 
 	@Test
-    public void testConvert() throws SQLException {
+    public void testComputerDTOtoComputer() throws SQLException {
         try {
             when(resultSet.getLong(IDCOMPUTER)).thenReturn(idComputer);
             when(resultSet.getString(NAMECOMPUTER)).thenReturn(computerName);
@@ -46,7 +46,7 @@ public class ComputerMapperTest {
         CompanyDTO compaDTO = new CompanyDTO();
 		compaDTO.setId(idCompany);
         ComputerDTO compuDTO =new ComputerDTO(computerName, introduced.toString(), discontinued.toString(), compaDTO); 
-		Computer computer = ComputerMapper.convert(compuDTO);
+		Computer computer = ComputerMapper.convertComputerDTOtoComputer(compuDTO);
         
         Company compa = new Company.CompanyBuilder().setId(idCompany).build();
         
@@ -57,6 +57,33 @@ public class ComputerMapperTest {
         assertEquals(expComputer.getIntroduced(), computer.getIntroduced());
         assertEquals(expComputer.getDiscontinued(), computer.getDiscontinued());
         assertEquals(expComputer.getCompany().getId(), computer.getCompany().getId());
+        
+    }
+	
+	@Test
+    public void testComputertoComputerDTO() throws SQLException {
+        try {
+            when(resultSet.getLong(IDCOMPUTER)).thenReturn(idComputer);
+            when(resultSet.getString(NAMECOMPUTER)).thenReturn(computerName);
+            when(resultSet.getDate(INTRODUCEDCOMPUTER)).thenReturn(introduced);
+            when(resultSet.getDate(DISCONTINUEDCOMPUTER)).thenReturn(discontinued);
+            when(resultSet.getLong(IDCOMPANY)).thenReturn(idCompany);
+        } catch (SQLException e) {
+            fail("sql exception :" + e.getMessage());
+        }
+        Company compa = new Company.CompanyBuilder().setId(idCompany).build();
+        Computer compu = new Computer.ComputerBuilder(computerName).setDiscontinued(discontinued.toLocalDate()).setIntroduced(introduced.toLocalDate()).setCompany(compa).build();
+        ComputerDTO computerDTO = ComputerMapper.convertComputertoComputerDTO(compu);
+        
+        CompanyDTO compaDTO = new CompanyDTO();
+		compaDTO.setId(idCompany);
+        
+		ComputerDTO expComputerDTO =new ComputerDTO(computerName, introduced.toString(), discontinued.toString(), compaDTO); 
+		
+        assertEquals(expComputerDTO.getId(), computerDTO.getId());
+        assertEquals(expComputerDTO.getName(), computerDTO.getName());
+        assertEquals(expComputerDTO.getIntroduced(), computerDTO.getIntroduced());
+        assertEquals(expComputerDTO.getDiscontinued(), computerDTO.getDiscontinued());
         
     }
 }    

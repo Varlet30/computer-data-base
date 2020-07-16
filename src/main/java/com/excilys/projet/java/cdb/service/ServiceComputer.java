@@ -2,7 +2,6 @@ package com.excilys.projet.java.cdb.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.excilys.projet.java.cdb.persistence.dao.ComputerDAO;
@@ -11,57 +10,59 @@ import com.excilys.projet.java.cdb.model.Computer;
 @Service
 public class ServiceComputer 
 {
-	
-	@Autowired
 	private ComputerDAO computerDao;
 	
-	private ServiceComputer()
+	private ServiceComputer(ComputerDAO computerDao)
 	{
-		
+		this.computerDao = computerDao;
 	}
 	
-	public List<Computer> getComputerList()
+	public List<Computer> getComputerList() 
 	{
-		List<Computer> listComput = computerDao.allComputer();
+		List<Computer> listComput=computerDao.allComputer();
+		
 		return listComput;	
 	}
 	
-	public List<Computer> getComputerListPaginer(int tri, String colonne, int limit, int offset)
+	public List<Computer> getComputerListPaginer(int tri, String column, int limit, int offset) 
 	{
-	List<Computer> listComput = computerDao.pageComputer(tri, colonne, limit, offset);
+		List<Computer> listComput = computerDao.pageComputer(tri, column, limit, offset);
+		
 		return listComput;
 	}
 	
-	public int getCount()
+	public int getCount() 
 	{
-		int nombreComputer = computerDao.count();
+		int nombreComputer=computerDao.countComputer();
+		
 		return nombreComputer;	
 	}
 	
-	public void addComputer(Computer comput)
+	public Computer addComputer(Computer comput) 
 	{
-		computerDao.create(comput);
+			return comput;
 	}
 	
-	public void editComputer(Computer comp)
+	public void editComputer(Computer comp) 
 	{
-		computerDao.update(comp);
+		computerDao.updateComputer(comp);
 	}
 	
-	public Computer findComputerById(Long id)
+	public Computer findComputerById(Long id) 
 	{
-		Computer comp = computerDao.findId(id);
+		Computer comp = computerDao.findComputerId(id);
+		
 		return comp;
 	}
 	
-	public void deleteComputer(long id)
+	public void deleteComputer(long id) 
 	{
-		computerDao.delete(id);
+		computerDao.deleteComputer(id);
 	}
 	
-	public List<Computer> findComputerByName(String name)
+	public List<Computer> findComputerByName(String name) 
 	{
-		List<Computer> computerList = computerDao.findName(name);
+		List<Computer> computerList = computerDao.findComputerName(name);
 		return computerList;
 	}
 }
