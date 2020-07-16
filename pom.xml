@@ -1,61 +1,29 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
-  <groupId>com.excilys.cbd</groupId>
+  
+  <groupId>com.excilys.projet.java.cdb</groupId>
   <artifactId>mavenCDB</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <packaging>war</packaging>
-
-  <name>mavenCDB Maven Webapp</name>
-  <!-- FIXME change it to the project's website -->
-  <url>http://www.example.com</url>
-
+  <version>1.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <name>mavenCDB</name>
+ 
   <properties>
-    <junit-version>4.12</junit-version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
-    <hikariCP-version>2.6.1</hikariCP-version>
     <junit-version>4.12</junit-version>
     <mysql-version>8.0.19</mysql-version>
-    <h2database-version>1.4.192</h2database-version>
     <slf4j-version>1.7.5</slf4j-version>
     <servlet-version>4.0.0-b06</servlet-version>
     <jstl-version>1.2</jstl-version>
     <spring-version>5.2.3.RELEASE</spring-version>
     <commonslogging-version>1.1</commonslogging-version>
-    <mockito-version>1.10.19</mockito-version>
-    <jupiter-version>5.7.0-M1</jupiter-version>
-    <selenium-version>3.141.59</selenium-version>
+    <hibernatecore-version>5.4.12.Final</hibernatecore-version>
   </properties>
-
- <dependencies>
-    <dependency>
-	    <groupId>org.springframework.boot</groupId>
-	    <artifactId>spring-boot-starter-test</artifactId>
-	    <scope>test</scope>
-	    <version>2.2.6.RELEASE</version>
-	</dependency>
-	<dependency>
-	    <groupId>com.h2database</groupId>
-	    <artifactId>h2</artifactId>
-	    <scope>test</scope>
-	</dependency>
-   <dependency>
-	  <groupId>org.seleniumhq.selenium</groupId>
-	  <artifactId>selenium-java</artifactId>
-	  <version>${selenium-version}</version>
-   </dependency>
-    <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-all</artifactId>
-      <version>${mockito-version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
+  
+  <dependencies>
+  <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>${junit-version}</version>
@@ -68,16 +36,16 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
-       <groupId>com.h2database</groupId>
-       <artifactId>h2</artifactId>
-       <version>${h2database-version}</version>
-       <scope>test</scope>
-    </dependency>
-   <dependency>
        <groupId>org.slf4j</groupId>
        <artifactId>slf4j-log4j12</artifactId>
        <version>${slf4j-version}</version>
-   </dependency>
+    </dependency>
+	<dependency>
+	    <groupId>javax.servlet</groupId>
+	    <artifactId>javax.servlet-api</artifactId>
+	    <version>${servlet-version}</version>
+	    <scope>provided</scope>
+	</dependency>
 	<dependency>
 	    <groupId>javax.servlet</groupId>
 	    <artifactId>jstl</artifactId>
@@ -98,17 +66,43 @@
 	    <artifactId>spring-webmvc</artifactId>
 	    <version>${spring-version}</version>
 	</dependency>
- </dependencies>
-
+	<dependency>
+	    <groupId>org.hibernate</groupId>
+	    <artifactId>hibernate-core</artifactId>
+	    <version>${hibernatecore-version}</version>
+	</dependency>
+	<dependency>
+          <groupId>ch.qos.logback</groupId>
+        <artifactId>logback-classic</artifactId>
+        <version>1.0.13</version>
+    </dependency>
+    <dependency>
+	    <groupId>org.springframework.data</groupId>
+	    <artifactId>spring-data-jpa</artifactId>
+	    <version>2.2.4.RELEASE</version>
+	</dependency>
+  </dependencies>
   <build>
-    <finalName>mavenCDB</finalName>
-    <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+    <pluginManagement>
+  
+      <!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+    
       <plugins>
-        <plugin>
+        <plugin>      
           <artifactId>maven-clean-plugin</artifactId>
           <version>3.1.0</version>
         </plugin>
-        <!-- see http://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_war_packaging -->
+        <plugin>
+          <artifactId>maven-site-plugin</artifactId>
+          <version>3.7.1</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-project-info-reports-plugin</artifactId>
+          <version>3.0.0</version>
+        </plugin>
+        
+        <!-- see http://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_jar_packaging -->
+
         <plugin>
           <artifactId>maven-resources-plugin</artifactId>
           <version>3.0.2</version>
@@ -122,8 +116,8 @@
           <version>2.22.1</version>
         </plugin>
         <plugin>
-          <artifactId>maven-war-plugin</artifactId>
-          <version>3.2.2</version>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>3.0.2</version>
         </plugin>
         <plugin>
           <artifactId>maven-install-plugin</artifactId>
@@ -136,4 +130,19 @@
       </plugins>
     </pluginManagement>
   </build>
+  <reporting>
+    <plugins>
+      <plugin>
+        <artifactId>maven-project-info-reports-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </reporting>
+  <modules>
+    <module>Core</module>
+    <module>Binding</module>
+    <module>Persistence</module>
+    <module>Service</module>
+    <module>Webapp</module>
+    <module>Console</module>
+  </modules>
 </project>
