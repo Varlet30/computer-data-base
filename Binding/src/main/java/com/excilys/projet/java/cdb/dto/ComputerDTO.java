@@ -8,6 +8,10 @@ public class ComputerDTO
 	private String discontinued;
 	private CompanyDTO companyDTO;
 	
+	public ComputerDTO() 
+	{
+	}
+	
 	public ComputerDTO(String name,String introduced, String discontinued, CompanyDTO companyDTO)
 	{
 		this.name = name;
