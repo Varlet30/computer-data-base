@@ -28,16 +28,11 @@ public class ComputerDAO
 {
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 	
-	//public static String CreateComputer = "insert into Computer (name, introduced, discontinued, company.id) values (:name,:introduced,:discontinued,:company.id)";
-	//public static String FindComputerId = "SELECT computer.id as computer_id, computer.name as computer_name, computer.introduced, computer.discontinued, computer.company_id, company.name as company_name FROM computer LEFT JOIN company on company.id=computer.company_id WHERE computer.id=:id";
-	//public static String FindComputerName = "SELECT  computer.name as computer_name, computer.id as computer_id, computer.introduced, computer.discontinued, computer.company_id, company.name as company_name FROM computer LEFT JOIN company on company.id=computer.company_id WHERE LOWER(computer.name) LIKE :research OR LOWER(company.name) LIKE :research OR introduced LIKE :research OR discontinued LIKE :research;";
-	//public static String UpdateComputer = "update Computer set name = :name, introduced = :introduced, discontinued = :discontinued, company.id = :company.id WHERE id = :id";
-	//public static String DeleteComputer = "DELETE FROM computer WHERE id = :id";
-	public static String DeleteComputerByCompa = "DELETE FROM computer WHERE company_id = :id";
-	public static String Select = "from Computer";
-	public static String Ascendant = " asc";
-	public static String Descendant = " desc";
-	public static String Order = " order by ";
+	public static final String DeleteComputerByCompa = "DELETE FROM computer WHERE company_id = :id";
+	public static final String Select = "from Computer";
+	public static final String Ascendant = " asc";
+	public static final String Descendant = " desc";
+	public static final String Order = " order by ";
 	
 	@Autowired
 	SessionFactory sessionFactory;
@@ -115,13 +110,6 @@ public class ComputerDAO
 	public int updateComputer(Computer comp) 
 	{
 		Session session = entityManager.unwrap(Session.class);
-//		Query<Computer> query = session.createQuery(MODIFIER, Computer.class);
-//		query.setParameter("name", comp.getName());
-//		query.setParameter("introduced", comp.getIntroduced());
-//		query.setParameter("discontinued", comp.getDiscontinued());
-//		query.setParameter("company.id", comp.getCompany().getId());
-//		query.setParameter("id", comp.getId());
-//		int result = query.executeUpdate();
 		session.update(comp);
     	return 1;
 	}
@@ -145,6 +133,7 @@ public class ComputerDAO
 	{
 		Session session = entityManager.unwrap(Session.class);
 		session.save(comp);
+		
     	return 1;
 	}
 }
