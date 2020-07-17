@@ -41,7 +41,7 @@ public class SpringMVCConfig implements WebMvcConfigurer{
 	        .addResourceLocations("/resources/"); 
 	 }
 	   
-	 @Bean("messageSource")
+	 @Bean
 	 public MessageSource messageSource() 
 	 {
 		ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
@@ -61,11 +61,7 @@ public class SpringMVCConfig implements WebMvcConfigurer{
 	 }
 		 
 	 public void addInterceptors(InterceptorRegistry registry) 
-	 {
-		 ThemeChangeInterceptor themeChangeInterceptor = new ThemeChangeInterceptor();
-		 themeChangeInterceptor.setParamName("theme");
-		 registry.addInterceptor(themeChangeInterceptor);
-		    
+	 { 
 		 LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
 		 localeChangeInterceptor.setParamName("lang");
 		 registry.addInterceptor(localeChangeInterceptor);

@@ -39,7 +39,11 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @EnableWebMvc
 @EnableTransactionManagement
 @Configuration
-@ComponentScan(basePackages = {"com.excilys.projet.java.cdb.persistence.dao", "com.excilys.projet.java.cdb.controlleur","com.excilys.projet.java.cdb.service","com.excilys.projet.java.cdb.controleur","com.excilys.projet.java.cdb.mapper"})
+@ComponentScan(basePackages = {"com.excilys.projet.java.cdb.persistence.dao", 
+							"com.excilys.projet.java.cdb.controlleur",
+							"com.excilys.projet.java.cdb.service",
+							"com.excilys.projet.java.cdb.controleur",
+							"com.excilys.projet.java.cdb.mapper"})
 @PropertySource("classpath:datasource.properties")
 public class SpringConfig extends AbstractContextLoaderInitializer 
 {
