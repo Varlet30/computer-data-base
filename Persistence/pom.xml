@@ -16,18 +16,19 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
+    <spring-version>5.2.3.RELEASE</spring-version>
   </properties>
 
   <dependencies>
   <dependency>
 	    <groupId>org.springframework</groupId>
 	    <artifactId>spring-jdbc</artifactId>
-	    <version>5.2.3.RELEASE</version>
+	    <version>${spring-version}</version>
 	</dependency>
 	<dependency>
 	    <groupId>org.springframework</groupId>
 	    <artifactId>spring-webmvc</artifactId>
-	    <version>5.2.3.RELEASE</version>
+	    <version>${spring-version}</version>
 	</dependency>
  	<dependency>
       <groupId>com.excilys.projet.java.cdb</groupId>
@@ -35,19 +36,4 @@
  	  <version>1.0-SNAPSHOT</version>
  	</dependency>
   </dependencies>
-
-  <build>
-    <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
-      <plugins>
-      </plugins>
-    </pluginManagement>
-  </build>
-
-  <reporting>
-    <plugins>
-      <plugin>
-        <artifactId>maven-project-info-reports-plugin</artifactId>
-      </plugin>
-    </plugins>
-  </reporting>
 </project>

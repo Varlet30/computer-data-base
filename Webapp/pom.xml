@@ -16,19 +16,18 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
+    <selenium-java-version>3.141.59</selenium-java-version>
+    <junit-version>4.12</junit-version>
+    <javax.servlet-api-version>4.0.0-b06</javax.servlet-api-version>
+    <javax.servlet-jstl-version>1.2</javax.servlet-jstl-version>
   </properties>
 
   <dependencies>
     <dependency>
 	  <groupId>org.seleniumhq.selenium</groupId>
 	  <artifactId>selenium-java</artifactId>
-	  <version>3.141.59</version>
+	  <version>${selenium-java-version}</version>
    </dependency>
-    <dependency>
-      <groupId>com.excilys.projet.java.cdb</groupId>
- 	  <artifactId>Core</artifactId>
- 	  <version>1.0-SNAPSHOT</version>
- 	</dependency>
  	<dependency>
       <groupId>com.excilys.projet.java.cdb</groupId>
  	  <artifactId>Binding</artifactId>
@@ -42,32 +41,28 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.12</version>
+      <version>${junit-version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
 	    <groupId>javax.servlet</groupId>
 	    <artifactId>javax.servlet-api</artifactId>
-	    <version>4.0.0-b06</version>
+	    <version>${javax.servlet-api-version}</version>
 	    <scope>provided</scope>
 	</dependency>
 	<dependency>
 	    <groupId>javax.servlet</groupId>
 	    <artifactId>jstl</artifactId>
-	    <version>1.2</version>
+	    <version>${javax.servlet-jstl-version}</version>
 	</dependency>
   </dependencies>
 
   <build>
-    <finalName>webModule</finalName>
-    <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
-      <plugins>
-        <!-- see http://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_war_packaging -->
-        <plugin>
-          <artifactId>maven-war-plugin</artifactId>
-          <version>3.2.2</version>
-        </plugin>
-      </plugins>
-    </pluginManagement>
+    <plugins>
+      <plugin>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>3.2.2</version>
+      </plugin>
+    </plugins>
   </build>
 </project>
