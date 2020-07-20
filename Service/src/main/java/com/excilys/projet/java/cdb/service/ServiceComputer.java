@@ -43,7 +43,7 @@ public class ServiceComputer
 			return comput;
 	}
 	
-	public void editComputer(Computer comp) 
+	public void updateComputer(Computer comp) 
 	{
 		computerDao.updateComputer(comp);
 	}

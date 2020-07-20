@@ -1,49 +1,14 @@
 package com.excilys.projet.java.cdb.mapper;
 
-import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.time.LocalDate;
 
-import org.springframework.jdbc.core.RowMapper;
 
 import com.excilys.projet.java.cdb.dto.CompanyDTO;
 import com.excilys.projet.java.cdb.dto.ComputerDTO;
 import com.excilys.projet.java.cdb.model.Company;
 import com.excilys.projet.java.cdb.model.Computer;
 
-public class ComputerMapper implements RowMapper<Computer>
-{
-	
-	public Computer mapRow(ResultSet resultat, int i) throws SQLException 
-	{
-		Computer comp = new Computer.ComputerBuilder(resultat.getString("computer_name")).build();
-		comp.setId(resultat.getLong("computer_id"));
-		Date intro = resultat.getDate("introduced");
-		Date disco = resultat.getDate("discontinued");
-		
-		LocalDate introduced = null;
-		
-		if (intro != null)
-		{
-			introduced =intro.toLocalDate();
-		}
-		
-		LocalDate discontinued = null;
-		comp.setIntroduced(introduced);
-		
-		if (disco != null)
-		{
-			discontinued = disco.toLocalDate();
-		}
-		comp.setIntroduced(introduced);
-		comp.setDiscontinued(discontinued);
-		
-		Company compa = new Company.CompanyBuilder().setId(resultat.getLong("company_id")).setName(resultat.getString("company_name")).build();
-		comp.setCompany(compa);
-		
-		return comp;
-	}
+public class ComputerMapper{
 	
 	public static Computer convertComputerDTOtoComputer(ComputerDTO compDTO)
 	{

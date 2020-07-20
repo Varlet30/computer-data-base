@@ -86,7 +86,6 @@ public class CompanyDTOTest {
 		results = company.toString();
 		
 		//THEN
-		System.out.println(results);
 		assertEquals(results, "CompanyDTO [id=0, name=null]");
 	}
 }

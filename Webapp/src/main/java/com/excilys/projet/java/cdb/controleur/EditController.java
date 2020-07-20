@@ -50,7 +50,7 @@ public class EditController
 	private void updateComput(ComputerDTO compDTO, ModelMap map)
 	{
 		Computer comp = ComputerMapper.convertComputerDTOtoComputer(compDTO);
-		serviceComputer.editComputer(comp);
+		serviceComputer.updateComputer(comp);
 	}
 	
 	@GetMapping("editComputer")

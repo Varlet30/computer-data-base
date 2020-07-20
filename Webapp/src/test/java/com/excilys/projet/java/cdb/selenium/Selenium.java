@@ -21,7 +21,7 @@ public class Selenium {
 		driver = new FirefoxDriver();
 		actions = new Actions(driver);
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-		driver.get("http://localhost:8080/mavenCDB/dashboard");
+		driver.get("http://localhost:8080/webModule/dashboard");
 		actions.moveToElement(driver.findElement(By.name("2"))).click().perform();
 		actions.pause(1000).perform();
 		actions.moveToElement(driver.findElement(By.id("addComputer"))).click().perform();

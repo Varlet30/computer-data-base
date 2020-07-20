@@ -2,35 +2,27 @@ package com.excilys.projet.java.cdb.mapper;
 
 import org.junit.Test;
 
+import static org.junit.Assert.fail;
+
 import com.excilys.projet.java.cdb.dto.CompanyDTO;
 import com.excilys.projet.java.cdb.model.Company;
+
+import static org.mockito.Mockito.when;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.mock;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 public class CompanyMapperTest {
-	
-	private static final String IDCOMPANY = "id";
-	private static final String NAMECOMPANY = "company";
-	private ResultSet resultSet = mock(ResultSet.class);
-	private final Long id = 10L;
-	private final String name = "company";
-	
+		
 	@Test
 	public void testCompanyDtoId() {
 		
 		//GIVEN
-		try {
-			when(resultSet.getLong(IDCOMPANY)).thenReturn(id);
-		} catch (SQLException e) {
-			fail("sql exception :" + e.getMessage());
-		}
+		Long id = 0L;
 		CompanyDTO compaDTO = new CompanyDTO();
 		compaDTO.setId(id);
 		
@@ -38,7 +30,7 @@ public class CompanyMapperTest {
 		Company compa = CompanyMapper.convertCompanyDTOtoCompany(compaDTO);
         Company expCompany = new Company.CompanyBuilder().setId(id).build();
         
-      //THEN
+        //THEN
         assertEquals(expCompany.getId(), compa.getId());
 	}
 	
@@ -46,11 +38,8 @@ public class CompanyMapperTest {
 	public void testCompanyDtoInverseNameId() {
 		
 		//GIVEN
-		try {
-			when(resultSet.getString(NAMECOMPANY)).thenReturn(name);
-		} catch (SQLException e) {
-			fail("sql exception :" + e.getMessage());
-		}
+		Long id = 1L;
+		String name = "company";
 		Company company = new Company();
 		company.setId(id);
 		company.setName(name);

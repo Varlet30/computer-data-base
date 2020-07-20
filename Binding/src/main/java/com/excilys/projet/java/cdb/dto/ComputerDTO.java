@@ -1,7 +1,6 @@
 package com.excilys.projet.java.cdb.dto;
 
-public class ComputerDTO 
-{
+public class ComputerDTO {
 	private long id;
 	private String name;
 	private String introduced;

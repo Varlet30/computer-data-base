@@ -96,4 +96,18 @@ public class ComputerDTOTest {
 		assertEquals(computer.getCompanyDTO().getName(), null);
 	}
 	
+	@Test 
+	public void testComputerToString() {
+		
+		//GIVEN
+		ComputerDTO computer = new ComputerDTO();
+		String results;
+				
+		//WHEN
+		results = computer.toString();
+				
+		//THEN
+		assertEquals(results, "ComputerDTO [id=0, name=null, introduced=null, discontinued=null, company=null]");
+	}
+	
 }
