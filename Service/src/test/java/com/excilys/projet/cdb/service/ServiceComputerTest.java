@@ -12,14 +12,13 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.excilys.projet.java.cdb.configuration.PersistenceConfig;
+import com.excilys.projet.java.cdb.configuration.TestConfig;
 import com.excilys.projet.java.cdb.model.Company;
 import com.excilys.projet.java.cdb.model.Computer;
 import com.excilys.projet.java.cdb.service.ServiceComputer;
 
-
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {PersistenceConfig.class})
+@ContextConfiguration(classes = {TestConfig.class})
 @Transactional
 public class ServiceComputerTest {
 
@@ -82,7 +81,6 @@ public class ServiceComputerTest {
 	public void testFindComputerNameCompany() {
 		
 		//GIVEN
-		
 		Company company = new Company();
 		company.setId(1L);
 		company.setName("Apple Inc.");

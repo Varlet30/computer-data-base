@@ -5,18 +5,22 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class ComputerDTOTest {	
+	
 	@Test
 	public void testCompanyDto() {
 		
 		//GIVEN
+		String name = null;
+		String introduced = null;
+		String discontinued = null;
 		
 		//WHEN
 		ComputerDTO computer = new ComputerDTO();
 		
 		//THEN
-		assertEquals(computer.getName(), null);
-		assertEquals(computer.getIntroduced(), null);
-		assertEquals(computer.getDiscontinued(), null);
+		assertEquals(computer.getName(), name);
+		assertEquals(computer.getIntroduced(), introduced);
+		assertEquals(computer.getDiscontinued(), discontinued);
 	}
 	
 	@Test
@@ -109,5 +113,4 @@ public class ComputerDTOTest {
 		//THEN
 		assertEquals(results, "ComputerDTO [id=0, name=null, introduced=null, discontinued=null, company=null]");
 	}
-	
 }

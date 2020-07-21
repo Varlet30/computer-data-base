@@ -20,9 +20,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @ComponentScan(basePackages = { "com.excilys.projet.java.cdb.model", "com.excilys.projet.java.cdb.persistence.dao", "com.excilys.projet.java.cdb.mapper" })
-@PropertySource("classpath:datasource.properties")
+@PropertySource("classpath:test.datasource.properties")
 @EnableTransactionManagement
-public class PersistenceConfig {
+public class TestConfig {
 
 	@Autowired
 	Environment environment;

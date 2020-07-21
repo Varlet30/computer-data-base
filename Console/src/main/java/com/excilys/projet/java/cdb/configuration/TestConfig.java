@@ -19,10 +19,10 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
-@ComponentScan(basePackages = { "com.excilys.projet.java.cdb.model", "com.excilys.projet.java.cdb.service", "com.excilys.projet.java.cdb.persistence.dao", "com.excilys.projet.java.cdb.mapper" })
-@PropertySource("classpath:datasource.properties")
+@ComponentScan(basePackages = { "com.excilys.projet.java.cdb.model", "com.excilys.projet.java.cdb.service", "com.excilys.projet.java.cdb.user", "com.excilys.projet.java.cdb.persistence.dao", "com.excilys.projet.java.cdb.mapper" })
+@PropertySource("classpath:test.datasource.properties")
 @EnableTransactionManagement
-public class PersistenceConfig {
+public class TestConfig {
 
 	@Autowired
 	Environment environment;

@@ -2,17 +2,8 @@ package com.excilys.projet.java.cdb.mapper;
 
 import org.junit.Test;
 
-import static org.junit.Assert.fail;
-
 import com.excilys.projet.java.cdb.dto.CompanyDTO;
 import com.excilys.projet.java.cdb.model.Company;
-
-import static org.mockito.Mockito.when;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
-import static org.mockito.Mockito.mock;
 
 import static org.junit.Assert.assertEquals;
 

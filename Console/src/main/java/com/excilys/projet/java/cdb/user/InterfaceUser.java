@@ -25,16 +25,16 @@ import com.excilys.projet.java.cdb.service.ServiceCompany;
 import com.excilys.projet.java.cdb.service.ServiceComputer;
 
 @Controller
-public class InterfaceUtilisateur 
+public class InterfaceUser
 {
 	@Autowired
 	private static ServiceComputer serviceComputer;
 	@Autowired
 	private static ServiceCompany serviceCompany;
 	
-	private static Logger logger = LoggerFactory.getLogger(InterfaceUtilisateur.class);
+	private static Logger logger = LoggerFactory.getLogger(InterfaceUser.class);
 	
-	public static void AfficherInterface() throws ParseException, SQLException
+	public static void DisplayInterface() throws ParseException, SQLException
 	{
 		System.out.println("Choices: "+
 							"\n 1/ Add computer"+
@@ -111,7 +111,7 @@ public class InterfaceUtilisateur
 	{
 		System.out.println("Nb computer to view: ");
 		int limit = clavier.nextInt();
-		System.out.println("Nb computer to view: ");
+		System.out.println("Nb computer to view max: ");
 		int offset = clavier.nextInt();
 		serviceComputer.getComputerListPaginer(0, null, limit, offset);
 	}
@@ -217,6 +217,7 @@ public class InterfaceUtilisateur
 		Company compa = createCompanyAdd(idCompany);
 		
 		Computer comp = new Computer.ComputerBuilder(name).setIntroduced(introduced).setDiscontinued(discontinued).setCompany(compa).build();			 
+		
 		serviceComputer.addComputer(comp);
 	}
 	

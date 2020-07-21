@@ -20,9 +20,16 @@
     <junit-version>4.12</junit-version>
     <javax.servlet-api-version>4.0.0-b06</javax.servlet-api-version>
     <javax.servlet-jstl-version>1.2</javax.servlet-jstl-version>
+    <spring-test-version>5.2.7.RELEASE</spring-test-version>
   </properties>
 
   <dependencies>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-test</artifactId>
+      <version>${spring-test-version}</version>
+      <scope>test</scope>
+    </dependency>
     <dependency>
 	  <groupId>org.seleniumhq.selenium</groupId>
 	  <artifactId>selenium-java</artifactId>

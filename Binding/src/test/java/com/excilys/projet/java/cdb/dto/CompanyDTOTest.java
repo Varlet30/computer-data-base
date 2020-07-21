@@ -5,6 +5,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class CompanyDTOTest {
+	
 	@Test
 	public void testCompanyDto() {
 		
@@ -23,8 +24,10 @@ public class CompanyDTOTest {
 		
 		//GIVEN
 		String id = "1";
+		
 		//WHEN
 		CompanyDTO company = new CompanyDTO(id);
+		
 		//THEN
 		assertEquals(company.getId(), 1L);
 		assertEquals(company.getName(), null);

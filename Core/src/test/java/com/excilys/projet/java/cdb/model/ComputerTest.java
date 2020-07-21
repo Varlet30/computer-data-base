@@ -152,5 +152,4 @@ public class ComputerTest {
 		//THEN
 		assertEquals(computer.toString(), "Computer [id=0, name=null, introduced=1997-03-11, discontinued=1998-03-11, compa=null]");
 	}
-	
 }

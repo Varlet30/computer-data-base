@@ -11,12 +11,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.excilys.projet.java.cdb.configuration.PersistenceConfig;
+import com.excilys.projet.java.cdb.configuration.TestConfig;
 import com.excilys.projet.java.cdb.model.Company;
 
-
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {PersistenceConfig.class})
+@ContextConfiguration(classes = {TestConfig.class})
 @Transactional
 public class CompanyDAOTest {
 
