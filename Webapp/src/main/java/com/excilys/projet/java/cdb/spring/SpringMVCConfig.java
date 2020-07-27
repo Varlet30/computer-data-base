@@ -15,8 +15,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 
-import org.springframework.web.servlet.theme.ThemeChangeInterceptor;
-
 import org.springframework.web.servlet.view.JstlView;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
@@ -33,7 +31,8 @@ public class SpringMVCConfig implements WebMvcConfigurer{
 	      
 	    return viewResolver;
 	 }
-	   
+	  
+	 @Override
 	 public void addResourceHandlers(ResourceHandlerRegistry registry) 
 	 {
 	    registry
@@ -55,11 +54,10 @@ public class SpringMVCConfig implements WebMvcConfigurer{
 	 @Bean
 	 public LocaleResolver localeResolver() 
 	 {
-		 CookieLocaleResolver localeResolver = new CookieLocaleResolver();
-		 
-		 return localeResolver;
+		 return new CookieLocaleResolver();
 	 }
-		 
+	
+	 @Override
 	 public void addInterceptors(InterceptorRegistry registry) 
 	 { 
 		 LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();

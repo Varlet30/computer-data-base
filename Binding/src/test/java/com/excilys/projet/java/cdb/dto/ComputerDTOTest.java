@@ -18,9 +18,9 @@ public class ComputerDTOTest {
 		ComputerDTO computer = new ComputerDTO();
 		
 		//THEN
-		assertEquals(computer.getName(), name);
-		assertEquals(computer.getIntroduced(), introduced);
-		assertEquals(computer.getDiscontinued(), discontinued);
+		assertEquals(name, computer.getName());
+		assertEquals(introduced, computer.getIntroduced());
+		assertEquals(discontinued, computer.getDiscontinued());
 	}
 	
 	@Test
@@ -36,11 +36,11 @@ public class ComputerDTOTest {
 		ComputerDTO computer = new ComputerDTO(name, introduced, discontinued, companyDTO);
 		
 		//THEN
-		assertEquals(computer.getName(), "computer");
-		assertEquals(computer.getIntroduced(), "1997-03-11");
-		assertEquals(computer.getDiscontinued(), "1997-03-11");
-		assertEquals(computer.getCompanyDTO().getId(), 0L);
-		assertEquals(computer.getCompanyDTO().getName(), null);
+		assertEquals("computer", computer.getName());
+		assertEquals("1997-03-11", computer.getIntroduced());
+		assertEquals("1997-03-11", computer.getDiscontinued());
+		assertEquals(0L, computer.getCompanyDTO().getId());
+		assertEquals(null, computer.getCompanyDTO().getName());
 	}
 	
 	@Test
@@ -54,7 +54,7 @@ public class ComputerDTOTest {
 		computer.setName(computerName);
 		
 		//THEN
-		assertEquals(computer.getName(), "computer");
+		assertEquals("computer", computer.getName());
 	}
 	
 	@Test
@@ -68,7 +68,7 @@ public class ComputerDTOTest {
 		computer.setIntroduced(computerIntroduced);
 		
 		//THEN
-		assertEquals(computer.getIntroduced(), "1997-03-11");
+		assertEquals("1997-03-11", computer.getIntroduced());
 	}
 	
 	@Test
@@ -82,7 +82,7 @@ public class ComputerDTOTest {
 		computer.setDiscontinued(computerDiscontinued);
 		
 		//THEN
-		assertEquals(computer.getDiscontinued(), "1997-03-11");
+		assertEquals("1997-03-11", computer.getDiscontinued());
 	}
 	
 	@Test
@@ -96,8 +96,8 @@ public class ComputerDTOTest {
 		computer.setCompanyDTO(company);
 		
 		//THEN
-		assertEquals(computer.getCompanyDTO().getId(), 0L);
-		assertEquals(computer.getCompanyDTO().getName(), null);
+		assertEquals(0L, computer.getCompanyDTO().getId());
+		assertEquals(null, computer.getCompanyDTO().getName());
 	}
 	
 	@Test 
@@ -111,6 +111,6 @@ public class ComputerDTOTest {
 		results = computer.toString();
 				
 		//THEN
-		assertEquals(results, "ComputerDTO [id=0, name=null, introduced=null, discontinued=null, company=null]");
+		assertEquals("ComputerDTO [id=0, name=null, introduced=null, discontinued=null, company=null]", results);
 	}
 }

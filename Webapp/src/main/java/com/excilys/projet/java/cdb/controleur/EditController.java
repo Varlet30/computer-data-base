@@ -30,8 +30,8 @@ public class EditController
 	
 	private String findComputUpdate(String idComputer, ModelMap map)
 	{
-		List<CompanyDTO>companyDTOList = new ArrayList<CompanyDTO>();
-		List<Company>companyList = new ArrayList<Company>();
+		List<CompanyDTO>companyDTOList = new ArrayList<>();
+		List<Company>companyList = new ArrayList<>();
 		
 		companyList = serviceCompany.getCompanyList();
 		companyList.stream().forEach(compa->companyDTOList.add(CompanyMapper.convertCompanytoCompanyDTO(compa)));
@@ -47,7 +47,7 @@ public class EditController
 		
 		return "editComputer";
 	}
-	private void updateComput(ComputerDTO compDTO, ModelMap map)
+	private void updateComput(ComputerDTO compDTO)
 	{
 		Computer comp = ComputerMapper.convertComputerDTOtoComputer(compDTO);
 		serviceComputer.updateComputer(comp);
@@ -64,8 +64,7 @@ public class EditController
 	public String postEditComputer (@ModelAttribute("computerToUpdate")ComputerDTO compDTO,
 			@RequestParam(value = "maxPage", defaultValue = "1")int maxPage, ModelMap map)
 	{
-		System.out.println(compDTO);
-		updateComput(compDTO, map);
+		updateComput(compDTO);
 		map.put("computerToUpdate", compDTO);
 		
 		return "dashboard";

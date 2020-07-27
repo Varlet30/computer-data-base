@@ -16,8 +16,8 @@ public class CompanyTest {
 		Company company = new Company();
 		
 		//THEN
-		assertEquals(company.getId(), Null);
-		assertEquals(company.getName(), null);
+		assertEquals(Null, company.getId());
+		assertEquals(null, company.getName());
 	}
 	
 	@Test
@@ -31,7 +31,7 @@ public class CompanyTest {
 		company.setId(id);
 		
 		//THEN
-		assertEquals(company.getId(), id);
+		assertEquals(id, company.getId());
 	}
 	
 	@Test
@@ -45,7 +45,7 @@ public class CompanyTest {
 		company.setName(name);
 		
 		//THEN
-		assertEquals(company.getName(), name);
+		assertEquals(name, company.getName());
 	}
 	
 	@Test
@@ -59,8 +59,8 @@ public class CompanyTest {
 		Company company = new Company.CompanyBuilder().setId(id).setName(name).build();
 		
 		//THEN
-		assertEquals(company.getId(), id);
-		assertEquals(company.getName(), "company");
+		assertEquals(id, company.getId());
+		assertEquals("company", company.getName());
 	}
 	
 	@Test
@@ -75,6 +75,6 @@ public class CompanyTest {
 		
 		//THEN
 		System.out.println(results);
-		assertEquals(results, "Company [id=0, name=null]");
+		assertEquals("Company [id=0, name=null]", results);
 	}
 }

@@ -20,10 +20,15 @@
     <spring-version>5.2.3.RELEASE</spring-version>
     <commonslogging-version>1.1</commonslogging-version>
     <hibernatecore-version>5.4.12.Final</hibernatecore-version>
+    <sonar.host.url>http://localhost:9000</sonar.host.url>
+    <sonar.junit.reportPaths>target/surefire-reports</sonar.junit.reportPaths>
+    <sonar.jacoco.reportPaths>target/jacoco.exec</sonar.jacoco.reportPaths>
+    <jacoco-maven-plugin.version>0.8.4</jacoco-maven-plugin.version>
+    <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
   </properties>
   
   <dependencies>
-  <dependency>
+    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>${junit-version}</version>
@@ -84,6 +89,29 @@
   </dependencies>
   
   <build>
+    <plugins>
+	  <plugin>
+	    <groupId>org.jacoco</groupId>
+	    <artifactId>jacoco-maven-plugin</artifactId>
+	    <version>${jacoco-maven-plugin.version}</version>
+	    <executions>
+	      <execution>
+		    <id>jacoco-initialize</id>
+		    <phase>initialize</phase>
+		    <goals>
+			  <goal>prepare-agent</goal>
+		    </goals>
+		  </execution>
+	      <execution>
+		    <id>jacoco-report</id>
+		    <phase>verify</phase>
+		    <goals>
+			  <goal>report</goal>
+		    </goals>
+		  </execution>
+	    </executions>
+	  </plugin>
+    </plugins>
     <pluginManagement>
       <plugins>
         <plugin>      
@@ -122,6 +150,23 @@
           <artifactId>maven-deploy-plugin</artifactId>
           <version>2.8.2</version>
         </plugin>
+        <plugin>
+          <groupId>org.sonarsource.scanner.maven</groupId>
+          <artifactId>sonar-maven-plugin</artifactId>
+          <version>3.7.0.1746</version>
+        </plugin>
+        <plugin>
+		  <groupId>org.apache.maven.plugins</groupId>
+		  <artifactId>maven-surefire-plugin</artifactId>
+		  <version>${maven-surefire-plugin.version}</version>
+		  <dependencies>
+			<dependency>
+			  <groupId>org.apache.maven.surefire</groupId>
+			  <artifactId>surefire-junit47</artifactId>
+			  <version>${maven-surefire-plugin.version}</version>
+			</dependency>
+		  </dependencies>
+		 </plugin>
       </plugins>
     </pluginManagement>
   </build>

@@ -3,7 +3,7 @@
 <%@ page isELIgnored="false"%>
 <%@page import="java.util.ArrayList" %>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <title><spring:message code="cdb.title"/></title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -32,8 +32,9 @@
                     <h1><spring:message code="EditComputer"/></h1>
 
                     <form action="editComputer" method="POST" name = "editComputer">
-                        <input type="hidden" value="${computerToUpdate.id}" id="id" name="id"/> <!-- TODO: Change this value with the computer id -->
+                        <input type="hidden" value="${computerToUpdate.id}" id="id" name="id"/>
                         <fieldset>
+                        	<legend>Edit computer</legend>
                             <div class="form-group">
                                 <label for="computerName"><spring:message code="Computer"/></label>
                                 <input type="text" class="form-control" name="name" id="computerName" value="${computerToUpdate.name}" placeholder="Computer name">

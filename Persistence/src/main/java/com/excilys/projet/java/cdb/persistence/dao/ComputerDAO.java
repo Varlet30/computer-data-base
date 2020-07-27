@@ -28,11 +28,13 @@ public class ComputerDAO
 {
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 	
-	public static final String DeleteComputerByCompa = "DELETE FROM computer WHERE company_id = :id";
-	public static final String Select = "from Computer";
-	public static final String Ascendant = " asc";
-	public static final String Descendant = " desc";
-	public static final String Order = " order by ";
+	public static final String DELETE_COMPUTER_BY_COMPANY = "DELETE FROM computer WHERE company_id = :id";
+	public static final String FIND_COMPUTER_BY_ID = "from Computer where id = :id";
+	public static final String FIND_COMPUTER_BY_NAME = "from Computer where lower(name) like :research or lower(company.name) like :research or introduced like :research or discontinued like :research";
+	public static final String SELECT = "from Computer";
+	public static final String ASCENDANT = " asc";
+	public static final String DESCENDANT = " desc";
+	public static final String ORDER = " order by ";
 	
 	@Autowired
 	SessionFactory sessionFactory;
@@ -50,50 +52,50 @@ public class ComputerDAO
 	public List<Computer> allComputer() 
 	{
 		Session session = entityManager.unwrap(Session.class);
-		Query<Computer> query = session.createQuery("from Computer", Computer.class);
+		Query<Computer> query = session.createQuery(SELECT, Computer.class);
 		return query.getResultList();
 	}
 	
 	public int countComputer() 
 	{
-		List<Computer> ListComputer = allComputer();
+		List<Computer> listComputer = allComputer();
 		
-		return ListComputer.size();
+		return listComputer.size();
 	}
 	
 	public List<Computer> pageComputer(int tri, String column, int limit, int offset) 
 	{
 		String requete;
 		
-		if (tri == 0||column == ""||column == null) 
+		if (tri == 0||column.equals("")) 
 		{
-			requete = Select;
+			requete = SELECT;
 			
 		} 
 		else if (tri == 1) 
 		{
-			requete = Select + Order + column + Ascendant;
+			requete = SELECT + ORDER + column + ASCENDANT;
 				
 		} 
 		else 
 		{
-			requete = Select + Order + column + Descendant;
+			requete = SELECT + ORDER + column + DESCENDANT;
 		}
 		
 		Session session = entityManager.unwrap(Session.class);
 		Query<Computer> query = session.createQuery(requete, Computer.class);
 		query.setFirstResult(offset);
 		query.setMaxResults(limit);
-		List<Computer> computerList = query.getResultList();
-    	return computerList;
+		
+		return query.getResultList();
 	}
 	
 	public Computer findComputerId (long id) 
 	{
 		Session session = entityManager.unwrap(Session.class);
-		Query<Computer> query = session.createQuery("from Computer where id = :id", Computer.class);
+		Query<Computer> query = session.createQuery(FIND_COMPUTER_BY_ID, Computer.class);
 	    query.setParameter("id", id);
-	    return (Computer)query.getSingleResult();
+	    return query.getSingleResult();
 	}
 	
 	public List<Computer> findComputerName (String research) 
@@ -101,10 +103,9 @@ public class ComputerDAO
 		research = research.toLowerCase();
 		research = "%"+ research +"%";
 		Session session = entityManager.unwrap(Session.class);
-		Query<Computer> query = session.createQuery("from Computer where lower(name) like :research or lower(company.name) like :research or introduced like :research or discontinued like :research", Computer.class);
+		Query<Computer> query = session.createQuery(FIND_COMPUTER_BY_NAME, Computer.class);
 		query.setParameter("research", research);
-		List<Computer> computerList = query.getResultList();
-    	return computerList;	
+		return query.getResultList();
 	}
 	
 	public int updateComputer(Computer comp) 
@@ -126,7 +127,7 @@ public class ComputerDAO
 	{
 		SqlParameterSource namedParameters  = new MapSqlParameterSource().addValue("id", id);
 		
-		return namedParameterJdbcTemplate.update(DeleteComputerByCompa, namedParameters);
+		return namedParameterJdbcTemplate.update(DELETE_COMPUTER_BY_COMPANY, namedParameters);
 	}
 	
 	public int createComputer(Computer comp) 

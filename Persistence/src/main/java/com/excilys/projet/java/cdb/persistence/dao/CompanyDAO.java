@@ -30,7 +30,10 @@ public class CompanyDAO
 	private ComputerDAO computerDao;
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 	
-	public static final String DeleteCompany = "DELETE FROM company WHERE id = :id";
+	public static final String DELETE_COMPANY = "DELETE FROM company WHERE id = :id";
+	public static final String ALL_COMPANY = "from Company";
+	public static final String FIND_COMPANY_BY_ID = "from Company where id = :id";
+	public static final String FIND_COMPANY_BY_NAME = "from Company where name = :name";
 	
 	@PersistenceContext
 	@Autowired
@@ -46,24 +49,24 @@ public class CompanyDAO
 	public List<Company> allCompany() {
 
 		Session session = entityManager.unwrap(Session.class);
-		Query<Company> query = session.createQuery("from Company", Company.class);
+		Query<Company> query = session.createQuery(ALL_COMPANY, Company.class);
 		return query.getResultList();
 	}
 	
 	public Company findCompany (long id) 
 	{
 		Session session = entityManager.unwrap(Session.class);
-		Query<Company> query = session.createQuery("from Company where id = :id", Company.class);
+		Query<Company> query = session.createQuery(FIND_COMPANY_BY_ID, Company.class);
 	    query.setParameter("id", id);
-	    return (Company)query.getSingleResult();
+	    return query.getSingleResult();
 	}
 	
 	public Company findCompany(String name) 
 	{
 		Session session = entityManager.unwrap(Session.class);
-		Query<Company> query = session.createQuery("from Company where name = :name", Company.class);
+		Query<Company> query = session.createQuery(FIND_COMPANY_BY_NAME, Company.class);
 	    query.setParameter("name", name);
-	    return (Company)query.getSingleResult();
+	    return query.getSingleResult();
 	}
 	
 	public int deleteCompany(long companyId) 
@@ -71,6 +74,6 @@ public class CompanyDAO
 		computerDao.deleteComputerByCompany(companyId);
 		SqlParameterSource namedParameters  = new MapSqlParameterSource().addValue("id", companyId);
 		
-		return namedParameterJdbcTemplate.update(DeleteCompany,namedParameters);
+		return namedParameterJdbcTemplate.update(DELETE_COMPANY,namedParameters);
 	}
 }

@@ -51,4 +51,8 @@ public class ComputerMapper{
 		
 		return compDTO;
 	}
+	
+	private ComputerMapper() {
+	    throw new IllegalStateException("Utility class");
+	}
 }

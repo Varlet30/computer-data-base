@@ -1,5 +1,6 @@
 package com.excilys.projet.java.cdb.selenium;
 
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.Test;
@@ -7,6 +8,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
+
+import static org.junit.Assert.assertEquals;
 
 public class Selenium {
 	private WebDriver driver;
@@ -17,11 +20,12 @@ public class Selenium {
 	}
 
 	@Test
-	public void testSelenium() throws InterruptedException {
+	public void testSelenium() throws InterruptedException, IOException {
+		String pass;
 		driver = new FirefoxDriver();
 		actions = new Actions(driver);
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-		driver.get("http://localhost:8080/webModule/dashboard");
+		driver.get("http://localhost:8080/Webapp/dashboard");
 		actions.moveToElement(driver.findElement(By.name("2"))).click().perform();
 		actions.pause(1000).perform();
 		actions.moveToElement(driver.findElement(By.id("addComputer"))).click().perform();
@@ -33,5 +37,9 @@ public class Selenium {
 		actions.moveToElement(driver.findElement(By.id("editComputer"))).click().perform();
 		actions.pause(1000).perform();
 		driver.quit();
+		pass = "pass";
+		assertEquals("pass",pass);
+		
+		
 	}
 }

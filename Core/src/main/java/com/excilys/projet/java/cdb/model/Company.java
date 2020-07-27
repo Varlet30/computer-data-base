@@ -52,7 +52,7 @@ public class Company
 		private String name;
 		
 		public CompanyBuilder ()
-		{
+		{// default implementation ignored
 		}
 		
 		public CompanyBuilder setId(long id)

@@ -1,5 +1,7 @@
 package com.excilys.projet.java.cdb.user;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.ByteArrayInputStream;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -27,16 +29,21 @@ public class MainTest {
 	public void testMain() throws ParseException, SQLException {
 		
 		//GIVEN
+		int results;
 		String choice = "10";
 		String scanner = choice;
 		
 		ByteArrayInputStream in = new ByteArrayInputStream(scanner.getBytes());
 		System.setIn(in);
-		
 		//WHEN
-		Main.main(null);
-		
+		try {
+			Main.main(null); 
+			results = 1;
+		}catch (NullPointerException e) {
+			results = 0;
+		} 
+				
 		//THEN
-		
+		assertEquals(1, results);
 	}
 }

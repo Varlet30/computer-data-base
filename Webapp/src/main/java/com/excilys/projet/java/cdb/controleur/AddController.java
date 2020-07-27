@@ -31,8 +31,8 @@ public class AddController
 	
 	private String listCompany(ModelMap map){
 		
-		List<CompanyDTO>companyDTOList = new ArrayList<CompanyDTO>();
-		List<Company>companyList = new ArrayList<Company>();
+		List<CompanyDTO>companyDTOList = new ArrayList<>();
+		List<Company>companyList = new ArrayList<>();
 		
 		companyList=serviceCompany.getCompanyList();
 		companyList.stream().forEach(compa->companyDTOList.add(CompanyMapper.convertCompanytoCompanyDTO(compa)));
@@ -41,7 +41,7 @@ public class AddController
 		
 		return "addComputer";
 	}
-	private void addComput(ComputerDTO compDTO, ModelMap map)
+	private void addComput(ComputerDTO compDTO)
 	{
 		Computer comp = ComputerMapper.convertComputerDTOtoComputer(compDTO);
 		serviceComputer.addComputer(comp);
@@ -58,8 +58,7 @@ public class AddController
 			@RequestParam(value = "maxPage", defaultValue = "1")int maxPage,
 			ModelMap map)
 	{
-		System.out.println(compDTO);
-		addComput(compDTO, map);
+		addComput(compDTO);
 		map.put("computerToAdd", compDTO);
 		
 		return "redirect:dashboard?lengthPage=10&column=&tri=0&page="+ maxPage;

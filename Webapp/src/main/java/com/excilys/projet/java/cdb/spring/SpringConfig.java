@@ -75,9 +75,7 @@ public class SpringConfig extends AbstractContextLoaderInitializer
 	@Bean
 	NamedParameterJdbcTemplate namedParameterJdbcTemplate(DataSource dataSource) 
 	{
-		NamedParameterJdbcTemplate namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
-		
-		return namedParameterJdbcTemplate;
+		return new NamedParameterJdbcTemplate(dataSource);
 	}
 	
 	@Bean

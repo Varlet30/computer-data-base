@@ -26,8 +26,8 @@ public class DashboardController
 	
 	private String search(String research,ModelMap map)
 	{
-		List<ComputerDTO>computerDTOList = new ArrayList<ComputerDTO>();
-		List<Computer>computerList = new ArrayList<Computer>();
+		List<ComputerDTO>computerDTOList = new ArrayList<>();
+		List<Computer>computerList = new ArrayList<>();
 		
 		computerList = serviceComputer.findComputerByName(research);
 		totalComputer = computerList.size();
@@ -40,7 +40,7 @@ public class DashboardController
 	}
 	private List<Computer> paginer(int tri, int lengthPage, int page, String column) 
 	{
-		List<Computer>computerList=new ArrayList<Computer>();
+		List<Computer>computerList=new ArrayList<>();
 		
 		tri %= 3;
 		if (page != 1) {
@@ -57,7 +57,7 @@ public class DashboardController
 	
 	private String classification(int tri, String column, int lengthPage,int page, ModelMap map)
 	{
-		List<ComputerDTO>computerDTOList = new ArrayList<ComputerDTO>();
+		List<ComputerDTO>computerDTOList = new ArrayList<>();
 		
 		totalComputer = serviceComputer.getCount();
 		maxPage = totalComputer/lengthPage;
@@ -76,7 +76,7 @@ public class DashboardController
 		return "dashboard";
 	}
 	
-	private void deleteComputers(String select, ModelMap map) throws NumberFormatException
+	private void deleteComputers(String select)
 	{
 		String[] listId = select.split(",");
 		
@@ -93,7 +93,7 @@ public class DashboardController
 			@RequestParam(value = "lengthPage",defaultValue = "10")int lengthPage,
 			ModelMap map)
 	{
-		if (research == null||research == "") 
+		if (research == null||research.equals(""))
 		{
 			return classification(tri, column, lengthPage, page, map);
 			
@@ -106,9 +106,9 @@ public class DashboardController
 	
 	@PostMapping("dashboard")
 	public String postEditComputer (@RequestParam(value = "select", defaultValue = "")String select,
-			ModelMap map) throws NumberFormatException
+			ModelMap map)
 	{
-		deleteComputers(select, map);
+		deleteComputers(select);
 		
 		return "redirect:dashboard";
 	}

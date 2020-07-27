@@ -17,9 +17,9 @@ public class ComputerTest {
 		Computer computer = new Computer();
 		
 		//THEN
-		assertEquals(computer.getName(), null);
-		assertEquals(computer.getIntroduced(), null);
-		assertEquals(computer.getDiscontinued(), null);
+		assertEquals(null, computer.getName());
+		assertEquals(null, computer.getIntroduced());
+		assertEquals(null, computer.getDiscontinued());
 	}
 	
 	@Test
@@ -33,7 +33,7 @@ public class ComputerTest {
 		computer.setName(name);
 		
 		//THEN
-		assertEquals(computer.getName(), name);
+		assertEquals(name, computer.getName());
 	}
 	
 	@Test
@@ -48,7 +48,7 @@ public class ComputerTest {
 		Long result = computer.getId();
 		
 		//THEN
-		assertEquals(result, id);
+		assertEquals(id, result);
 	}
 	
 	@Test
@@ -65,11 +65,11 @@ public class ComputerTest {
 		Computer computer = new Computer.ComputerBuilder(name).setIntroduced(introduced).setDiscontinued(discontinued).setCompany(company).build();
 		
 		//THEN
-		assertEquals(computer.getName(), "computer");
-		assertEquals(computer.getIntroduced(), LocalDate.parse("1997-03-11"));
-		assertEquals(computer.getDiscontinued(), LocalDate.parse("1998-04-12"));
-		assertEquals(computer.getCompany().getId(), Null);
-		assertEquals(computer.getCompany().getName(), null);
+		assertEquals("computer", computer.getName());
+		assertEquals(LocalDate.parse("1997-03-11"), computer.getIntroduced());
+		assertEquals(LocalDate.parse("1998-04-12"), computer.getDiscontinued());
+		assertEquals(Null, computer.getCompany().getId());
+		assertEquals(null, computer.getCompany().getName());
 	}	
 
 	@Test 
@@ -82,7 +82,7 @@ public class ComputerTest {
 		//WHEN
 		results = computer.toString();
 		//THEN
-		assertEquals(results, "Computer [id=0, name=null, introduced=null, discontinued=null, compa=null]");
+		assertEquals("Computer [id=0, name=null, introduced=null, discontinued=null, compa=null]", results);
 	}
 	
 	@Test 
@@ -102,7 +102,7 @@ public class ComputerTest {
 		computer.setDiscontinued(discontinued);
 	
 		//THEN
-		assertEquals(computer.toString(), "Computer [id=0, name=computer, introduced=1997-03-11, discontinued=1998-04-12, compa=Company [id=0, name=null]]");
+		assertEquals("Computer [id=0, name=computer, introduced=1997-03-11, discontinued=1998-04-12, compa=Company [id=0, name=null]]", computer.toString());
 	}
 	
 	@Test 
@@ -118,7 +118,7 @@ public class ComputerTest {
 		computer.setDiscontinued(discontinued);
 		
 		//THEN
-		assertEquals(computer.toString(), "Computer [id=0, name=null, introduced=1997-03-11, discontinued=null, compa=null]");
+		assertEquals("Computer [id=0, name=null, introduced=1997-03-11, discontinued=null, compa=null]", computer.toString());
 	}
 	
 	@Test 
@@ -134,7 +134,7 @@ public class ComputerTest {
 		computer.setDiscontinued(discontinued);
 		
 		//THEN
-		assertEquals(computer.toString(), "Computer [id=0, name=null, introduced=null, discontinued=1997-03-11, compa=null]");
+		assertEquals("Computer [id=0, name=null, introduced=null, discontinued=1997-03-11, compa=null]", computer.toString());
 	}
 	
 	@Test 
@@ -150,6 +150,6 @@ public class ComputerTest {
 		computer.setIntroduced(introduced);
 		
 		//THEN
-		assertEquals(computer.toString(), "Computer [id=0, name=null, introduced=1997-03-11, discontinued=1998-03-11, compa=null]");
+		assertEquals("Computer [id=0, name=null, introduced=1997-03-11, discontinued=1998-03-11, compa=null]", computer.toString());
 	}
 }

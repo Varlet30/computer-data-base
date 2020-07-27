@@ -30,7 +30,7 @@ public class InterfaceUserTest {
 	public void testInterfaceAddComputer() throws ParseException, SQLException {
 		
 		//GIVEN
-		int results = 0;
+		int results;
 		
 		String choice = "1";
 		String name = "test";
@@ -44,14 +44,14 @@ public class InterfaceUserTest {
 		
 		//WHEN
 		try {
-			interfaceUser.DisplayInterface();  
+			interfaceUser.displayInterface();  
 			results = 1;
 		}catch (NullPointerException e) {
 			results = 0;
 		} 
 		
 		//THEN
-		assertEquals(results, 0);
+		assertEquals(0, results);
 	}
 	
 	@SuppressWarnings("static-access")
@@ -65,22 +65,22 @@ public class InterfaceUserTest {
 		String name = "test";
 		String introduced = "1997-03-11";
 		String discontinued = "1998-04-12";
-		String company = "5";
+		String companyId = "5";
 		
-		String scanner = choice+"\n"+name+"\n"+introduced+"\n"+discontinued+"\n"+company;
+		String scanner = choice+"\n"+name+"\n"+introduced+"\n"+discontinued+"\n"+companyId;
 		ByteArrayInputStream in = new ByteArrayInputStream(scanner.getBytes());
 		System.setIn(in);
 		
 		//WHEN
 		try {
-			interfaceUser.DisplayInterface();  
+			interfaceUser.displayInterface();  
 			results = 1;
 		}catch (NullPointerException e) {
 			results = 0;
 		} 
 		
 		//THEN
-		assertEquals(results, 0);
+		assertEquals(0, results);
 	}
 	
 	@SuppressWarnings("static-access")
@@ -88,22 +88,27 @@ public class InterfaceUserTest {
 	public void testInterfaceUserUpdateComputerById() throws ParseException, SQLException {
 		
 		//GIVEN
+		int results;
 		String choice = "2";
-		String computerId = "5";
-		String name = null;
+		String name = "computer";
 		String introduced = null;
 		String discontinued = null;
-		String companyId = "5";
+		String companyId = null;
 		
-		String scanner = choice+"\n"+computerId+"\n"+name+"\n"+introduced+"\n"+discontinued+"\n"+companyId;
+		String scanner = choice+"\n"+name+"\n"+introduced+"\n"+discontinued+"\n"+companyId;
 		ByteArrayInputStream in = new ByteArrayInputStream(scanner.getBytes());
 		System.setIn(in);
 		
 		//WHEN
-		interfaceUser.DisplayInterface();  
-		
+		try {
+			interfaceUser.displayInterface();  
+			results = 1;
+		}catch (NullPointerException e) {
+			results = 0;
+		} 
+				
 		//THEN
-		
+		assertEquals(0, results);
 	}
 	
 	@SuppressWarnings("static-access")
@@ -111,22 +116,27 @@ public class InterfaceUserTest {
 	public void testInterfaceUserUpdateComputerByIdDateParser() throws ParseException, SQLException {
 		
 		//GIVEN
+		int results;
 		String choice = "2";
-		String computerId = "5";
 		String name = null;
 		String introduced = "1997-03-11";
 		String discontinued = "1998-04-12";
 		String companyId = "5";
 		
-		String scanner = choice+"\n"+computerId+"\n"+name+"\n"+introduced+"\n"+discontinued+"\n"+companyId;
+		String scanner = choice+"\n"+name+"\n"+introduced+"\n"+discontinued+"\n"+companyId;
 		ByteArrayInputStream in = new ByteArrayInputStream(scanner.getBytes());
 		System.setIn(in);
 		
 		//WHEN
-		interfaceUser.DisplayInterface();  
-		
+		try {
+			interfaceUser.displayInterface();  
+			results = 1;
+		}catch (NullPointerException e) {
+			results = 0;
+		} 
+				
 		//THEN
-		
+		assertEquals(0, results);
 	}
 	
 	@SuppressWarnings("static-access")
@@ -145,14 +155,14 @@ public class InterfaceUserTest {
 		
 		//WHEN
 		try {
-			interfaceUser.DisplayInterface();  
+			interfaceUser.displayInterface();  
 			results = 1;
 		}catch (NullPointerException e) {
 			results = 0;
 		} 
 		
 		//THEN
-		assertEquals(results, 0);  
+		assertEquals(0, results);  
 	}
 	
 	@SuppressWarnings("static-access")
@@ -171,14 +181,14 @@ public class InterfaceUserTest {
 		
 		//WHEN
 		try {
-			interfaceUser.DisplayInterface();  
+			interfaceUser.displayInterface();  
 			results = 1;
 		}catch (NullPointerException e) {
 			results = 0;
 		} 
 		
 		//THEN
-		assertEquals(results, 0);  
+		assertEquals(0, results);  
 	}
 	
 	@SuppressWarnings("static-access")
@@ -196,14 +206,14 @@ public class InterfaceUserTest {
 		
 		//WHEN
 		try {
-			interfaceUser.DisplayInterface();  
+			interfaceUser.displayInterface();  
 			results = 1;
 		}catch (NullPointerException e) {
 			results = 0;
 		} 
 		
 		//THEN
-		assertEquals(results, 0);  
+		assertEquals(0, results);  
 	}
 	
 	@SuppressWarnings("static-access")
@@ -221,14 +231,14 @@ public class InterfaceUserTest {
 		
 		//WHEN
 		try {
-			interfaceUser.DisplayInterface();  
+			interfaceUser.displayInterface();  
 			results = 1;
 		}catch (NullPointerException e) {
 			results = 0;
 		} 
 		
 		//THEN
-		assertEquals(results, 0);  
+		assertEquals(0, results);  
 	}
 	
 	@SuppressWarnings("static-access")
@@ -247,13 +257,13 @@ public class InterfaceUserTest {
 		
 		//WHEN
 		try {
-			interfaceUser.DisplayInterface();  
+			interfaceUser.displayInterface();  
 			results = 1;
 		}catch (NullPointerException e) {
 			results = 0;
 		} 
 		//THEN
-		assertEquals(results, 0);  
+		assertEquals(0, results);  
 	}
 	
 	@SuppressWarnings("static-access")
@@ -273,14 +283,14 @@ public class InterfaceUserTest {
 		
 		//WHEN
 		try {
-			interfaceUser.DisplayInterface();  
+			interfaceUser.displayInterface();  
 			results = 1;
 		}catch (NullPointerException e) {
 			results = 0;
 		} 
 		
 		//THEN
-		assertEquals(results, 0);  
+		assertEquals(0, results);  
 	}
 	
 	@SuppressWarnings("static-access")
@@ -299,14 +309,14 @@ public class InterfaceUserTest {
 		
 		//WHEN
 		try {
-			interfaceUser.DisplayInterface();  
+			interfaceUser.displayInterface();  
 			results = 1;
 		}catch (NullPointerException e) {
 			results = 0;
 		} 
 		
 		//THEN
-		assertEquals(results, 0);  
+		assertEquals(0, results);  
 	}
 	
 	@SuppressWarnings("static-access")
@@ -314,6 +324,7 @@ public class InterfaceUserTest {
 	public void testInterfaceExit() throws ParseException, SQLException {
 		
 		//GIVEN
+		int results;
 		String choice = "10";
 		
 		String scanner = choice;
@@ -321,9 +332,15 @@ public class InterfaceUserTest {
 		System.setIn(in);
 		
 		//WHEN
-		interfaceUser.DisplayInterface();  
-		
+		try {
+			interfaceUser.displayInterface();  
+			results = 1;
+		}catch (NullPointerException e) {
+			results = 0;
+		} 
+				
 		//THEN
+		assertEquals(1, results);
 		
 	}
 }

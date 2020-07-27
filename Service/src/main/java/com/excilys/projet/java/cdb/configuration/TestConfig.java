@@ -1,20 +1,27 @@
 package com.excilys.projet.java.cdb.configuration;
 
+import javax.sql.DataSource;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+
 import org.springframework.core.env.Environment;
+
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
+
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 

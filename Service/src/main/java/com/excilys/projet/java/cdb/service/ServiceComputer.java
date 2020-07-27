@@ -2,6 +2,7 @@ package com.excilys.projet.java.cdb.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.excilys.projet.java.cdb.persistence.dao.ComputerDAO;
@@ -10,32 +11,22 @@ import com.excilys.projet.java.cdb.model.Computer;
 @Service
 public class ServiceComputer 
 {
+	@Autowired
 	private ComputerDAO computerDao;
-	
-	private ServiceComputer(ComputerDAO computerDao)
-	{
-		this.computerDao = computerDao;
-	}
 	
 	public List<Computer> getComputerList() 
 	{
-		List<Computer> listComput=computerDao.allComputer();
-		
-		return listComput;	
+		return computerDao.allComputer();
 	}
 	
 	public List<Computer> getComputerListPaginer(int tri, String column, int limit, int offset) 
 	{
-		List<Computer> listComput = computerDao.pageComputer(tri, column, limit, offset);
-		
-		return listComput;
+		return computerDao.pageComputer(tri, column, limit, offset);
 	}
 	
 	public int getCount() 
 	{
-		int nombreComputer=computerDao.countComputer();
-		
-		return nombreComputer;	
+		return computerDao.countComputer();
 	}
 	
 	public Computer addComputer(Computer comput) 
@@ -50,9 +41,7 @@ public class ServiceComputer
 	
 	public Computer findComputerById(Long id) 
 	{
-		Computer comp = computerDao.findComputerId(id);
-		
-		return comp;
+		return computerDao.findComputerId(id);
 	}
 	
 	public void deleteComputer(long id) 
@@ -62,7 +51,6 @@ public class ServiceComputer
 	
 	public List<Computer> findComputerByName(String name) 
 	{
-		List<Computer> computerList = computerDao.findComputerName(name);
-		return computerList;
+		return computerDao.findComputerName(name);
 	}
 }

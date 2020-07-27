@@ -3,7 +3,7 @@
 <%@ page isELIgnored="false"%>
 <%@page import="java.util.ArrayList" %>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <title><spring:message code="cdb.title"/></title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -58,32 +58,32 @@
         </form>
 
         <div class="container" style="margin-top: 10px;">
-            <table class="table table-striped table-bordered">
+            <table class="table table-striped table-bordered" aria-describedby="edit">
                 <thead>
                     <tr>
                         <!-- Variable declarations for passing labels as parameters -->
                         <!-- Table header for Computer Name -->
 
-                        <th class="editMode" style="width: 60px; height: 22px;">
+                        <th id="edit" class="editMode" style="width: 60px; height: 22px;">
                             <input type="checkbox" id="selectall" /> 
                             <span style="vertical-align: top;">
                                    <a href="#" id="deleteSelected" onclick="$.fn.deleteSelected();">
-                                        <i class="fa fa-trash-o fa-lg"></i>
+                                        <em class="fa fa-trash-o fa-lg"></em>
                                     </a>
                             </span>
                         </th>
-                        <th>
+                        <th id="Computer">
 							<a href ="?column=name&tri=${tri+1}&lengthPage=${lengthPage}"><spring:message code="Computer"/></a>
                         </th>
-                        <th>
+                        <th id="Introduced">
                             <a href ="?column=introduced&tri=${tri+1}&lengthPage=${lengthPage}"><spring:message code="Introduced"/></a>
                         </th>
                         <!-- Table header for Discontinued Date -->
-                        <th>
+                        <th id="Discontinued">
                             <a href ="?column=discontinued&tri=${tri+1}&lengthPage=${lengthPage}"><spring:message code="Discontinued"/></a>
                         </th>
                         <!-- Table header for Company -->
-                        <th>
+                        <th id="Company">
                             <a href ="?column=company.name&tri=${tri+1}&lengthPage=${lengthPage}"><spring:message code="Company"/></a>
                         </th>
 

@@ -8,9 +8,8 @@ public class CompanyMapper{
 	public static Company convertCompanyDTOtoCompany(CompanyDTO compaDTO)
 	{
 		long id = compaDTO.getId();
-		Company compa = new Company.CompanyBuilder().setId(id).build();
 		
-		return compa;
+		return new Company.CompanyBuilder().setId(id).build();
 	}
 	public static CompanyDTO convertCompanytoCompanyDTO(Company compa)
 	{
@@ -23,5 +22,9 @@ public class CompanyMapper{
 			compaDTO = new CompanyDTO(id, name);
 		}
 		return compaDTO;
+	}
+	
+	private CompanyMapper() {
+	    throw new IllegalStateException("Utility class");
 	}
 }

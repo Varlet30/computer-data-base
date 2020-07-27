@@ -15,8 +15,8 @@ public class CompanyDTOTest {
 		CompanyDTO company = new CompanyDTO();
 		
 		//THEN
-		assertEquals(company.getId(), 0L);
-		assertEquals(company.getName(), null);
+		assertEquals(0L, company.getId());
+		assertEquals(null, company.getName());
 	}
 	
 	@Test
@@ -29,8 +29,8 @@ public class CompanyDTOTest {
 		CompanyDTO company = new CompanyDTO(id);
 		
 		//THEN
-		assertEquals(company.getId(), 1L);
-		assertEquals(company.getName(), null);
+		assertEquals(1L, company.getId());
+		assertEquals(null, company.getName());
 	}
 	
 	@Test
@@ -44,8 +44,8 @@ public class CompanyDTOTest {
 		CompanyDTO company = new CompanyDTO(id, name);
 		
 		//THEN
-		assertEquals(company.getId(), 1L);
-		assertEquals(company.getName(), "company");
+		assertEquals(1L, company.getId());
+		assertEquals("company", company.getName());
 	}
 	
 	@Test
@@ -59,8 +59,8 @@ public class CompanyDTOTest {
 		company.setId(idSet);
 		
 		//THEN
-		assertEquals(company.getId(), 2L);
-		assertEquals(company.getName(), null);
+		assertEquals(2L, company.getId());
+		assertEquals(null, company.getName());
 	}
 	
 	@Test
@@ -74,8 +74,8 @@ public class CompanyDTOTest {
 		company.setName(nameSet);
 		
 		//THEN
-		assertEquals(company.getId(), 0L);
-		assertEquals(company.getName(), "company");
+		assertEquals(0L, company.getId());
+		assertEquals("company", company.getName());
 	}
 	
 	@Test
@@ -89,6 +89,6 @@ public class CompanyDTOTest {
 		results = company.toString();
 		
 		//THEN
-		assertEquals(results, "CompanyDTO [id=0, name=null]");
+		assertEquals("CompanyDTO [id=0, name=null]", results);
 	}
 }
