@@ -19,16 +19,24 @@
 </head>
 <body>
     <header class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
+        <div id="justify">
             <a class="navbar-brand" href="dashboard"> <spring:message code="cdb.title"/> </a>
-        <div class="dropdown ">
+        	<div id="center" >
+				<a href="${pageContext.request.contextPath}/addUser"
+					style="color: white"><em class="fa fa-user-plus"
+					style="font-size: 24px; color: #de4e4e"></em> Add user</a> 
+				<a href="${pageContext.request.contextPath}/logout"
+					style="color: white"><em class="fa fa-sign-out"
+					style="font-size: 24px; color: #de4e4e" aria-hidden="true"></em>Logout</a>
+			</div>	
+        	<div class="dropdown ">
 	            <button class="btn btn-danger dropdown-toggle" type="button" id="dropdownMenuButton"
 	               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><spring:message code="app.lang.title"/></button>
 	            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 	            	  <a class="dropdown-item" href="?lang=fr"><spring:message code="app.lang.french"/></a>
 	               	  <a class="dropdown-item" href="?lang=en"><spring:message code="app.lang.english"/></a> 
 	          </div>
-        </div>
+        	</div>
         </div>
     </header>
 

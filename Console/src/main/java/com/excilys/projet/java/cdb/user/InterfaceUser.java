@@ -6,9 +6,6 @@ import java.util.Scanner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.SQLException;
-import java.sql.Timestamp;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -33,9 +30,11 @@ public class InterfaceUser
 	@Autowired
 	private static ServiceCompany serviceCompany;
 	
+	
+	
 	private static Logger logger = LoggerFactory.getLogger(InterfaceUser.class);
 	
-	public static void displayInterface() throws ParseException, SQLException
+	public static void displayInterface() throws ParseException
 	{
 		logger.info("Choices: "+
 							"\n 1/ Add computer"+
@@ -146,14 +145,14 @@ public class InterfaceUser
 		serviceComputer.findComputerByName(nameComputer);
 	}
 	
-	public static void deleteCompanyById(Scanner clavier) throws SQLException 
+	public static void deleteCompanyById(Scanner clavier)
 	{	
 		logger.info("Id company to delete: ");
 		Long companyId = clavier.nextLong();
 		serviceCompany.getDeleteCompany(companyId);
 	}
 	
-	public static void updateComputerById(Scanner clavier) throws ParseException
+	public static void updateComputerById(Scanner clavier)
 	{	
 		logger.info("Name computer: ");
 		String name = clavier.next();
@@ -178,7 +177,7 @@ public class InterfaceUser
 		serviceComputer.updateComputer(comp);
 	}
 	
-	public static LocalDate newDateUpdate(String dateString) throws ParseException {
+	public static LocalDate newDateUpdate(String dateString){
 		
 		LocalDate date;
 		

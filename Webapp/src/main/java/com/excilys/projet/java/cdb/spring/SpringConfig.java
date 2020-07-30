@@ -103,9 +103,9 @@ public class SpringConfig extends AbstractContextLoaderInitializer
 	public void onStartup(ServletContext servletContext) throws ServletException
 	{
 		AnnotationConfigWebApplicationContext webContext = new AnnotationConfigWebApplicationContext();
-		webContext.register(SpringConfig.class,SpringMVCConfig.class);
+		webContext.register(SpringConfig.class, SpringMVCConfig.class, WebSecurityConfig.class, SecurityWebApplicationInitializer.class);
 		webContext.setServletContext(servletContext);
-		ServletRegistration.Dynamic servlet = servletContext.addServlet("dynamicServlet", new DispatcherServlet(webContext));
+		ServletRegistration.Dynamic servlet = servletContext.addServlet("login", new DispatcherServlet(webContext));
 		servlet.setLoadOnStartup(1);
 		servlet.addMapping("/");
 	}

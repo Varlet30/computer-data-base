@@ -32,9 +32,7 @@ public class AddController
 	private String listCompany(ModelMap map){
 		
 		List<CompanyDTO>companyDTOList = new ArrayList<>();
-		List<Company>companyList = new ArrayList<>();
-		
-		companyList=serviceCompany.getCompanyList();
+		List<Company>companyList = serviceCompany.getCompanyList();
 		companyList.stream().forEach(compa->companyDTOList.add(CompanyMapper.convertCompanytoCompanyDTO(compa)));
 		
 		map.put("listCompany", companyDTOList);

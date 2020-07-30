@@ -34,10 +34,10 @@ public class TestConfig {
 	@Autowired
 	Environment environment;
 
-	private final String DRIVER = "driverClassName";
-	private final String URL = "jdbcUrl";
-	private final String USER = "username2";
-	private final String PASSWORD = "password";
+	private static final String DRIVER = "driverClassName";
+	private static final String URL = "jdbcUrl";
+	private static final String USER = "username2";
+	private static final String PASSWORD = "password";
 
 	@Bean
 	DataSource dataSource() {

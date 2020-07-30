@@ -3,7 +3,7 @@ package com.excilys.projet.java.cdb.user;
 import static org.junit.Assert.assertEquals;
 
 import java.io.ByteArrayInputStream;
-import java.sql.SQLException;
+
 import java.text.ParseException;
 
 import org.junit.Test;
@@ -26,7 +26,7 @@ public class MainTest {
 	public InterfaceUser interfaceUser;
 	
 	@Test
-	public void testMain() throws ParseException, SQLException {
+	public void testMain() throws ParseException{
 		
 		//GIVEN
 		int results;
@@ -35,6 +35,7 @@ public class MainTest {
 		
 		ByteArrayInputStream in = new ByteArrayInputStream(scanner.getBytes());
 		System.setIn(in);
+		
 		//WHEN
 		try {
 			Main.main(null); 

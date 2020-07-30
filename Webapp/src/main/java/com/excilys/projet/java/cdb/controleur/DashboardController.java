@@ -27,9 +27,7 @@ public class DashboardController
 	private String search(String research,ModelMap map)
 	{
 		List<ComputerDTO>computerDTOList = new ArrayList<>();
-		List<Computer>computerList = new ArrayList<>();
-		
-		computerList = serviceComputer.findComputerByName(research);
+		List<Computer>computerList = serviceComputer.findComputerByName(research);
 		totalComputer = computerList.size();
 		map.put("totalComputer", totalComputer);
 		
@@ -40,7 +38,7 @@ public class DashboardController
 	}
 	private List<Computer> paginer(int tri, int lengthPage, int page, String column) 
 	{
-		List<Computer>computerList=new ArrayList<>();
+		List<Computer>computerList;
 		
 		tri %= 3;
 		if (page != 1) {

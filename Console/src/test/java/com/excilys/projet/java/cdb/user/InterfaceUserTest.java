@@ -24,11 +24,11 @@ public class InterfaceUserTest {
 	
 	@Autowired
 	public InterfaceUser interfaceUser;
-	
+
 	@SuppressWarnings("static-access")
 	@Test
-	public void testInterfaceAddComputer() throws ParseException, SQLException {
-		
+	public void testInterfaceAddComputer() throws ParseException{
+
 		//GIVEN
 		int results;
 		

@@ -44,6 +44,11 @@ public class ServiceComputer
 		return computerDao.findComputerId(id);
 	}
 	
+	public Computer findComputerById(Integer id) 
+	{
+		return computerDao.findComputerId(id);
+	}
+	
 	public void deleteComputer(long id) 
 	{
 		computerDao.deleteComputer(id);

@@ -26,7 +26,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
-@ComponentScan(basePackages = {"com.excilys.projet.java.cdb.model", "com.excilys.projet.java.cdb.service", "com.excilys.projet.java.cdb.user", "com.excilys.projet.java.cdb.persistence.dao", "com.excilys.projet.java.cdb.mapper", "com.excilys.projet.java.cdb.user" })
+@ComponentScan(basePackages = {"com.excilys.projet.java.cdb.model", "com.excilys.projet.java.cdb.service", "com.excilys.projet.java.cdb.user", "com.excilys.projet.java.cdb.persistence.dao", "com.excilys.projet.java.cdb.mapper" })
 @PropertySource("classpath:test.datasource.properties")
 @EnableTransactionManagement
 public class TestConfig {
@@ -34,10 +34,10 @@ public class TestConfig {
 	@Autowired
 	Environment environment;
 
-	private final String DRIVER = "driverClassName";
-	private final String URL = "jdbcUrl";
-	private final String USER = "username2";
-	private final String PASSWORD = "password";
+	private static final String DRIVER = "driverClassName";
+	private static final String URL = "jdbcUrl";
+	private static final String USER = "username2";
+	private static final String PASSWORD = "password";
 
 	@Bean
 	DataSource dataSource() {
