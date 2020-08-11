@@ -1,44 +1,62 @@
-version: 2
-jobs:
-  build:
-    working_directory: ~/computer-database
+# This code is licensed from CircleCI to the user under the MIT license. See
+# https://circleci.com/orbs/registry/licensing for details.
+version: 2.1
+description: "Maven common tasks"
 
-    docker:
-      - image: circleci/openjdk:8-jdk-stretch
+commands:
 
+  with_cache:
+    description: Run a set of steps with Maven dependencies cached.
+    parameters:
+      settings_file:
+        description: Specify a custom settings file to use (optional)
+        type: string
+        default: ""
+      mvn_path:
+        description: Specify a custom path to maven
+        type: string
+        default: mvn
+      steps:
+        description: Commands to execute between cache restore and save
+        type: steps
+      force_download:
+        description: Wheter to preemptively download all dependencies
+        type: boolean
+        default: true
     steps:
-      - checkout
-
       - run:
-          name: Generate cumulative pom.xml checksum
-          command: |
-            find . -type f -name "pom.xml" -exec sh -c "sha256sum {} >> ~/pom-checksum.tmp" \;
-            sort -o ~/pom-checksum ~/pom-checksum.tmp
-          when: always
-
+          name: Generate Cache Checksum
+          command: find . -name 'pom.xml' | sort | xargs cat > /tmp/maven_cache_seed
       - restore_cache:
-          keys:
-            - computer-database-{{ checksum "~/pom-checksum" }}
-            - computer-database-
-
-      - run: mvn de.qaware.maven:go-offline-maven-plugin:resolve-dependencies
-
+          key: maven-{{ checksum "/tmp/maven_cache_seed" }}
+      - run:
+          name: Setup artifactory from ci-conf if present
+          command: |
+            FILE="$GIT_ROOT/ci-conf/mvn/settings.xml"
+            if [ -f "$FILE" ]; then
+              mkdir -v -p ~/.m2
+              cp -v $FILE ~/.m2
+            fi
+      - when:
+          condition: << parameters.force_download >>
+          steps:
+            - run:
+                name: Install Dependencies
+                command: << parameters.mvn_path >> dependency:go-offline <<# parameters.settings_file >> --settings << parameters.settings_file >><</ parameters.settings_file >>
+      - steps: << parameters.steps >>
       - save_cache:
           paths:
             - ~/.m2
-          key: computer-database-{{ checksum "~/pom-checksum" }}
+          key: maven-{{ checksum "/tmp/maven_cache_seed" }}
 
-      - run: mvn package
-
+  aggregate_test_results:
+    description: Aggregates test results in a multi-module maven project and store for the build.
+    steps:
       - run:
-          name: Save test results
-          command: |
-            mkdir -p ~/test-results/junit/
-            find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} ~/test-results/junit/ \;
+          name: Copy test results
           when: always
-
+          command: |
+            mkdir -p /tmp/surefire/
+            find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} /tmp/surefire/ \;
       - store_test_results:
-          path: ~/test-results
-
-      - store_artifacts:
-          path: my-service/target/my-service.jar
+          path: /tmp/surefire/
