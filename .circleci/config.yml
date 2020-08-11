@@ -1,7 +1,7 @@
 version: 2
 jobs:
   build:
-    working_directory: ~/my-multi-module-mvn-prj
+    working_directory: ~/computer-database
 
     docker:
       - image: circleci/openjdk:8-jdk-stretch
@@ -18,15 +18,15 @@ jobs:
 
       - restore_cache:
           keys:
-            - my-multi-module-mvn-prj-{{ checksum "~/pom-checksum" }}
-            - my-multi-module-mvn-prj-
+            - computer-database-{{ checksum "~/pom-checksum" }}
+            - computer-database-
 
       - run: mvn de.qaware.maven:go-offline-maven-plugin:resolve-dependencies
 
       - save_cache:
           paths:
             - ~/.m2
-          key: my-multi-module-mvn-prj-{{ checksum "~/pom-checksum" }}
+          key: computer-database-{{ checksum "~/pom-checksum" }}
 
       - run: mvn package
 
